@@ -1,0 +1,9 @@
+C:\Users\local\Documents\GitHub\elm-project\Software\Toolbox\NetworkLib\bin\Debug\NetworkLib.dll
+C:\Users\local\Documents\GitHub\elm-project\Software\Toolbox\NetworkLib\bin\Debug\NetworkLib.pdb
+C:\Users\local\Documents\GitHub\elm-project\Software\Toolbox\NetworkLib\obj\Debug\NetworkLib.csprojResolveAssemblyReference.cache
+C:\Users\local\Documents\GitHub\elm-project\Software\Toolbox\NetworkLib\obj\Debug\NetworkLib.ResourceText.resources
+C:\Users\local\Documents\GitHub\elm-project\Software\Toolbox\NetworkLib\obj\Debug\NetworkLib.csproj.GenerateResource.Cache
+C:\Users\local\Documents\GitHub\elm-project\Software\Toolbox\NetworkLib\obj\Debug\NetworkLib.dll
+C:\Users\local\Documents\GitHub\elm-project\Software\Toolbox\NetworkLib\obj\Debug\NetworkLib.pdb
+C:\Users\local\Documents\GitHub\elm-project\Software\Toolbox\NetworkLib\bin\Debug\Renci.SshNet.dll
+C:\Users\local\Documents\GitHub\elm-project\Software\Toolbox\NetworkLib\bin\Debug\Renci.SshNet.xml

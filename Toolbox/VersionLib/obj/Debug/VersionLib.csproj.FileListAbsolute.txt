@@ -1,0 +1,11 @@
+C:\Users\local\Documents\GitHub\elm-project\Software\Toolbox\VersionLib\bin\Debug\VersionLib.dll
+C:\Users\local\Documents\GitHub\elm-project\Software\Toolbox\VersionLib\bin\Debug\VersionLib.pdb
+C:\Users\local\Documents\GitHub\elm-project\Software\Toolbox\VersionLib\bin\Debug\NetworkLib.dll
+C:\Users\local\Documents\GitHub\elm-project\Software\Toolbox\VersionLib\bin\Debug\Renci.SshNet.dll
+C:\Users\local\Documents\GitHub\elm-project\Software\Toolbox\VersionLib\bin\Debug\NetworkLib.pdb
+C:\Users\local\Documents\GitHub\elm-project\Software\Toolbox\VersionLib\bin\Debug\Renci.SshNet.xml
+C:\Users\local\Documents\GitHub\elm-project\Software\Toolbox\VersionLib\obj\Debug\VersionLib.csprojResolveAssemblyReference.cache
+C:\Users\local\Documents\GitHub\elm-project\Software\Toolbox\VersionLib\obj\Debug\VersionLib.ResourceText.resources
+C:\Users\local\Documents\GitHub\elm-project\Software\Toolbox\VersionLib\obj\Debug\VersionLib.csproj.GenerateResource.Cache
+C:\Users\local\Documents\GitHub\elm-project\Software\Toolbox\VersionLib\obj\Debug\VersionLib.dll
+C:\Users\local\Documents\GitHub\elm-project\Software\Toolbox\VersionLib\obj\Debug\VersionLib.pdb
