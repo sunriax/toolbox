@@ -11,6 +11,7 @@
 //	| (c) 2017, Alle Rechte vorbehalten		|
 //	+---------------------------------------+
 
+#include "system.h"
 #include "i2c.h"
 
 //	+---------------------------------------------------------------+
@@ -46,13 +47,126 @@ void i2c_transmit(unsigned char data)
 //	+---------------------------------------------------------------+
 //	|					I²C Empfangsroutine							|
 //	+---------------------------------------------------------------+
-void i2c_receive(unsigned char acknowledge, unsigned char *data)
+unsigned char i2c_receive(unsigned char acknowledge)
 {
-	switch(acknowledge)
-	{
-		case 0	:	TWCR = (1<<TWINT) | (1<<TWEN);				break;
-		default	:	TWCR = (1<<TWINT) | (1<<TWEA) | (1<<TWEN);	break;
-	}
+	// Überprüfen ob Quittierung erforderlich
+	if(acknowledge == NACK)
+		TWCR = ((1<<TWINT) | (1<<TWEN));			// Keine Quittierung senden
+	else
+		TWCR = (1<<TWINT) | (1<<TWEA) | (1<<TWEN);	// Quittierung senden
+
+	// Warten bis Daten über I2C empfangen
 	while (!(TWCR & (1<<TWINT)));
-		*data = TWDR;
+		return TWDR;								// Empfangene Daten zurückgeben
+}
+
+//	+---------------------------------------------------------------+
+//	|					I²C EEPROM Byte schreiben					|
+//	+---------------------------------------------------------------+
+unsigned char i2c_eeprom_write_byte(unsigned char deviceaddr, unsigned char wordaddr, unsigned char data)
+{
+	unsigned char read;
+	
+	// Daten in EEPROM schreiben
+	i2c_start();
+	i2c_transmit(deviceaddr | I2C_WRITE);
+	i2c_transmit(wordaddr);
+	i2c_transmit(data);
+	i2c_stop();
+	
+	// Wartezeit bis Daten in EEPROM gespeichert
+	_delay_ms(I2C_EEPROM_WRITE);
+	
+	// Daten aus EEPROM lesen
+	i2c_start();
+	i2c_transmit(deviceaddr | I2C_READ);
+	read = i2c_receive(NACK);
+	i2c_stop();
+	
+	// Überprüfen ob geschriebene Daten korrekt
+	if(read == data)
+		return 0xFF;	// Rückgabewert Daten korrekt
+	return 0x00;		// Rückgabewert Daten falsch
+}
+
+//	+---------------------------------------------------------------+
+//	|					I²C EEPROM Block schreiben					|
+//	+---------------------------------------------------------------+
+unsigned char i2c_eeprom_write_block(unsigned char deviceaddr, unsigned char wordaddr, unsigned char data[], unsigned char blocksize)
+{
+	unsigned char read[blocksize];
+	
+	// Array in EEPROM schreiben
+	i2c_start();
+	i2c_transmit(deviceaddr | I2C_WRITE);
+	i2c_transmit(wordaddr);
+	
+	for(unsigned i=0; i < blocksize; i++)
+		i2c_transmit(data[i]);
+	
+	i2c_stop();
+	
+	// Wartezeit bis Daten in EEPROM gespeichert
+	_delay_ms(I2C_EEPROM_WRITE);
+	
+	// Array aus EEPROM lesen
+	i2c_eeprom_read_block(deviceaddr, wordaddr, &read[0], blocksize);
+	// oder
+	// i2c_eeprom_read_block(deviceaddr, wordaddr, read, blocksize);
+	
+	for(unsigned char j=0; j < blocksize; j++)
+	{
+		if(read[j] != data[j])
+			return 0x00;
+	}
+	
+	return 0xFF;
+}
+
+//	+---------------------------------------------------------------+
+//	|					I²C EEPROM Byte lesen						|
+//	+---------------------------------------------------------------+
+void i2c_eeprom_read_byte(unsigned char deviceaddr, unsigned char wordaddr, unsigned char *data)
+{	
+	// Dummy Write
+	i2c_start();
+	i2c_transmit(deviceaddr | I2C_WRITE);
+	i2c_transmit(wordaddr);
+	
+	// Daten aus EEPROM lesen
+	i2c_start();
+	i2c_transmit(deviceaddr | I2C_READ);
+	*data = i2c_receive(NACK);
+	i2c_stop();
+}
+
+//	+---------------------------------------------------------------+
+//	|					I²C EEPROM Block lesen						|
+//	+---------------------------------------------------------------+
+void i2c_eeprom_read_block(unsigned char deviceaddr, unsigned char wordaddr, unsigned char *data, unsigned char blocksize)
+{
+		// Dummy Write
+		i2c_start();
+		i2c_transmit(deviceaddr | I2C_WRITE);
+		i2c_transmit(wordaddr);
+		
+		// EEPROM Lesen initiieren
+		i2c_start();
+		i2c_transmit(deviceaddr | I2C_READ);
+		
+		// Datenblock aus EEPROM lesen
+		for(unsigned char i=0; i < blocksize; i++)
+		{
+			// Überprüfen ob Datensatz durchlaufen
+			if((blocksize - 1) >= i)
+				*data = i2c_receive(NACK);		// Daten Empfangen ohne Quittierung
+			else
+				*data = i2c_receive(ACK);		// Daten Empfangen mit Quittierung
+				
+			data++;
+			
+			percent((i+1), blocksize);
+		}
+		
+		i2c_stop();
 }

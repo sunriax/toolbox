@@ -44,6 +44,7 @@ C_SRCS +=  \
 ../_lib/i2c.c \
 ../_lib/lcd.c \
 ../_lib/printf.c \
+../_lib/promer.c \
 ../_lib/spi.c \
 ../_lib/system.c \
 ../_lib/uart.c
@@ -62,6 +63,7 @@ _lib/eeprom.o \
 _lib/i2c.o \
 _lib/lcd.o \
 _lib/printf.o \
+_lib/promer.o \
 _lib/spi.o \
 _lib/system.o \
 _lib/uart.o
@@ -73,6 +75,7 @@ _lib/eeprom.o \
 _lib/i2c.o \
 _lib/lcd.o \
 _lib/printf.o \
+_lib/promer.o \
 _lib/spi.o \
 _lib/system.o \
 _lib/uart.o
@@ -84,6 +87,7 @@ _lib/eeprom.d \
 _lib/i2c.d \
 _lib/lcd.d \
 _lib/printf.d \
+_lib/promer.d \
 _lib/spi.d \
 _lib/system.d \
 _lib/uart.d
@@ -95,6 +99,7 @@ _lib/eeprom.d \
 _lib/i2c.d \
 _lib/lcd.d \
 _lib/printf.d \
+_lib/promer.d \
 _lib/spi.d \
 _lib/system.d \
 _lib/uart.d
@@ -113,6 +118,8 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

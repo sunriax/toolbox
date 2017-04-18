@@ -21,9 +21,15 @@ unsigned char eeNOMODE[]	EEMEM;
 unsigned char eeMODE0[]		EEMEM;
 unsigned char eeMODE1[]		EEMEM;
 unsigned char eeMODE2[]		EEMEM;
-unsigned char eeGETDATA[]	EEMEM;
 unsigned char eeDONE[]		EEMEM;
 unsigned char eeFAIL[]		EEMEM;
 unsigned char eeSETDATA[]	EEMEM;
+unsigned char eeGETDATA[]	EEMEM;
+unsigned char eeSETADDR[]	EEMEM;
+unsigned char eeGETADDR[]	EEMEM;
+unsigned char eeSETWORD[]	EEMEM;
+unsigned char eeGETWORD[]	EEMEM;
+unsigned char eeREAD[]		EEMEM;
+unsigned char eeWRITE[]		EEMEM;
+unsigned char eeDATA[]		EEMEM;
 unsigned char eeSIZE[]		EEMEM;
-

@@ -27,9 +27,9 @@
 	#define U2XEN			// Doppelte Baudrate aktivieren
 #endif
 
-#ifndef UARTRXCIE
-	#define UARTRXCIE		// Empfangsdaten Interrupt
-#endif
+//#ifndef UARTRXCIE
+//	#define UARTRXCIE		// Empfangsdaten Interrupt
+//#endif
 
 #ifndef MAXCMDSIZE
 	#define MAXCMDSIZE 8		// Empfangsdaten Buffer
@@ -37,13 +37,15 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include <util/delay.h>
 #include <string.h>
 
 void uart_init(unsigned char datasize, unsigned char parity, unsigned char stopbits);
 void uart_setchar(unsigned char data);
 void uart_setstring(unsigned char *string, unsigned char line);
-void uart_getchar(unsigned char *address);
-void uart_fetchchar(unsigned char *address);
+void uart_getchar(unsigned char *dataaddr);
+unsigned char uart_getchar_status(unsigned char *dataaddr);
+void uart_fetchchar(unsigned char *dataaddr);
 void uart_getcmd(unsigned char cmd[]);
 void uart_getarg(unsigned char arg[]);
 

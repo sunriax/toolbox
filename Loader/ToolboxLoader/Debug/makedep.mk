@@ -14,6 +14,8 @@ _lib\lcd.c
 
 _lib\printf.c
 
+_lib\promer.c
+
 _lib\spi.c
 
 _lib\system.c

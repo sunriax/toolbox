@@ -77,7 +77,14 @@ extern unsigned char eeMODE2[7];	//	[DBUG]
 extern unsigned char eeDONE[7];		//	[DONE]
 extern unsigned char eeFAIL[7];		//	[FAIL]
 extern unsigned char eeSETDATA[7];	//	[XSET]
-extern unsigned char eeSIZE[7];		//	{SIZE}
 extern unsigned char eeGETDATA[7];	//	{XGET}
+extern unsigned char eeSETADDR[7];	//	[ADDR]
+extern unsigned char eeGETADDR[7];	//	{ADDR}
+extern unsigned char eeSETWORD[7];	//	[WORD]
+extern unsigned char eeGETWORD[7];	//	{WORD}
+extern unsigned char eeREAD[7];		//	[READ]
+extern unsigned char eeWRITE[7];	//	[SAVE]
+extern unsigned char eeDATA[7];		//	[DATA]
+extern unsigned char eeSIZE[7];		//	{SIZE}
 
 #endif /* DEFINITION_H_ */

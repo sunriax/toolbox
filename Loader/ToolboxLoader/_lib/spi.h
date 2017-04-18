@@ -19,7 +19,7 @@
 #endif
 
 #ifndef SPI2XEN
-	#define SPI2XEN			// Doppelte Baudrate aktivieren
+	#define SPI2XEN				// Doppelte Baudrate aktivieren
 #endif
 
 #ifndef SPI_DDR

@@ -12,6 +12,7 @@
 //	+---------------------------------------+
 
 #include "eeprom.h"
+#include "i2c.h"
 
 //	+---------------------------------------------------------------+
 //	|				EEPROM Initialisierung (deaktiviert)			|
@@ -31,8 +32,15 @@ void rom_init(void)
 	memcpy(buffer, "[DONE]",	sizeof(eeDONE));	eeprom_write_block (buffer, eeDONE,		sizeof(eeDONE));
 	memcpy(buffer, "[FAIL]",	sizeof(eeFAIL));	eeprom_write_block (buffer, eeFAIL,		sizeof(eeFAIL));
 	memcpy(buffer, "[XSET]",	sizeof(eeSETDATA));	eeprom_write_block (buffer, eeSETDATA,	sizeof(eeSETDATA));
-	memcpy(buffer, "{SIZE}",	sizeof(eeSIZE));	eeprom_write_block (buffer, eeSIZE,		sizeof(eeSIZE));
 	memcpy(buffer, "{XGET}",	sizeof(eeGETDATA));	eeprom_write_block (buffer, eeGETDATA,	sizeof(eeGETDATA));
+	memcpy(buffer, "[ADDR]",	sizeof(eeSETADDR));	eeprom_write_block (buffer, eeSETADDR,	sizeof(eeSETADDR));
+	memcpy(buffer, "{ADDR}",	sizeof(eeGETADDR));	eeprom_write_block (buffer, eeGETADDR,	sizeof(eeGETADDR));
+	memcpy(buffer, "[WORD]",	sizeof(eeSETWORD));	eeprom_write_block (buffer, eeSETWORD,	sizeof(eeSETWORD));
+	memcpy(buffer, "{WORD}",	sizeof(eeGETWORD));	eeprom_write_block (buffer, eeGETWORD,	sizeof(eeGETWORD));
+	memcpy(buffer, "[READ]",	sizeof(eeREAD));	eeprom_write_block (buffer, eeREAD,		sizeof(eeREAD));
+	memcpy(buffer, "[SAVE]",	sizeof(eeWRITE));	eeprom_write_block (buffer, eeWRITE,	sizeof(eeWRITE));
+	memcpy(buffer, "[DATA]",	sizeof(eeDATA));	eeprom_write_block (buffer, eeDATA,		sizeof(eeDATA));
+	memcpy(buffer, "{SIZE}",	sizeof(eeSIZE));	eeprom_write_block (buffer, eeSIZE,		sizeof(eeSIZE));
 }
 
 //	+---------------------------------------------------------------+
@@ -40,5 +48,5 @@ void rom_init(void)
 //	+---------------------------------------------------------------+
 void rom_block(unsigned char eeADDRESS[], unsigned char buffer[], unsigned char size)
 {	
-	eeprom_read_block (buffer, eeADDRESS, size);
+	eeprom_read_block (buffer, eeADDRESS, size);	// EEPROM Block lesen
 }

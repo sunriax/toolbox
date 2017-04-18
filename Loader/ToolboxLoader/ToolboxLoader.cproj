@@ -164,6 +164,12 @@
     <Compile Include="_lib\printf.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="_lib\promer.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="_lib\promer.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="_lib\spi.c">
       <SubType>compile</SubType>
     </Compile>

@@ -20,6 +20,7 @@
 #include "_lib/definition.h"
 #include "_lib/eeprom.h"
 #include "_lib/system.h"
+#include "_lib/promer.h"
 #include "_lib/lcd.h"
 #include "_lib/uart.h"
 #include "_lib/i2c.h"

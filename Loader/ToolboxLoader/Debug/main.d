@@ -23,7 +23,8 @@ main.d main.o: .././main.c \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdarg.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdlib.h \
- .././_lib/uart.h .././_lib/eeprom.h .././_lib/lcd.h .././_lib/uart.h \
+ .././_lib/uart.h .././_lib/eeprom.h .././_lib/promer.h \
+ .././_lib/system.h .././_lib/i2c.h .././_lib/lcd.h .././_lib/uart.h \
  .././_lib/i2c.h .././_lib/spi.h
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\io.h:
@@ -83,6 +84,12 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 .././_lib/uart.h:
 
 .././_lib/eeprom.h:
+
+.././_lib/promer.h:
+
+.././_lib/system.h:
+
+.././_lib/i2c.h:
 
 .././_lib/lcd.h:
 

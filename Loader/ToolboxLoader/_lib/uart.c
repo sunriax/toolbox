@@ -124,19 +124,29 @@ void uart_setstring(unsigned char *string, unsigned char line)	{
 //	+---------------------------------------------------------------+
 //	|					UART Zeichen empfangen						|
 //	+---------------------------------------------------------------+
-void uart_getchar(unsigned char *address)	{
+void uart_getchar(unsigned char *dataaddr)	{
+	if(UCSRA & (1<<RXC))					// Überprüfen ob Daten in Empfangsbuffer
+		*dataaddr = UDR;					// Daten auf in Variable der Adresse address schreiben
+}
+
+//	+---------------------------------------------------------------+
+//	|					UART Zeichen empfangen mit Status			|
+//	+---------------------------------------------------------------+
+unsigned char uart_getchar_status(unsigned char *dataaddr)	{
 	if(UCSRA & (1<<RXC))	{				// Überprüfen ob Daten in Empfangsbuffer
-		*address = UDR;						// Daten auf in Variable der Adresse address schreiben
+		*dataaddr = UDR;					// Daten auf in Variable der Adresse address schreiben
+		return 0xFF;						// Wenn neue Daten vorhanden Status 0xFF
 	}
+	return 0x00;							// Wenn keine neuen Daten vorhanden Status 0x00
 }
 
 //	+---------------------------------------------------------------+
 //	|					UART Zeichen abholen						|
 //	+---------------------------------------------------------------+
-void uart_fetchchar(unsigned char *address)	{
+void uart_fetchchar(unsigned char *dataaddr)	{
 	while(!(UCSRA & (1<<RXC)));				// Warten bis neues Zeichen verfügbar
-		*address = UDR;						// Daten auf in Variable der Adresse address schreiben
-	uart_setchar(*address);
+		*dataaddr = UDR;					// Daten auf in Variable der Adresse address schreiben
+	uart_setchar(*dataaddr);
 }
 
 //	+---------------------------------------------------------------+
@@ -144,7 +154,7 @@ void uart_fetchchar(unsigned char *address)	{
 //	+---------------------------------------------------------------+
 void uart_getarg(unsigned char arg[])
 {
-	unsigned char data;
+	unsigned char data = 0;
 	unsigned char loop = 0;
 	unsigned char cancel = 0x00;
 	
@@ -194,26 +204,28 @@ void uart_getarg(unsigned char arg[])
 //	+---------------------------------------------------------------+
 void uart_getcmd(unsigned char cmd[])
 {
-	unsigned char data;
+	unsigned char data = 0;
 	unsigned char loop = 0;
 	unsigned char cancel = 0x00;
 	
 	// Loop bis Datensatz beginnt
 	while(1)
 	{
-		uart_getchar(&data);
 		
+		uart_getchar(&data);
+
 		if(data == '[')
 		{
+			
 			cmd[loop] = data;	// Empfangenes Zeichen auf Buffer legen
-			loop++;					// Arrayzeiger erhöhen
+			loop++;				// Arrayzeiger erhöhen
 			
 			uart_setchar(data);
 			
 			do
 			{
 				uart_fetchchar(&data);	// Warten bis Zeichen verfügbar
-				cmd[loop] = data;	// Zeichen in Array schreiben
+				cmd[loop] = data;		// Zeichen in Array schreiben
 				loop++;					// Arrayzeiger erhöhen
 				
 				// Überprüfen ob Loop Zähler >= (Arraygröße - 1)

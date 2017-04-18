@@ -69,3 +69,6 @@ C:\Users\local\Documents\GitHub\elm-project\Software\Toolbox\Toolbox\obj\Debug\T
 C:\Users\local\Documents\GitHub\elm-project\Software\Toolbox\Toolbox\obj\Debug\de-AT\Toolbox.resources.dll
 C:\Users\local\Documents\GitHub\elm-project\Software\Toolbox\Toolbox\bin\Debug\NetworkLib.dll
 C:\Users\local\Documents\GitHub\elm-project\Software\Toolbox\Toolbox\bin\Debug\NetworkLib.pdb
+C:\Users\local\Documents\GitHub\toolbox\Toolbox\Toolbox\bin\Debug\Toolbox.exe.config
+C:\Users\local\Documents\GitHub\toolbox\Toolbox\Toolbox\obj\Debug\Toolbox.exe
+C:\Users\local\Documents\GitHub\toolbox\Toolbox\Toolbox\obj\Debug\Toolbox.pdb
