@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 using Toolbox.Language;
 using NetworkLib;
 
@@ -16,9 +17,10 @@ namespace Toolbox
 	public partial class FormLinuxAccount : Form
 	{
 
-		Dictionary<int, Dictionary<string, string>> _account = new Dictionary<int, Dictionary<string, string>>();
-		Network _network = new Network();
+		private Dictionary<int, Dictionary<string, string>> _account = new Dictionary<int, Dictionary<string, string>>();
+		private Network _network = new Network();
 		private int _selectedid;
+		private string _certificate = null;
 
 		public FormLinuxAccount(Dictionary<int, Dictionary<string, string>> account)
 		{
@@ -239,6 +241,8 @@ namespace Toolbox
 			textBoxServer.Text = ResourceText.ValueServer;
 			textBoxPort.Text = ResourceText.ValuePort;
 
+			textBoxCert.Text = ResourceText.ValueCertificate;
+
 			textBoxUsername.ForeColor = Color.LightGray;
 			textBoxPassword.ForeColor = Color.LightGray;
 			textBoxServer.ForeColor = Color.LightGray;
@@ -274,5 +278,63 @@ namespace Toolbox
 			}
 		}
 
+		private void buttonCert_Click(object sender, EventArgs e)
+		{
+			openFileDialogCert.Filter = ResourceText.CertificateFileFilter;
+
+			DialogResult FilePointer = openFileDialogCert.ShowDialog();
+
+			if (FilePointer == DialogResult.Cancel || FilePointer == DialogResult.Abort)
+				return;
+
+			string _certificate = openFileDialogCert.FileName;
+
+			if (textBoxCert.Text == ResourceText.ValueCertificate)
+				textBoxCert.Text = Path.GetFileNameWithoutExtension(_certificate);
+
+			// string certificate_name = Path.GetFileName(_certificate);
+			// string certificate_path = ResourceText.CertificateFileFilter;
+
+			/*if (!Directory.Exists(certificate_path))
+				try
+				{
+					DirectoryInfo DirectoryPointer = Directory.CreateDirectory(certificate_path);
+				}
+				catch
+				{
+					MessageBox.Show("Fehler Zertifikatordner konnte nicht erstellt werden");
+					return;
+				}
+
+			if(!File.Exists(certificate_path + certificate_name))
+				try
+				{
+					File.Copy(_certificate, certificate_path + certificate_name);
+				}
+				catch
+				{
+					MessageBox.Show("Fehler Datei konnte nicht kopiert werden");
+					return;
+				}
+			*/
+			
+
+		}
+
+		private void buttonCertAdd_Click(object sender, EventArgs e)
+		{
+			if (_certificate == null)
+				return;
+		}
+
+		private void buttonCertDelete_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void buttonNewCert_Click(object sender, EventArgs e)
+		{
+
+		}
 	}
 }

@@ -33,6 +33,7 @@
 #include "definition.h"
 #include "lcd.h"
 #include "uart.h"
+#include "i2c.h"
 #include "eeprom.h"
 
 // Funktionsaufrufe

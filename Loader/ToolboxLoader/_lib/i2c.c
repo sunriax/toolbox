@@ -11,8 +11,13 @@
 //	| (c) 2017, Alle Rechte vorbehalten		|
 //	+---------------------------------------+
 
-#include "system.h"
 #include "i2c.h"
+
+void i2c_init(void)
+{
+	TWSR = 0x00;
+	TWBR = 7;	
+}
 
 //	+---------------------------------------------------------------+
 //	|					I²C START Kommando							|
@@ -78,10 +83,7 @@ unsigned char i2c_eeprom_write_byte(unsigned char deviceaddr, unsigned char word
 	_delay_ms(I2C_EEPROM_WRITE);
 	
 	// Daten aus EEPROM lesen
-	i2c_start();
-	i2c_transmit(deviceaddr | I2C_READ);
-	read = i2c_receive(NACK);
-	i2c_stop();
+	i2c_eeprom_read_byte(deviceaddr, wordaddr, &read);
 	
 	// Überprüfen ob geschriebene Daten korrekt
 	if(read == data)
@@ -92,7 +94,7 @@ unsigned char i2c_eeprom_write_byte(unsigned char deviceaddr, unsigned char word
 //	+---------------------------------------------------------------+
 //	|					I²C EEPROM Block schreiben					|
 //	+---------------------------------------------------------------+
-unsigned char i2c_eeprom_write_block(unsigned char deviceaddr, unsigned char wordaddr, unsigned char data[], unsigned char blocksize)
+unsigned char i2c_eeprom_write_block(unsigned char deviceaddr, unsigned char wordaddr, unsigned char *data, unsigned char blocksize)
 {
 	unsigned char read[blocksize];
 	
@@ -101,10 +103,14 @@ unsigned char i2c_eeprom_write_block(unsigned char deviceaddr, unsigned char wor
 	i2c_transmit(deviceaddr | I2C_WRITE);
 	i2c_transmit(wordaddr);
 	
-	for(unsigned i=0; i < blocksize; i++)
-		i2c_transmit(data[i]);
+	for(unsigned char i=0; i < blocksize; i++)
+	{
+		i2c_transmit(*data);
+		data++;
+	}
 	
 	i2c_stop();
+	data = data - blocksize;
 	
 	// Wartezeit bis Daten in EEPROM gespeichert
 	_delay_ms(I2C_EEPROM_WRITE);
@@ -116,10 +122,10 @@ unsigned char i2c_eeprom_write_block(unsigned char deviceaddr, unsigned char wor
 	
 	for(unsigned char j=0; j < blocksize; j++)
 	{
-		if(read[j] != data[j])
+		if(read[j] != *data)
 			return 0x00;
+		data++;
 	}
-	
 	return 0xFF;
 }
 
@@ -159,7 +165,10 @@ void i2c_eeprom_read_block(unsigned char deviceaddr, unsigned char wordaddr, uns
 		{
 			// Überprüfen ob Datensatz durchlaufen
 			if((blocksize - 1) >= i)
+			{
 				*data = i2c_receive(NACK);		// Daten Empfangen ohne Quittierung
+				data++;
+			}
 			else
 				*data = i2c_receive(ACK);		// Daten Empfangen mit Quittierung
 				

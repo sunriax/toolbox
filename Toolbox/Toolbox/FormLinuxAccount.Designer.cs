@@ -44,6 +44,20 @@
 			this.columnHeaderServer = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeaderPort = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.tabPageCert = new System.Windows.Forms.TabPage();
+			this.textBoxCert = new System.Windows.Forms.TextBox();
+			this.buttonCert = new System.Windows.Forms.Button();
+			this.textBoxCertPort = new System.Windows.Forms.TextBox();
+			this.buttonNewCert = new System.Windows.Forms.Button();
+			this.textBoxCertServer = new System.Windows.Forms.TextBox();
+			this.textBoxPhassphrase = new System.Windows.Forms.TextBox();
+			this.buttonCertAdd = new System.Windows.Forms.Button();
+			this.buttonCertDelete = new System.Windows.Forms.Button();
+			this.listViewCertificate = new System.Windows.Forms.ListView();
+			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.FileSaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -56,26 +70,11 @@
 			this.labelChoose = new System.Windows.Forms.Label();
 			this.labelAccount = new System.Windows.Forms.Label();
 			this.labelHelp = new System.Windows.Forms.Label();
-			this.listViewCertificate = new System.Windows.Forms.ListView();
-			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.textBoxCertPort = new System.Windows.Forms.TextBox();
-			this.buttonNewCert = new System.Windows.Forms.Button();
-			this.textBoxCertServer = new System.Windows.Forms.TextBox();
-			this.textBoxPhassphrase = new System.Windows.Forms.TextBox();
-			this.buttonCertAdd = new System.Windows.Forms.Button();
-			this.buttonCertDelete = new System.Windows.Forms.Button();
-			this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
-			this.buttonCert = new System.Windows.Forms.Button();
-			this.textBoxCert = new System.Windows.Forms.TextBox();
+			this.openFileDialogCert = new System.Windows.Forms.OpenFileDialog();
 			this.tabControl.SuspendLayout();
 			this.tabPageUser.SuspendLayout();
 			this.tabPageCert.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// tabControl
@@ -245,6 +244,125 @@
 			this.tabPageCert.Text = "Zertifikat";
 			this.tabPageCert.UseVisualStyleBackColor = true;
 			// 
+			// textBoxCert
+			// 
+			this.textBoxCert.ForeColor = System.Drawing.SystemColors.WindowFrame;
+			this.textBoxCert.Location = new System.Drawing.Point(42, 97);
+			this.textBoxCert.Name = "textBoxCert";
+			this.textBoxCert.Size = new System.Drawing.Size(59, 20);
+			this.textBoxCert.TabIndex = 17;
+			this.textBoxCert.Text = "Name";
+			// 
+			// buttonCert
+			// 
+			this.buttonCert.Image = global::Toolbox.ResourceImage.Certificate;
+			this.buttonCert.Location = new System.Drawing.Point(107, 95);
+			this.buttonCert.Name = "buttonCert";
+			this.buttonCert.Size = new System.Drawing.Size(35, 23);
+			this.buttonCert.TabIndex = 16;
+			this.buttonCert.UseVisualStyleBackColor = true;
+			this.buttonCert.Click += new System.EventHandler(this.buttonCert_Click);
+			// 
+			// textBoxCertPort
+			// 
+			this.textBoxCertPort.ForeColor = System.Drawing.SystemColors.WindowFrame;
+			this.textBoxCertPort.Location = new System.Drawing.Point(389, 97);
+			this.textBoxCertPort.Name = "textBoxCertPort";
+			this.textBoxCertPort.Size = new System.Drawing.Size(34, 20);
+			this.textBoxCertPort.TabIndex = 15;
+			this.textBoxCertPort.Text = "Port";
+			// 
+			// buttonNewCert
+			// 
+			this.buttonNewCert.Image = global::Toolbox.ResourceImage.Action;
+			this.buttonNewCert.Location = new System.Drawing.Point(6, 95);
+			this.buttonNewCert.Name = "buttonNewCert";
+			this.buttonNewCert.Size = new System.Drawing.Size(30, 23);
+			this.buttonNewCert.TabIndex = 14;
+			this.buttonNewCert.UseVisualStyleBackColor = true;
+			this.buttonNewCert.Click += new System.EventHandler(this.buttonNewCert_Click);
+			// 
+			// textBoxCertServer
+			// 
+			this.textBoxCertServer.ForeColor = System.Drawing.SystemColors.WindowFrame;
+			this.textBoxCertServer.Location = new System.Drawing.Point(254, 97);
+			this.textBoxCertServer.Name = "textBoxCertServer";
+			this.textBoxCertServer.Size = new System.Drawing.Size(129, 20);
+			this.textBoxCertServer.TabIndex = 13;
+			this.textBoxCertServer.Text = "Server";
+			// 
+			// textBoxPhassphrase
+			// 
+			this.textBoxPhassphrase.ForeColor = System.Drawing.SystemColors.WindowFrame;
+			this.textBoxPhassphrase.Location = new System.Drawing.Point(148, 97);
+			this.textBoxPhassphrase.Name = "textBoxPhassphrase";
+			this.textBoxPhassphrase.PasswordChar = '*';
+			this.textBoxPhassphrase.Size = new System.Drawing.Size(100, 20);
+			this.textBoxPhassphrase.TabIndex = 12;
+			this.textBoxPhassphrase.Text = "Passwort";
+			// 
+			// buttonCertAdd
+			// 
+			this.buttonCertAdd.Image = global::Toolbox.ResourceImage.Add;
+			this.buttonCertAdd.Location = new System.Drawing.Point(429, 95);
+			this.buttonCertAdd.Name = "buttonCertAdd";
+			this.buttonCertAdd.Size = new System.Drawing.Size(30, 23);
+			this.buttonCertAdd.TabIndex = 10;
+			this.buttonCertAdd.UseVisualStyleBackColor = true;
+			this.buttonCertAdd.Click += new System.EventHandler(this.buttonCertAdd_Click);
+			// 
+			// buttonCertDelete
+			// 
+			this.buttonCertDelete.Image = global::Toolbox.ResourceImage.Delete;
+			this.buttonCertDelete.Location = new System.Drawing.Point(465, 95);
+			this.buttonCertDelete.Name = "buttonCertDelete";
+			this.buttonCertDelete.Size = new System.Drawing.Size(30, 23);
+			this.buttonCertDelete.TabIndex = 9;
+			this.buttonCertDelete.UseVisualStyleBackColor = true;
+			this.buttonCertDelete.Click += new System.EventHandler(this.buttonCertDelete_Click);
+			// 
+			// listViewCertificate
+			// 
+			this.listViewCertificate.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2,
+            this.columnHeader3,
+            this.columnHeader4,
+            this.columnHeader5});
+			this.listViewCertificate.FullRowSelect = true;
+			this.listViewCertificate.HideSelection = false;
+			this.listViewCertificate.Location = new System.Drawing.Point(6, 6);
+			this.listViewCertificate.MultiSelect = false;
+			this.listViewCertificate.Name = "listViewCertificate";
+			this.listViewCertificate.Size = new System.Drawing.Size(489, 84);
+			this.listViewCertificate.TabIndex = 1;
+			this.listViewCertificate.UseCompatibleStateImageBehavior = false;
+			this.listViewCertificate.View = System.Windows.Forms.View.Details;
+			// 
+			// columnHeader1
+			// 
+			this.columnHeader1.Text = "Id";
+			this.columnHeader1.Width = 26;
+			// 
+			// columnHeader2
+			// 
+			this.columnHeader2.Text = "Zertifikat";
+			this.columnHeader2.Width = 106;
+			// 
+			// columnHeader3
+			// 
+			this.columnHeader3.Text = "Schlüssel";
+			this.columnHeader3.Width = 107;
+			// 
+			// columnHeader4
+			// 
+			this.columnHeader4.Text = "Server";
+			this.columnHeader4.Width = 133;
+			// 
+			// columnHeader5
+			// 
+			this.columnHeader5.Text = "Port";
+			// 
 			// menuStrip1
 			// 
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -345,125 +463,9 @@
 			this.labelHelp.Text = "Help";
 			this.labelHelp.Visible = false;
 			// 
-			// listViewCertificate
+			// openFileDialogCert
 			// 
-			this.listViewCertificate.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2,
-            this.columnHeader3,
-            this.columnHeader4,
-            this.columnHeader5});
-			this.listViewCertificate.FullRowSelect = true;
-			this.listViewCertificate.HideSelection = false;
-			this.listViewCertificate.Location = new System.Drawing.Point(6, 6);
-			this.listViewCertificate.MultiSelect = false;
-			this.listViewCertificate.Name = "listViewCertificate";
-			this.listViewCertificate.Size = new System.Drawing.Size(489, 84);
-			this.listViewCertificate.TabIndex = 1;
-			this.listViewCertificate.UseCompatibleStateImageBehavior = false;
-			this.listViewCertificate.View = System.Windows.Forms.View.Details;
-			// 
-			// columnHeader1
-			// 
-			this.columnHeader1.Text = "Id";
-			this.columnHeader1.Width = 26;
-			// 
-			// columnHeader2
-			// 
-			this.columnHeader2.Text = "Zertifikat";
-			this.columnHeader2.Width = 106;
-			// 
-			// columnHeader3
-			// 
-			this.columnHeader3.Text = "Schlüssel";
-			this.columnHeader3.Width = 107;
-			// 
-			// columnHeader4
-			// 
-			this.columnHeader4.Text = "Server";
-			this.columnHeader4.Width = 133;
-			// 
-			// columnHeader5
-			// 
-			this.columnHeader5.Text = "Port";
-			// 
-			// textBoxCertPort
-			// 
-			this.textBoxCertPort.ForeColor = System.Drawing.SystemColors.WindowFrame;
-			this.textBoxCertPort.Location = new System.Drawing.Point(389, 97);
-			this.textBoxCertPort.Name = "textBoxCertPort";
-			this.textBoxCertPort.Size = new System.Drawing.Size(34, 20);
-			this.textBoxCertPort.TabIndex = 15;
-			this.textBoxCertPort.Text = "Port";
-			// 
-			// buttonNewCert
-			// 
-			this.buttonNewCert.Image = global::Toolbox.ResourceImage.Action;
-			this.buttonNewCert.Location = new System.Drawing.Point(6, 95);
-			this.buttonNewCert.Name = "buttonNewCert";
-			this.buttonNewCert.Size = new System.Drawing.Size(30, 23);
-			this.buttonNewCert.TabIndex = 14;
-			this.buttonNewCert.UseVisualStyleBackColor = true;
-			// 
-			// textBoxCertServer
-			// 
-			this.textBoxCertServer.ForeColor = System.Drawing.SystemColors.WindowFrame;
-			this.textBoxCertServer.Location = new System.Drawing.Point(254, 97);
-			this.textBoxCertServer.Name = "textBoxCertServer";
-			this.textBoxCertServer.Size = new System.Drawing.Size(129, 20);
-			this.textBoxCertServer.TabIndex = 13;
-			this.textBoxCertServer.Text = "Server";
-			// 
-			// textBoxPhassphrase
-			// 
-			this.textBoxPhassphrase.ForeColor = System.Drawing.SystemColors.WindowFrame;
-			this.textBoxPhassphrase.Location = new System.Drawing.Point(148, 97);
-			this.textBoxPhassphrase.Name = "textBoxPhassphrase";
-			this.textBoxPhassphrase.PasswordChar = '*';
-			this.textBoxPhassphrase.Size = new System.Drawing.Size(100, 20);
-			this.textBoxPhassphrase.TabIndex = 12;
-			this.textBoxPhassphrase.Text = "Passwort";
-			// 
-			// buttonCertAdd
-			// 
-			this.buttonCertAdd.Image = global::Toolbox.ResourceImage.Add;
-			this.buttonCertAdd.Location = new System.Drawing.Point(429, 95);
-			this.buttonCertAdd.Name = "buttonCertAdd";
-			this.buttonCertAdd.Size = new System.Drawing.Size(30, 23);
-			this.buttonCertAdd.TabIndex = 10;
-			this.buttonCertAdd.UseVisualStyleBackColor = true;
-			// 
-			// buttonCertDelete
-			// 
-			this.buttonCertDelete.Image = global::Toolbox.ResourceImage.Delete;
-			this.buttonCertDelete.Location = new System.Drawing.Point(465, 95);
-			this.buttonCertDelete.Name = "buttonCertDelete";
-			this.buttonCertDelete.Size = new System.Drawing.Size(30, 23);
-			this.buttonCertDelete.TabIndex = 9;
-			this.buttonCertDelete.UseVisualStyleBackColor = true;
-			// 
-			// fileSystemWatcher1
-			// 
-			this.fileSystemWatcher1.EnableRaisingEvents = true;
-			this.fileSystemWatcher1.SynchronizingObject = this;
-			// 
-			// buttonCert
-			// 
-			this.buttonCert.Image = global::Toolbox.ResourceImage.Certificate;
-			this.buttonCert.Location = new System.Drawing.Point(107, 95);
-			this.buttonCert.Name = "buttonCert";
-			this.buttonCert.Size = new System.Drawing.Size(35, 23);
-			this.buttonCert.TabIndex = 16;
-			this.buttonCert.UseVisualStyleBackColor = true;
-			// 
-			// textBoxCert
-			// 
-			this.textBoxCert.ForeColor = System.Drawing.SystemColors.WindowFrame;
-			this.textBoxCert.Location = new System.Drawing.Point(42, 97);
-			this.textBoxCert.Name = "textBoxCert";
-			this.textBoxCert.Size = new System.Drawing.Size(59, 20);
-			this.textBoxCert.TabIndex = 17;
-			this.textBoxCert.Text = "Port";
+			this.openFileDialogCert.FileName = "openFileDialogCert";
 			// 
 			// FormLinuxAccount
 			// 
@@ -486,7 +488,6 @@
 			this.tabPageCert.PerformLayout();
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -536,6 +537,6 @@
 		private System.Windows.Forms.ColumnHeader columnHeader5;
 		private System.Windows.Forms.TextBox textBoxCert;
 		private System.Windows.Forms.Button buttonCert;
-		private System.IO.FileSystemWatcher fileSystemWatcher1;
+		private System.Windows.Forms.OpenFileDialog openFileDialogCert;
 	}
 }

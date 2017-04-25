@@ -270,4 +270,13 @@
   <data name="MsgSameData" xml:space="preserve">
     <value>Daten entsprechen den Standardeingabedaten, wirklich fortsetzten?</value>
   </data>
+  <data name="CertificateDirPath" xml:space="preserve">
+    <value>Certificate/</value>
+  </data>
+  <data name="CertificateFileFilter" xml:space="preserve">
+    <value>Zertifikate|*.crt;*.pem;*.cert;*.ssh|Alle Dateien (*.*)|*.*</value>
+  </data>
+  <data name="ValueCertificate" xml:space="preserve">
+    <value>Zertifikat</value>
+  </data>
 </root>

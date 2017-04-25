@@ -59,13 +59,16 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
+#include "system.h"
+
+void i2c_init(void);
 void i2c_start(void);
 void i2c_stop(void);
 void i2c_transmit(unsigned char data);
 unsigned char i2c_receive(unsigned char acknowledge);
 
 unsigned char i2c_eeprom_write_byte(unsigned char deviceaddr, unsigned char wordaddr, unsigned char data);
-unsigned char i2c_eeprom_write_block(unsigned char deviceaddr, unsigned char wordaddr, unsigned char data[], unsigned char blocksize);
+unsigned char i2c_eeprom_write_block(unsigned char deviceaddr, unsigned char wordaddr, unsigned char *data, unsigned char blocksize);
 void i2c_eeprom_read_byte(unsigned char deviceaddr, unsigned char wordaddr, unsigned char *data);
 void i2c_eeprom_read_block(unsigned char deviceaddr, unsigned char wordaddr, unsigned char *data, unsigned char blocksize);
 

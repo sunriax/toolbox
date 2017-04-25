@@ -151,6 +151,24 @@ namespace Toolbox.Language {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Certificate/ ähnelt.
+        /// </summary>
+        public static string CertificateDirPath {
+            get {
+                return ResourceManager.GetString("CertificateDirPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Zertifikate|*.crt;*.pem;*.cert;*.ssh|Alle Dateien (*.*)|*.* ähnelt.
+        /// </summary>
+        public static string CertificateFileFilter {
+            get {
+                return ResourceManager.GetString("CertificateFileFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Verbindung hergestellt ähnelt.
         /// </summary>
         public static string ConnectionEstablished {
@@ -471,6 +489,15 @@ namespace Toolbox.Language {
         public static string Title {
             get {
                 return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Zertifikat ähnelt.
+        /// </summary>
+        public static string ValueCertificate {
+            get {
+                return ResourceManager.GetString("ValueCertificate", resourceCulture);
             }
         }
         

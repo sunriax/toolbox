@@ -36,6 +36,9 @@ void system_init()
 	uart_setstring(buffer, 1);	// Initialisierung auf Konsole ausgeben
 	load(&OUTPUT, 1, 250);		// Ladebalken erhöhen
 
+	// I2C Initialisierung
+	i2c_init();					// I2C Bus Initialisieren
+
 	// LCD Initialisierung
 	lcd_init();					// LCD Initialisierung
 	load(&OUTPUT, 1, 250);		// Ladebalken erhöhen

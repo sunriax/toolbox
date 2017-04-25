@@ -49,7 +49,6 @@ void promer(unsigned char buffer[])
 				
 							uart_getarg(arg);								// Warten bis Argument über UART empfangen
 							addr = arg[0];									// Aus empfangenem Argument Adresse extrahieren
-							
 							loop++;											// Loop Variable inkrementieren
 						}
 						else
@@ -73,7 +72,6 @@ void promer(unsigned char buffer[])
 				
 							uart_getarg(arg);								// Warten bis Argument über UART empfangen
 							word = arg[0];									// Aus empfangenem Argument Wortadresse extrahieren
-				
 							loop++;											// Loop Variable inkrementieren
 						}
 						else
@@ -120,6 +118,12 @@ void promer(unsigned char buffer[])
 						uart_getarg(arg);									// {.} Größe (max. 1 Byte empfangen 0-255)
 			
 						datasize = arg[0];									// Datengröße abspeichern
+						
+						// !!!!!!!!!!!!!!!!!!!!!!!!!!
+						datasize = 7;	// Für Testzwecke
+						addr = 0xA0;
+						word = 0x00;
+						// !!!!!!!!!!!!!!!!!!!!!!!!!!
 			
 						// Überprüfen ob Datengröße > 0
 						if(datasize > 0)
@@ -139,7 +143,9 @@ void promer(unsigned char buffer[])
 								else
 								{
 									i2c_eeprom_read_block(addr, word, &data[0], datasize);		// Block aus EEPROM lesen
-									uart_setstring(&data[0], 1);								// Block über UART senden
+									
+									for(unsigned char i=0; i < datasize; i++)
+										uart_setchar(data[i]);									// Block über UART senden
 								}
 								
 								rom_block(eeDONE, mem, sizeof(eeDONE));			// [DONE] Kommando von EEPROM in lokalen Speicher laden
@@ -164,7 +170,6 @@ void promer(unsigned char buffer[])
 									
 									fail = i2c_eeprom_write_block(addr, word, &data[0], datasize);
 								}
-									i2c_eeprom_read_block(addr, word, &data[0], datasize);
 								
 								if(fail == 0xFF)
 									rom_block(eeDONE, mem, sizeof(eeDONE));		// [DONE] Kommando von EEPROM in lokalen Speicher laden
@@ -192,6 +197,9 @@ void promer(unsigned char buffer[])
 						}
 						
 						// Rücksetzten der Variablen
+						for(unsigned i=0; i < sizeof(unsigned char); i++)
+							data[i] = 0x00;
+						
 						loop = 0;
 						addr = 0;
 						word = 0;
@@ -211,6 +219,10 @@ void promer(unsigned char buffer[])
 							
 							loop = 0;									// Loop Variable auf 0
 							loop++;										// Loop Variable inkrementieren
+							
+							// !!!!!!!!!!!!!!!!!!!!!!!!!!
+							loop = 3;	// Für Testzwecke
+							// !!!!!!!!!!!!!!!!!!!!!!!!!!
 						}
 						// Falsches kommando empfangen
 						else
