@@ -133,7 +133,7 @@ namespace NetworkLib.Language {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die ToolboxLib ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die NetworkLib ähnelt.
         /// </summary>
         internal static string ExceptionClass {
             get {

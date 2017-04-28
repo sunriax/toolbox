@@ -1,0 +1,7 @@
+C:\Users\local\Documents\GitHub\toolbox\Toolbox\ToolboxLib\bin\Debug\ToolboxLib.dll
+C:\Users\local\Documents\GitHub\toolbox\Toolbox\ToolboxLib\bin\Debug\ToolboxLib.pdb
+C:\Users\local\Documents\GitHub\toolbox\Toolbox\ToolboxLib\obj\Debug\ToolboxLib.csprojResolveAssemblyReference.cache
+C:\Users\local\Documents\GitHub\toolbox\Toolbox\ToolboxLib\obj\Debug\ToolboxLib.dll
+C:\Users\local\Documents\GitHub\toolbox\Toolbox\ToolboxLib\obj\Debug\ToolboxLib.pdb
+C:\Users\local\Documents\GitHub\toolbox\Toolbox\ToolboxLib\obj\Debug\ToolboxLib.ResourceText.resources
+C:\Users\local\Documents\GitHub\toolbox\Toolbox\ToolboxLib\obj\Debug\ToolboxLib.csproj.GenerateResource.Cache

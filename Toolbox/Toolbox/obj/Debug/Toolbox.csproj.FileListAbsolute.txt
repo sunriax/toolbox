@@ -94,3 +94,6 @@ C:\Users\local\Documents\GitHub\toolbox\Toolbox\Toolbox\obj\Debug\Toolbox.Resour
 C:\Users\local\Documents\GitHub\toolbox\Toolbox\Toolbox\obj\Debug\Toolbox.ResourceText.de-AT.resources
 C:\Users\local\Documents\GitHub\toolbox\Toolbox\Toolbox\obj\Debug\Toolbox.csproj.GenerateResource.Cache
 C:\Users\local\Documents\GitHub\toolbox\Toolbox\Toolbox\obj\Debug\de-AT\Toolbox.resources.dll
+C:\Users\local\Documents\GitHub\toolbox\Toolbox\Toolbox\bin\Debug\ToolboxLib.dll
+C:\Users\local\Documents\GitHub\toolbox\Toolbox\Toolbox\bin\Debug\ToolboxLib.pdb
+C:\Users\local\Documents\GitHub\toolbox\Toolbox\Toolbox\obj\Debug\Toolbox.ResourceFlag.resources

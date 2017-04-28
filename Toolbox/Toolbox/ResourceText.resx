@@ -279,4 +279,28 @@
   <data name="ValueCertificate" xml:space="preserve">
     <value>Zertifikat</value>
   </data>
+  <data name="Information" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="keyLanguage" xml:space="preserve">
+    <value>language</value>
+  </data>
+  <data name="keyNone" xml:space="preserve">
+    <value>none</value>
+  </data>
+  <data name="MsgLanguageNotFound" xml:space="preserve">
+    <value>Eingestelltes Sprachpaket konnte nicht gealden werden!</value>
+  </data>
+  <data name="MsgLanguageSetup" xml:space="preserve">
+    <value>Sprache erfolgreich eingestellt, zum übernehmen ist ein Neustart der Toolbox erforderlich!</value>
+  </data>
+  <data name="SpeakdeAT" xml:space="preserve">
+    <value>de-AT</value>
+  </data>
+  <data name="SpeakenGB" xml:space="preserve">
+    <value>en-GB</value>
+  </data>
+  <data name="SpeakesES" xml:space="preserve">
+    <value>es-ES</value>
+  </data>
 </root>

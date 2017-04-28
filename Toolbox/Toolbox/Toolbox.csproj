@@ -91,6 +91,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResourceFlag.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResourceFlag.resx</DependentUpon>
+    </Compile>
     <Compile Include="ResourceImage.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -138,6 +143,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ResourceFlag.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResourceFlag.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="ResourceImage.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ResourceImage.Designer.cs</LastGenOutput>
@@ -426,6 +435,10 @@
       <Project>{e9f1d76e-007f-411e-a21a-44b4c4857a9e}</Project>
       <Name>NetworkLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ToolboxLib\ToolboxLib.csproj">
+      <Project>{5a056c23-9b40-4cf1-a9ea-9ea72eaf3bf2}</Project>
+      <Name>ToolboxLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VersionLib\VersionLib.csproj">
       <Project>{f8c843cd-e9c1-4ced-8225-a4ca04c42f3e}</Project>
       <Name>VersionLib</Name>
@@ -529,6 +542,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
+    <None Include="Resources\es_ES.png" />
+    <None Include="Resources\de_AT.png" />
+    <None Include="Resources\en_GB.png" />
+    <None Include="Resources\esES.png" />
+    <None Include="Resources\deAT.png" />
+    <None Include="Resources\enGB.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Certificate\" />

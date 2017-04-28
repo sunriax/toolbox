@@ -14,38 +14,83 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Configuration;
 using Toolbox.Language;
+using ToolboxLib;
 using NetworkLib;
 using VersionLib;
-using System.Xml;
 
 namespace Toolbox
 {
 	public partial class FormMain : Form
 	{
-		// Konfigurationsspeicher erzeugen
-		// Configuration appconfig = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
-		// system.AppSettings.Settings.Remove("AllowResolution");
-		// system.AppSettings.Settings.Add("AllowResolution", returnResolution);
-		// system.Save(ConfigurationSaveMode.Modified);
-
 		// Array Liste zum Speichern der UART Porteinstellungen erzeugen
 		List<string[]> _SystemPorts = new List<string[]>();
 
+		// Toolboxressource erzeugen
+		private Ressource _SystemApp = new Ressource(Application.ExecutablePath);
+
 		// Versionskontrolle erzeugen
 		private Library _SystemVersion = new Library();
+
+		// Verschlüsselungstool erzeugen
+		private Chiper _SystemSecure = new Chiper();
 
 		// SSH Array und Verindungsvariable
 		Dictionary<int, Dictionary<string, string>> _Account = new Dictionary<int, Dictionary<string, string>>();
 		private SSH _SSHToolbox = null;
 
+		// Systemvariablen
+		private bool _restart = false;
+
 		// Programmstart (Fensteraufruf)
 		public FormMain()
 		{
-			// Sprache Initialisieren
-			//Thread.CurrentThread.CurrentCulture = new CultureInfo("de-AT");
-			//Thread.CurrentThread.CurrentUICulture = new CultureInfo("de-AT");
+			#region Language
+			//	+--------------------------------------------------+
+			//	|+++	Sprache Initialisieren					+++|
+			//	+--------------------------------------------------+
+			try
+			{
+				// Überprüfen ob Systemsprache verwendet werden soll
+				if (ConfigurationManager.AppSettings[ResourceText.keyLanguage] == ResourceText.keyNone)
+				{
+					// Sprache von System ermitteln
+					Thread.CurrentThread.CurrentCulture = new CultureInfo(CultureInfo.InstalledUICulture.ToString());
+					Thread.CurrentThread.CurrentUICulture = new CultureInfo(CultureInfo.InstalledUICulture.ToString());
+				}
+				else
+				{
+					// Sprache aus App.config laden
+					Thread.CurrentThread.CurrentCulture = new CultureInfo(_SystemApp.GetValue(ResourceText.keyLanguage));
+					Thread.CurrentThread.CurrentUICulture = new CultureInfo(_SystemApp.GetValue(ResourceText.keyLanguage));
+				}
+			}
+			catch
+			{
+				MessageBox.Show(ResourceText.MsgLanguageNotFound, ResourceText.Information, MessageBoxButtons.OK ,MessageBoxIcon.Information);
+			}
+			//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+			#endregion
+
+			#region Language
+			//	+--------------------------------------------------+
+			//	|+++	Standard accountdaten laden				+++|
+			//	+--------------------------------------------------+
+			_Account[0] = new Dictionary<string, string>();
+
+			// Standardbenutzeraccount aus Appconfig Initialiseren
+			_Account[0].Add(ResourceText.keyMode,		_SystemApp.GetValue(ResourceText.keyMode));
+			_Account[0].Add(ResourceText.keyUsername,	_SystemApp.GetValue(ResourceText.keyUsername));
+			_Account[0].Add(ResourceText.keyPassword,	_SystemApp.GetValue(ResourceText.keyPassword));
+			_Account[0].Add(ResourceText.keyServer,		_SystemApp.GetValue(ResourceText.keyServer));
+			_Account[0].Add(ResourceText.keyPort,		_SystemApp.GetValue(ResourceText.keyPort));
+			//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+			#endregion
 
 			InitializeComponent();
+
+			string encrypt = _SystemSecure.Encrypt("Blablabla12345", "asasdkewez2i371o3fdhx");
+			string decrypt = _SystemSecure.Decrypt(encrypt ,"asasdkewez2i371o3fdhx");
+
 
 			// Prüfen ob Debugmodus aktiven
 #if (DEBUG)
@@ -54,23 +99,6 @@ namespace Toolbox
 			// Debug Modus aktiviert in Main Frame anzeigen
 			groupBoxDebug.Visible = true;
 #endif
-
-			// SSH Standard Benutzername, Passwort zum Key,Value Array hinzufügen
-
-			_Account[0] = new Dictionary<string, string>();
-
-			// _Account[0].Add(ResourceText.keyMode, ResourceText.AuthModePWD);
-			// _Account[0].Add(ResourceText.keyUsername, ResourceText.AuthUsername);
-			// _Account[0].Add(ResourceText.keyPassword, ResourceText.AuthPassword);
-			// _Account[0].Add(ResourceText.keyServer, ResourceText.AuthServer);
-			// _Account[0].Add(ResourceText.keyPort, ResourceText.AuthPort);
-
-			// Standardbenutzeraccount aus Appconfig Initialiseren
-			_Account[0].Add(ResourceText.keyMode,		ConfigurationManager.AppSettings[ResourceText.keyMode]);
-			_Account[0].Add(ResourceText.keyUsername,	ConfigurationManager.AppSettings[ResourceText.keyUsername]);
-			_Account[0].Add(ResourceText.keyPassword,	ConfigurationManager.AppSettings[ResourceText.keyPassword]);
-			_Account[0].Add(ResourceText.keyServer,		ConfigurationManager.AppSettings[ResourceText.keyServer]);
-			_Account[0].Add(ResourceText.keyPort,		ConfigurationManager.AppSettings[ResourceText.keyPort]);
 
 			// Version auf Mainframe einstellen
 			labelVersionNr.Text = ResourceText.ProgramVersion;
@@ -224,7 +252,6 @@ namespace Toolbox
 			// SSH Funktionen in Toolstrip aktivieren
 			controlToolStripMenuItem.Enabled = true;    // Menüband -> Toolbox -> Network -> Control Freigeben
 			sshToolStripMenuItem.Enabled = true;        // Menüband -> Toolbox -> Network -> SSH Freigeben
-
 		}
 
 		private void PortToolStripMenuItem_Click(object sender, EventArgs e)
@@ -252,28 +279,80 @@ namespace Toolbox
 
 		private void deutschAustriaToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			// Menüband -> Einstellung -> Sprache -> Deutsch
+			// Menüband -> Einstellung -> Sprache -> Deutsch/Österreich
+			// Eingestellte Sprache in der App.config abspeichern
+			_SystemApp.Create(ResourceText.keyLanguage, ResourceText.SpeakdeAT);
+
+			// Ausgabe das Daten erfolgreich gespeichert
+			DialogResult Message = MessageBox.Show(ResourceText.MsgLanguageSetup, ResourceText.Information, MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+
+			// Überprüfen ob Neustart OK
+			if(Message == DialogResult.OK)
+			{
+				_restart = true;        // Restart abfrage deaktivieren
+				Application.Restart();  // Applikation neu starten
+			}
 		}
 
 		private void englishGreatBritanToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			// Menüband -> Einstellung -> Sprache -> English
+			// Eingestellte Sprache in der App.config abspeichern
+			_SystemApp.Create(ResourceText.keyLanguage, ResourceText.SpeakenGB);
 
+			// Ausgabe das Daten erfolgreich gespeichert
+			DialogResult Message = MessageBox.Show(ResourceText.MsgLanguageSetup, ResourceText.Information, MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+
+			// Überprüfen ob Neustart OK
+			if (Message == DialogResult.OK)
+			{
+				_restart = true;        // Restart abfrage deaktivieren
+				Application.Restart();  // Applikation neu starten
+			}
 		}
 
 		private void espanolSpainToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			// Menüband -> Einstellung -> Sprache -> Espanol
+			// Eingestellte Sprache in der App.config abspeichern
+			_SystemApp.Create(ResourceText.keyLanguage, ResourceText.SpeakesES);
 
+			// Ausgabe das Daten erfolgreich gespeichert
+			DialogResult Message = MessageBox.Show(ResourceText.MsgLanguageSetup, ResourceText.Information, MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+
+			// Überprüfen ob Neustart OK
+			if (Message == DialogResult.OK)
+			{
+				_restart = true;        // Restart abfrage deaktivieren
+				Application.Restart();  // Applikation neu starten
+			}
+		}
+
+		private void SystemSpeakToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			// Menüband -> Einstellung -> Sprache -> Systemsprache
+			// System Sprache in der App.config abspeichern
+			_SystemApp.Create(ResourceText.keyLanguage, ResourceText.keyNone);
+
+			// Ausgabe das Daten erfolgreich gespeichert
+			DialogResult Message = MessageBox.Show(ResourceText.MsgLanguageSetup, ResourceText.Information, MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+
+			// Überprüfen ob Neustart OK
+			if (Message == DialogResult.OK)
+			{
+				_restart = true;		// Restart abfrage deaktivieren
+				Application.Restart();  // Applikation neu starten
+			}
+				
 		}
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		#endregion
-		#endregion
+			#endregion
+			#endregion
 
-		#region Hilfe
-		//	+--------------------------------------------------+
-		//	|+++	Menüband - > Hilfe						+++|
-		//	+--------------------------------------------------+
+			#region Hilfe
+			//	+--------------------------------------------------+
+			//	|+++	Menüband - > Hilfe						+++|
+			//	+--------------------------------------------------+
 
 		private void GithubToolStripMenuItem_Click(object sender, EventArgs e)
 		{
@@ -312,6 +391,9 @@ namespace Toolbox
 		//	+--------------------------------------------------+
 		private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
 		{
+			if (_restart == true)
+				return;
+
 			// Abfragen ob Programm wirklich geschlossen werden soll
 			DialogResult result = MessageBox.Show(ResourceText.MsgProgramExit, ResourceText.Hint, MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
 

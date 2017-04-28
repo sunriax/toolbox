@@ -34,6 +34,12 @@
 			this.FileLoadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.QuitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.serverToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.dateiHochladenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.verzeichnisHochladenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.neuStartenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.herunterfahrenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.hilfeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.VersionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.HelpSupportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,29 +48,24 @@
 			this.progressBarExecute = new System.Windows.Forms.ProgressBar();
 			this.comboBox1 = new System.Windows.Forms.ComboBox();
 			this.groupBoxApache = new System.Windows.Forms.GroupBox();
-			this.labelWebStatus = new System.Windows.Forms.Label();
-			this.pictureBoxWebStatus = new System.Windows.Forms.PictureBox();
-			this.listBoxReturn = new System.Windows.Forms.ListBox();
-			this.buttonWebExecute = new System.Windows.Forms.Button();
-			this.checkBoxWebRestart = new System.Windows.Forms.CheckBox();
-			this.checkBoxWebStart = new System.Windows.Forms.CheckBox();
-			this.checkBoxWebStop = new System.Windows.Forms.CheckBox();
 			this.linkLabelWebserver = new System.Windows.Forms.LinkLabel();
+			this.checkBoxWebStop = new System.Windows.Forms.CheckBox();
+			this.checkBoxWebStart = new System.Windows.Forms.CheckBox();
+			this.checkBoxWebRestart = new System.Windows.Forms.CheckBox();
+			this.buttonWebExecute = new System.Windows.Forms.Button();
+			this.pictureBoxWebStatus = new System.Windows.Forms.PictureBox();
+			this.labelWebStatus = new System.Windows.Forms.Label();
+			this.listBoxReturn = new System.Windows.Forms.ListBox();
 			this.groupBoxCommand = new System.Windows.Forms.GroupBox();
 			this.groupBoxStatus = new System.Windows.Forms.GroupBox();
 			this.groupBoxSetting = new System.Windows.Forms.GroupBox();
-			this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-			this.checkBoxAutorefresh = new System.Windows.Forms.CheckBox();
-			this.labelRefreshUnit = new System.Windows.Forms.Label();
+			this.checkBoxSSHrestart = new System.Windows.Forms.CheckBox();
 			this.checkBoxAutoreconnect = new System.Windows.Forms.CheckBox();
+			this.labelRefreshUnit = new System.Windows.Forms.Label();
+			this.checkBoxAutorefresh = new System.Windows.Forms.CheckBox();
+			this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
 			this.groupBoxUpload = new System.Windows.Forms.GroupBox();
 			this.labelPath = new System.Windows.Forms.Label();
-			this.serverToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.dateiHochladenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-			this.neuStartenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.herunterfahrenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.verzeichnisHochladenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.groupBoxFTPserver = new System.Windows.Forms.GroupBox();
 			this.linkLabelFTPserver = new System.Windows.Forms.LinkLabel();
 			this.checkBoxFTPstop = new System.Windows.Forms.CheckBox();
@@ -73,16 +74,15 @@
 			this.buttonFTPExecute = new System.Windows.Forms.Button();
 			this.pictureBoxFTPStatus = new System.Windows.Forms.PictureBox();
 			this.labelFTPStatus = new System.Windows.Forms.Label();
-			this.checkBoxSSHrestart = new System.Windows.Forms.CheckBox();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.labelBootImage = new System.Windows.Forms.Label();
-			this.comboBox2 = new System.Windows.Forms.ComboBox();
-			this.labelBootWireless = new System.Windows.Forms.Label();
-			this.textBox1 = new System.Windows.Forms.TextBox();
-			this.buttonBootSearch = new System.Windows.Forms.Button();
-			this.textBox2 = new System.Windows.Forms.TextBox();
-			this.buttonBootProgram = new System.Windows.Forms.Button();
 			this.labelBootInfo = new System.Windows.Forms.Label();
+			this.buttonBootProgram = new System.Windows.Forms.Button();
+			this.textBox2 = new System.Windows.Forms.TextBox();
+			this.buttonBootSearch = new System.Windows.Forms.Button();
+			this.textBox1 = new System.Windows.Forms.TextBox();
+			this.labelBootWireless = new System.Windows.Forms.Label();
+			this.comboBox2 = new System.Windows.Forms.ComboBox();
+			this.labelBootImage = new System.Windows.Forms.Label();
 			this.menuStrip1.SuspendLayout();
 			this.groupBoxApache.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxWebStatus)).BeginInit();
@@ -124,31 +124,80 @@
 			// 
 			this.FileSaveToolStripMenuItem.Image = global::Toolbox.ResourceImage.Save;
 			this.FileSaveToolStripMenuItem.Name = "FileSaveToolStripMenuItem";
-			this.FileSaveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.FileSaveToolStripMenuItem.Text = "Datei speicher";
+			this.FileSaveToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+			this.FileSaveToolStripMenuItem.Text = "Datei speichern";
 			this.FileSaveToolStripMenuItem.Click += new System.EventHandler(this.FileSaveToolStripMenuItem_Click);
 			// 
 			// FileLoadToolStripMenuItem
 			// 
-			this.FileLoadToolStripMenuItem.Enabled = false;
 			this.FileLoadToolStripMenuItem.Image = global::Toolbox.ResourceImage.Folder;
 			this.FileLoadToolStripMenuItem.Name = "FileLoadToolStripMenuItem";
-			this.FileLoadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.FileLoadToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
 			this.FileLoadToolStripMenuItem.Text = "Datei öffnen";
 			this.FileLoadToolStripMenuItem.Click += new System.EventHandler(this.FileLoadToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+			this.toolStripSeparator1.Size = new System.Drawing.Size(152, 6);
 			// 
 			// QuitToolStripMenuItem
 			// 
 			this.QuitToolStripMenuItem.Image = global::Toolbox.ResourceImage.Close;
 			this.QuitToolStripMenuItem.Name = "QuitToolStripMenuItem";
-			this.QuitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.QuitToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
 			this.QuitToolStripMenuItem.Text = "Beenden";
 			this.QuitToolStripMenuItem.Click += new System.EventHandler(this.QuitToolStripMenuItem_Click);
+			// 
+			// serverToolStripMenuItem
+			// 
+			this.serverToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.dateiHochladenToolStripMenuItem,
+            this.verzeichnisHochladenToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.neuStartenToolStripMenuItem,
+            this.herunterfahrenToolStripMenuItem});
+			this.serverToolStripMenuItem.Image = global::Toolbox.ResourceImage.Server;
+			this.serverToolStripMenuItem.Name = "serverToolStripMenuItem";
+			this.serverToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
+			this.serverToolStripMenuItem.Text = "Server";
+			// 
+			// dateiHochladenToolStripMenuItem
+			// 
+			this.dateiHochladenToolStripMenuItem.Enabled = false;
+			this.dateiHochladenToolStripMenuItem.Image = global::Toolbox.ResourceImage.Toggle;
+			this.dateiHochladenToolStripMenuItem.Name = "dateiHochladenToolStripMenuItem";
+			this.dateiHochladenToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+			this.dateiHochladenToolStripMenuItem.Text = "Datei hochladen";
+			// 
+			// verzeichnisHochladenToolStripMenuItem
+			// 
+			this.verzeichnisHochladenToolStripMenuItem.Enabled = false;
+			this.verzeichnisHochladenToolStripMenuItem.Image = global::Toolbox.ResourceImage.Class;
+			this.verzeichnisHochladenToolStripMenuItem.Name = "verzeichnisHochladenToolStripMenuItem";
+			this.verzeichnisHochladenToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+			this.verzeichnisHochladenToolStripMenuItem.Text = "Verzeichnis hochladen";
+			// 
+			// toolStripSeparator2
+			// 
+			this.toolStripSeparator2.Name = "toolStripSeparator2";
+			this.toolStripSeparator2.Size = new System.Drawing.Size(188, 6);
+			// 
+			// neuStartenToolStripMenuItem
+			// 
+			this.neuStartenToolStripMenuItem.Enabled = false;
+			this.neuStartenToolStripMenuItem.Image = global::Toolbox.ResourceImage.Timer;
+			this.neuStartenToolStripMenuItem.Name = "neuStartenToolStripMenuItem";
+			this.neuStartenToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+			this.neuStartenToolStripMenuItem.Text = "Neu Starten";
+			// 
+			// herunterfahrenToolStripMenuItem
+			// 
+			this.herunterfahrenToolStripMenuItem.Enabled = false;
+			this.herunterfahrenToolStripMenuItem.Image = global::Toolbox.ResourceImage.Delete;
+			this.herunterfahrenToolStripMenuItem.Name = "herunterfahrenToolStripMenuItem";
+			this.herunterfahrenToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+			this.herunterfahrenToolStripMenuItem.Text = "Herunterfahren";
 			// 
 			// hilfeToolStripMenuItem
 			// 
@@ -228,61 +277,15 @@
 			this.groupBoxApache.TabStop = false;
 			this.groupBoxApache.Text = "Webserver";
 			// 
-			// labelWebStatus
+			// linkLabelWebserver
 			// 
-			this.labelWebStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.labelWebStatus.Location = new System.Drawing.Point(6, 20);
-			this.labelWebStatus.Name = "labelWebStatus";
-			this.labelWebStatus.Size = new System.Drawing.Size(51, 14);
-			this.labelWebStatus.TabIndex = 0;
-			this.labelWebStatus.Text = "Status";
-			this.labelWebStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			// 
-			// pictureBoxWebStatus
-			// 
-			this.pictureBoxWebStatus.Location = new System.Drawing.Point(63, 20);
-			this.pictureBoxWebStatus.Name = "pictureBoxWebStatus";
-			this.pictureBoxWebStatus.Size = new System.Drawing.Size(91, 14);
-			this.pictureBoxWebStatus.TabIndex = 1;
-			this.pictureBoxWebStatus.TabStop = false;
-			// 
-			// listBoxReturn
-			// 
-			this.listBoxReturn.BackColor = System.Drawing.SystemColors.Control;
-			this.listBoxReturn.FormattingEnabled = true;
-			this.listBoxReturn.Location = new System.Drawing.Point(6, 46);
-			this.listBoxReturn.Name = "listBoxReturn";
-			this.listBoxReturn.Size = new System.Drawing.Size(200, 69);
-			this.listBoxReturn.TabIndex = 0;
-			// 
-			// buttonWebExecute
-			// 
-			this.buttonWebExecute.Location = new System.Drawing.Point(10, 93);
-			this.buttonWebExecute.Name = "buttonWebExecute";
-			this.buttonWebExecute.Size = new System.Drawing.Size(144, 23);
-			this.buttonWebExecute.TabIndex = 5;
-			this.buttonWebExecute.Text = "Ausführen";
-			this.buttonWebExecute.UseVisualStyleBackColor = true;
-			// 
-			// checkBoxWebRestart
-			// 
-			this.checkBoxWebRestart.AutoSize = true;
-			this.checkBoxWebRestart.Location = new System.Drawing.Point(43, 40);
-			this.checkBoxWebRestart.Name = "checkBoxWebRestart";
-			this.checkBoxWebRestart.Size = new System.Drawing.Size(83, 17);
-			this.checkBoxWebRestart.TabIndex = 6;
-			this.checkBoxWebRestart.Text = "Neu Starten";
-			this.checkBoxWebRestart.UseVisualStyleBackColor = true;
-			// 
-			// checkBoxWebStart
-			// 
-			this.checkBoxWebStart.AutoSize = true;
-			this.checkBoxWebStart.Location = new System.Drawing.Point(43, 55);
-			this.checkBoxWebStart.Name = "checkBoxWebStart";
-			this.checkBoxWebStart.Size = new System.Drawing.Size(60, 17);
-			this.checkBoxWebStart.TabIndex = 7;
-			this.checkBoxWebStart.Text = "Starten";
-			this.checkBoxWebStart.UseVisualStyleBackColor = true;
+			this.linkLabelWebserver.AutoSize = true;
+			this.linkLabelWebserver.Location = new System.Drawing.Point(7, 119);
+			this.linkLabelWebserver.Name = "linkLabelWebserver";
+			this.linkLabelWebserver.Size = new System.Drawing.Size(104, 13);
+			this.linkLabelWebserver.TabIndex = 9;
+			this.linkLabelWebserver.TabStop = true;
+			this.linkLabelWebserver.Text = "Link zum Webserver";
 			// 
 			// checkBoxWebStop
 			// 
@@ -294,15 +297,61 @@
 			this.checkBoxWebStop.Text = "Stoppen";
 			this.checkBoxWebStop.UseVisualStyleBackColor = true;
 			// 
-			// linkLabelWebserver
+			// checkBoxWebStart
 			// 
-			this.linkLabelWebserver.AutoSize = true;
-			this.linkLabelWebserver.Location = new System.Drawing.Point(7, 119);
-			this.linkLabelWebserver.Name = "linkLabelWebserver";
-			this.linkLabelWebserver.Size = new System.Drawing.Size(104, 13);
-			this.linkLabelWebserver.TabIndex = 9;
-			this.linkLabelWebserver.TabStop = true;
-			this.linkLabelWebserver.Text = "Link zum Webserver";
+			this.checkBoxWebStart.AutoSize = true;
+			this.checkBoxWebStart.Location = new System.Drawing.Point(43, 55);
+			this.checkBoxWebStart.Name = "checkBoxWebStart";
+			this.checkBoxWebStart.Size = new System.Drawing.Size(60, 17);
+			this.checkBoxWebStart.TabIndex = 7;
+			this.checkBoxWebStart.Text = "Starten";
+			this.checkBoxWebStart.UseVisualStyleBackColor = true;
+			// 
+			// checkBoxWebRestart
+			// 
+			this.checkBoxWebRestart.AutoSize = true;
+			this.checkBoxWebRestart.Location = new System.Drawing.Point(43, 40);
+			this.checkBoxWebRestart.Name = "checkBoxWebRestart";
+			this.checkBoxWebRestart.Size = new System.Drawing.Size(83, 17);
+			this.checkBoxWebRestart.TabIndex = 6;
+			this.checkBoxWebRestart.Text = "Neu Starten";
+			this.checkBoxWebRestart.UseVisualStyleBackColor = true;
+			// 
+			// buttonWebExecute
+			// 
+			this.buttonWebExecute.Location = new System.Drawing.Point(10, 93);
+			this.buttonWebExecute.Name = "buttonWebExecute";
+			this.buttonWebExecute.Size = new System.Drawing.Size(144, 23);
+			this.buttonWebExecute.TabIndex = 5;
+			this.buttonWebExecute.Text = "Ausführen";
+			this.buttonWebExecute.UseVisualStyleBackColor = true;
+			// 
+			// pictureBoxWebStatus
+			// 
+			this.pictureBoxWebStatus.Location = new System.Drawing.Point(63, 20);
+			this.pictureBoxWebStatus.Name = "pictureBoxWebStatus";
+			this.pictureBoxWebStatus.Size = new System.Drawing.Size(91, 14);
+			this.pictureBoxWebStatus.TabIndex = 1;
+			this.pictureBoxWebStatus.TabStop = false;
+			// 
+			// labelWebStatus
+			// 
+			this.labelWebStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.labelWebStatus.Location = new System.Drawing.Point(6, 20);
+			this.labelWebStatus.Name = "labelWebStatus";
+			this.labelWebStatus.Size = new System.Drawing.Size(51, 14);
+			this.labelWebStatus.TabIndex = 0;
+			this.labelWebStatus.Text = "Status";
+			this.labelWebStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
+			// listBoxReturn
+			// 
+			this.listBoxReturn.BackColor = System.Drawing.SystemColors.Control;
+			this.listBoxReturn.FormattingEnabled = true;
+			this.listBoxReturn.Location = new System.Drawing.Point(6, 46);
+			this.listBoxReturn.Name = "listBoxReturn";
+			this.listBoxReturn.Size = new System.Drawing.Size(200, 69);
+			this.listBoxReturn.TabIndex = 0;
 			// 
 			// groupBoxCommand
 			// 
@@ -339,12 +388,34 @@
 			this.groupBoxSetting.TabStop = false;
 			this.groupBoxSetting.Text = "Einstellungen";
 			// 
-			// numericUpDown1
+			// checkBoxSSHrestart
 			// 
-			this.numericUpDown1.Location = new System.Drawing.Point(103, 19);
-			this.numericUpDown1.Name = "numericUpDown1";
-			this.numericUpDown1.Size = new System.Drawing.Size(55, 20);
-			this.numericUpDown1.TabIndex = 0;
+			this.checkBoxSSHrestart.AutoSize = true;
+			this.checkBoxSSHrestart.Location = new System.Drawing.Point(6, 66);
+			this.checkBoxSSHrestart.Name = "checkBoxSSHrestart";
+			this.checkBoxSSHrestart.Size = new System.Drawing.Size(142, 17);
+			this.checkBoxSSHrestart.TabIndex = 4;
+			this.checkBoxSSHrestart.Text = "SSH Server Neu Starten";
+			this.checkBoxSSHrestart.UseVisualStyleBackColor = true;
+			// 
+			// checkBoxAutoreconnect
+			// 
+			this.checkBoxAutoreconnect.AutoSize = true;
+			this.checkBoxAutoreconnect.Location = new System.Drawing.Point(6, 43);
+			this.checkBoxAutoreconnect.Name = "checkBoxAutoreconnect";
+			this.checkBoxAutoreconnect.Size = new System.Drawing.Size(162, 17);
+			this.checkBoxAutoreconnect.TabIndex = 3;
+			this.checkBoxAutoreconnect.Text = "Verbindung Wiederherstellen";
+			this.checkBoxAutoreconnect.UseVisualStyleBackColor = true;
+			// 
+			// labelRefreshUnit
+			// 
+			this.labelRefreshUnit.AutoSize = true;
+			this.labelRefreshUnit.Location = new System.Drawing.Point(164, 21);
+			this.labelRefreshUnit.Name = "labelRefreshUnit";
+			this.labelRefreshUnit.Size = new System.Drawing.Size(30, 13);
+			this.labelRefreshUnit.TabIndex = 2;
+			this.labelRefreshUnit.Text = "[sec]";
 			// 
 			// checkBoxAutorefresh
 			// 
@@ -356,24 +427,12 @@
 			this.checkBoxAutorefresh.Text = "Autorefresh";
 			this.checkBoxAutorefresh.UseVisualStyleBackColor = true;
 			// 
-			// labelRefreshUnit
+			// numericUpDown1
 			// 
-			this.labelRefreshUnit.AutoSize = true;
-			this.labelRefreshUnit.Location = new System.Drawing.Point(164, 21);
-			this.labelRefreshUnit.Name = "labelRefreshUnit";
-			this.labelRefreshUnit.Size = new System.Drawing.Size(30, 13);
-			this.labelRefreshUnit.TabIndex = 2;
-			this.labelRefreshUnit.Text = "[sec]";
-			// 
-			// checkBoxAutoreconnect
-			// 
-			this.checkBoxAutoreconnect.AutoSize = true;
-			this.checkBoxAutoreconnect.Location = new System.Drawing.Point(6, 43);
-			this.checkBoxAutoreconnect.Name = "checkBoxAutoreconnect";
-			this.checkBoxAutoreconnect.Size = new System.Drawing.Size(162, 17);
-			this.checkBoxAutoreconnect.TabIndex = 3;
-			this.checkBoxAutoreconnect.Text = "Verbindung Wiederherstellen";
-			this.checkBoxAutoreconnect.UseVisualStyleBackColor = true;
+			this.numericUpDown1.Location = new System.Drawing.Point(103, 19);
+			this.numericUpDown1.Name = "numericUpDown1";
+			this.numericUpDown1.Size = new System.Drawing.Size(55, 20);
+			this.numericUpDown1.TabIndex = 0;
 			// 
 			// groupBoxUpload
 			// 
@@ -393,56 +452,6 @@
 			this.labelPath.Size = new System.Drawing.Size(53, 13);
 			this.labelPath.TabIndex = 33;
 			this.labelPath.Text = "Dateipfad";
-			// 
-			// serverToolStripMenuItem
-			// 
-			this.serverToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.dateiHochladenToolStripMenuItem,
-            this.verzeichnisHochladenToolStripMenuItem,
-            this.toolStripSeparator2,
-            this.neuStartenToolStripMenuItem,
-            this.herunterfahrenToolStripMenuItem});
-			this.serverToolStripMenuItem.Image = global::Toolbox.ResourceImage.Server;
-			this.serverToolStripMenuItem.Name = "serverToolStripMenuItem";
-			this.serverToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
-			this.serverToolStripMenuItem.Text = "Server";
-			// 
-			// dateiHochladenToolStripMenuItem
-			// 
-			this.dateiHochladenToolStripMenuItem.Enabled = false;
-			this.dateiHochladenToolStripMenuItem.Image = global::Toolbox.ResourceImage.Toggle;
-			this.dateiHochladenToolStripMenuItem.Name = "dateiHochladenToolStripMenuItem";
-			this.dateiHochladenToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
-			this.dateiHochladenToolStripMenuItem.Text = "Datei hochladen";
-			// 
-			// toolStripSeparator2
-			// 
-			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(188, 6);
-			// 
-			// neuStartenToolStripMenuItem
-			// 
-			this.neuStartenToolStripMenuItem.Enabled = false;
-			this.neuStartenToolStripMenuItem.Image = global::Toolbox.ResourceImage.Timer;
-			this.neuStartenToolStripMenuItem.Name = "neuStartenToolStripMenuItem";
-			this.neuStartenToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
-			this.neuStartenToolStripMenuItem.Text = "Neu Starten";
-			// 
-			// herunterfahrenToolStripMenuItem
-			// 
-			this.herunterfahrenToolStripMenuItem.Enabled = false;
-			this.herunterfahrenToolStripMenuItem.Image = global::Toolbox.ResourceImage.Delete;
-			this.herunterfahrenToolStripMenuItem.Name = "herunterfahrenToolStripMenuItem";
-			this.herunterfahrenToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
-			this.herunterfahrenToolStripMenuItem.Text = "Herunterfahren";
-			// 
-			// verzeichnisHochladenToolStripMenuItem
-			// 
-			this.verzeichnisHochladenToolStripMenuItem.Enabled = false;
-			this.verzeichnisHochladenToolStripMenuItem.Image = global::Toolbox.ResourceImage.Class;
-			this.verzeichnisHochladenToolStripMenuItem.Name = "verzeichnisHochladenToolStripMenuItem";
-			this.verzeichnisHochladenToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
-			this.verzeichnisHochladenToolStripMenuItem.Text = "Verzeichnis hochladen";
 			// 
 			// groupBoxFTPserver
 			// 
@@ -527,16 +536,6 @@
 			this.labelFTPStatus.Text = "Status";
 			this.labelFTPStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
-			// checkBoxSSHrestart
-			// 
-			this.checkBoxSSHrestart.AutoSize = true;
-			this.checkBoxSSHrestart.Location = new System.Drawing.Point(6, 66);
-			this.checkBoxSSHrestart.Name = "checkBoxSSHrestart";
-			this.checkBoxSSHrestart.Size = new System.Drawing.Size(142, 17);
-			this.checkBoxSSHrestart.TabIndex = 4;
-			this.checkBoxSSHrestart.Text = "SSH Server Neu Starten";
-			this.checkBoxSSHrestart.UseVisualStyleBackColor = true;
-			// 
 			// groupBox1
 			// 
 			this.groupBox1.Controls.Add(this.labelBootInfo);
@@ -554,14 +553,55 @@
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Boot Argumente";
 			// 
-			// labelBootImage
+			// labelBootInfo
 			// 
-			this.labelBootImage.AutoSize = true;
-			this.labelBootImage.Location = new System.Drawing.Point(7, 20);
-			this.labelBootImage.Name = "labelBootImage";
-			this.labelBootImage.Size = new System.Drawing.Size(36, 13);
-			this.labelBootImage.TabIndex = 0;
-			this.labelBootImage.Text = "Binary";
+			this.labelBootInfo.AutoSize = true;
+			this.labelBootInfo.Location = new System.Drawing.Point(145, 20);
+			this.labelBootInfo.Name = "labelBootInfo";
+			this.labelBootInfo.Size = new System.Drawing.Size(227, 13);
+			this.labelBootInfo.TabIndex = 7;
+			this.labelBootInfo.Text = "Abhängig von der Speichergröße des Linux uC";
+			// 
+			// buttonBootProgram
+			// 
+			this.buttonBootProgram.Location = new System.Drawing.Point(63, 69);
+			this.buttonBootProgram.Name = "buttonBootProgram";
+			this.buttonBootProgram.Size = new System.Drawing.Size(226, 23);
+			this.buttonBootProgram.TabIndex = 6;
+			this.buttonBootProgram.Text = "Übernehmen";
+			this.buttonBootProgram.UseVisualStyleBackColor = true;
+			// 
+			// textBox2
+			// 
+			this.textBox2.Location = new System.Drawing.Point(148, 43);
+			this.textBox2.Name = "textBox2";
+			this.textBox2.Size = new System.Drawing.Size(141, 20);
+			this.textBox2.TabIndex = 5;
+			// 
+			// buttonBootSearch
+			// 
+			this.buttonBootSearch.Location = new System.Drawing.Point(295, 41);
+			this.buttonBootSearch.Name = "buttonBootSearch";
+			this.buttonBootSearch.Size = new System.Drawing.Size(75, 23);
+			this.buttonBootSearch.TabIndex = 4;
+			this.buttonBootSearch.Text = "Suchen";
+			this.buttonBootSearch.UseVisualStyleBackColor = true;
+			// 
+			// textBox1
+			// 
+			this.textBox1.Location = new System.Drawing.Point(63, 43);
+			this.textBox1.Name = "textBox1";
+			this.textBox1.Size = new System.Drawing.Size(79, 20);
+			this.textBox1.TabIndex = 3;
+			// 
+			// labelBootWireless
+			// 
+			this.labelBootWireless.AutoSize = true;
+			this.labelBootWireless.Location = new System.Drawing.Point(7, 46);
+			this.labelBootWireless.Name = "labelBootWireless";
+			this.labelBootWireless.Size = new System.Drawing.Size(47, 13);
+			this.labelBootWireless.TabIndex = 2;
+			this.labelBootWireless.Text = "Wireless";
 			// 
 			// comboBox2
 			// 
@@ -574,55 +614,14 @@
 			this.comboBox2.Size = new System.Drawing.Size(79, 21);
 			this.comboBox2.TabIndex = 1;
 			// 
-			// labelBootWireless
+			// labelBootImage
 			// 
-			this.labelBootWireless.AutoSize = true;
-			this.labelBootWireless.Location = new System.Drawing.Point(7, 46);
-			this.labelBootWireless.Name = "labelBootWireless";
-			this.labelBootWireless.Size = new System.Drawing.Size(47, 13);
-			this.labelBootWireless.TabIndex = 2;
-			this.labelBootWireless.Text = "Wireless";
-			// 
-			// textBox1
-			// 
-			this.textBox1.Location = new System.Drawing.Point(63, 43);
-			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(79, 20);
-			this.textBox1.TabIndex = 3;
-			// 
-			// buttonBootSearch
-			// 
-			this.buttonBootSearch.Location = new System.Drawing.Point(295, 41);
-			this.buttonBootSearch.Name = "buttonBootSearch";
-			this.buttonBootSearch.Size = new System.Drawing.Size(75, 23);
-			this.buttonBootSearch.TabIndex = 4;
-			this.buttonBootSearch.Text = "Suchen";
-			this.buttonBootSearch.UseVisualStyleBackColor = true;
-			// 
-			// textBox2
-			// 
-			this.textBox2.Location = new System.Drawing.Point(148, 43);
-			this.textBox2.Name = "textBox2";
-			this.textBox2.Size = new System.Drawing.Size(141, 20);
-			this.textBox2.TabIndex = 5;
-			// 
-			// buttonBootProgram
-			// 
-			this.buttonBootProgram.Location = new System.Drawing.Point(63, 69);
-			this.buttonBootProgram.Name = "buttonBootProgram";
-			this.buttonBootProgram.Size = new System.Drawing.Size(226, 23);
-			this.buttonBootProgram.TabIndex = 6;
-			this.buttonBootProgram.Text = "Übernehmen";
-			this.buttonBootProgram.UseVisualStyleBackColor = true;
-			// 
-			// labelBootInfo
-			// 
-			this.labelBootInfo.AutoSize = true;
-			this.labelBootInfo.Location = new System.Drawing.Point(145, 20);
-			this.labelBootInfo.Name = "labelBootInfo";
-			this.labelBootInfo.Size = new System.Drawing.Size(227, 13);
-			this.labelBootInfo.TabIndex = 7;
-			this.labelBootInfo.Text = "Abhängig von der Speichergröße des Linux uC";
+			this.labelBootImage.AutoSize = true;
+			this.labelBootImage.Location = new System.Drawing.Point(7, 20);
+			this.labelBootImage.Name = "labelBootImage";
+			this.labelBootImage.Size = new System.Drawing.Size(36, 13);
+			this.labelBootImage.TabIndex = 0;
+			this.labelBootImage.Text = "Binary";
 			// 
 			// FormControl
 			// 

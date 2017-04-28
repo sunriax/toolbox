@@ -41,6 +41,9 @@
 			this.groupBoxFPGA = new System.Windows.Forms.GroupBox();
 			this.gb_FPGA_Text = new System.Windows.Forms.Label();
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+			this.labelVersionNr = new System.Windows.Forms.Label();
+			this.labelVersion = new System.Windows.Forms.Label();
+			this.pictureBoxLogo = new System.Windows.Forms.PictureBox();
 			this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.FileSaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.FileLoadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -66,6 +69,7 @@
 			this.deutschAustriaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.englishGreatBritanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.espanolSpainToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.SystemSpeakToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.AriettaG25ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.PortToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -75,9 +79,6 @@
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.UpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.GithubToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.labelVersionNr = new System.Windows.Forms.Label();
-			this.labelVersion = new System.Windows.Forms.Label();
-			this.pictureBoxLogo = new System.Windows.Forms.PictureBox();
 			this.groupBoxDebug.SuspendLayout();
 			this.groupBoxLinux.SuspendLayout();
 			this.groupBoxTool.SuspendLayout();
@@ -226,6 +227,38 @@
 			this.menuStrip1.Size = new System.Drawing.Size(624, 24);
 			this.menuStrip1.TabIndex = 20;
 			this.menuStrip1.Text = "menuStrip1";
+			// 
+			// labelVersionNr
+			// 
+			this.labelVersionNr.AutoSize = true;
+			this.labelVersionNr.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+			this.labelVersionNr.Location = new System.Drawing.Point(568, 418);
+			this.labelVersionNr.Name = "labelVersionNr";
+			this.labelVersionNr.Size = new System.Drawing.Size(27, 14);
+			this.labelVersionNr.TabIndex = 22;
+			this.labelVersionNr.Text = "1.0";
+			// 
+			// labelVersion
+			// 
+			this.labelVersion.AutoSize = true;
+			this.labelVersion.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+			this.labelVersion.Location = new System.Drawing.Point(509, 418);
+			this.labelVersion.Name = "labelVersion";
+			this.labelVersion.Size = new System.Drawing.Size(53, 14);
+			this.labelVersion.TabIndex = 21;
+			this.labelVersion.Text = "Version";
+			// 
+			// pictureBoxLogo
+			// 
+			this.pictureBoxLogo.BackgroundImage = global::Toolbox.ResourceImage.elmLogo;
+			this.pictureBoxLogo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+			this.pictureBoxLogo.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+			this.pictureBoxLogo.Location = new System.Drawing.Point(224, 116);
+			this.pictureBoxLogo.Margin = new System.Windows.Forms.Padding(0);
+			this.pictureBoxLogo.Name = "pictureBoxLogo";
+			this.pictureBoxLogo.Size = new System.Drawing.Size(180, 180);
+			this.pictureBoxLogo.TabIndex = 14;
+			this.pictureBoxLogo.TabStop = false;
 			// 
 			// startToolStripMenuItem
 			// 
@@ -426,7 +459,8 @@
 			this.LanguageToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.deutschAustriaToolStripMenuItem,
             this.englishGreatBritanToolStripMenuItem,
-            this.espanolSpainToolStripMenuItem});
+            this.espanolSpainToolStripMenuItem,
+            this.SystemSpeakToolStripMenuItem});
 			this.LanguageToolStripMenuItem.Image = global::Toolbox.ResourceImage.Glasses;
 			this.LanguageToolStripMenuItem.Name = "LanguageToolStripMenuItem";
 			this.LanguageToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
@@ -434,24 +468,34 @@
 			// 
 			// deutschAustriaToolStripMenuItem
 			// 
+			this.deutschAustriaToolStripMenuItem.Image = global::Toolbox.ResourceFlag.de_AT;
 			this.deutschAustriaToolStripMenuItem.Name = "deutschAustriaToolStripMenuItem";
-			this.deutschAustriaToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+			this.deutschAustriaToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
 			this.deutschAustriaToolStripMenuItem.Text = "Deutsch (Österreich)";
 			this.deutschAustriaToolStripMenuItem.Click += new System.EventHandler(this.deutschAustriaToolStripMenuItem_Click);
 			// 
 			// englishGreatBritanToolStripMenuItem
 			// 
+			this.englishGreatBritanToolStripMenuItem.Image = global::Toolbox.ResourceFlag.en_GB;
 			this.englishGreatBritanToolStripMenuItem.Name = "englishGreatBritanToolStripMenuItem";
-			this.englishGreatBritanToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+			this.englishGreatBritanToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
 			this.englishGreatBritanToolStripMenuItem.Text = "English (Great Britan)";
 			this.englishGreatBritanToolStripMenuItem.Click += new System.EventHandler(this.englishGreatBritanToolStripMenuItem_Click);
 			// 
 			// espanolSpainToolStripMenuItem
 			// 
+			this.espanolSpainToolStripMenuItem.Image = global::Toolbox.ResourceFlag.es_ES;
 			this.espanolSpainToolStripMenuItem.Name = "espanolSpainToolStripMenuItem";
-			this.espanolSpainToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+			this.espanolSpainToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
 			this.espanolSpainToolStripMenuItem.Text = "Espanol (Espana)";
 			this.espanolSpainToolStripMenuItem.Click += new System.EventHandler(this.espanolSpainToolStripMenuItem_Click);
+			// 
+			// SystemSpeakToolStripMenuItem
+			// 
+			this.SystemSpeakToolStripMenuItem.Name = "SystemSpeakToolStripMenuItem";
+			this.SystemSpeakToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+			this.SystemSpeakToolStripMenuItem.Text = "Standard (Systemsprache)";
+			this.SystemSpeakToolStripMenuItem.Click += new System.EventHandler(this.SystemSpeakToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator3
 			// 
@@ -490,7 +534,7 @@
 			// VersionToolStripMenuItem
 			// 
 			this.VersionToolStripMenuItem.Name = "VersionToolStripMenuItem";
-			this.VersionToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+			this.VersionToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.VersionToolStripMenuItem.Text = "Version";
 			this.VersionToolStripMenuItem.Click += new System.EventHandler(this.VersionToolStripMenuItem_Click);
 			// 
@@ -498,20 +542,20 @@
 			// 
 			this.HelpSupportToolStripMenuItem.Image = global::Toolbox.ResourceImage.Star;
 			this.HelpSupportToolStripMenuItem.Name = "HelpSupportToolStripMenuItem";
-			this.HelpSupportToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+			this.HelpSupportToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.HelpSupportToolStripMenuItem.Text = "Hilfe/Support";
 			this.HelpSupportToolStripMenuItem.Click += new System.EventHandler(this.HelpSupportToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator2
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(143, 6);
+			this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
 			// 
 			// UpdateToolStripMenuItem
 			// 
 			this.UpdateToolStripMenuItem.Enabled = false;
 			this.UpdateToolStripMenuItem.Name = "UpdateToolStripMenuItem";
-			this.UpdateToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+			this.UpdateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.UpdateToolStripMenuItem.Text = "Aktualisieren";
 			this.UpdateToolStripMenuItem.Click += new System.EventHandler(this.UpdateToolStripMenuItem_Click);
 			// 
@@ -519,41 +563,9 @@
 			// 
 			this.GithubToolStripMenuItem.Image = global::Toolbox.ResourceImage.WebBrowser;
 			this.GithubToolStripMenuItem.Name = "GithubToolStripMenuItem";
-			this.GithubToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+			this.GithubToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.GithubToolStripMenuItem.Text = "elm|Github";
 			this.GithubToolStripMenuItem.Click += new System.EventHandler(this.GithubToolStripMenuItem_Click);
-			// 
-			// labelVersionNr
-			// 
-			this.labelVersionNr.AutoSize = true;
-			this.labelVersionNr.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-			this.labelVersionNr.Location = new System.Drawing.Point(568, 418);
-			this.labelVersionNr.Name = "labelVersionNr";
-			this.labelVersionNr.Size = new System.Drawing.Size(27, 14);
-			this.labelVersionNr.TabIndex = 22;
-			this.labelVersionNr.Text = "1.0";
-			// 
-			// labelVersion
-			// 
-			this.labelVersion.AutoSize = true;
-			this.labelVersion.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-			this.labelVersion.Location = new System.Drawing.Point(509, 418);
-			this.labelVersion.Name = "labelVersion";
-			this.labelVersion.Size = new System.Drawing.Size(53, 14);
-			this.labelVersion.TabIndex = 21;
-			this.labelVersion.Text = "Version";
-			// 
-			// pictureBoxLogo
-			// 
-			this.pictureBoxLogo.BackgroundImage = global::Toolbox.ResourceImage.elmLogo;
-			this.pictureBoxLogo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-			this.pictureBoxLogo.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-			this.pictureBoxLogo.Location = new System.Drawing.Point(224, 116);
-			this.pictureBoxLogo.Margin = new System.Windows.Forms.Padding(0);
-			this.pictureBoxLogo.Name = "pictureBoxLogo";
-			this.pictureBoxLogo.Size = new System.Drawing.Size(180, 180);
-			this.pictureBoxLogo.TabIndex = 14;
-			this.pictureBoxLogo.TabStop = false;
 			// 
 			// FormMain
 			// 
@@ -640,6 +652,7 @@
 		private System.Windows.Forms.Label labelVersionNr;
 		private System.Windows.Forms.Label labelVersion;
 		private System.Windows.Forms.ToolStripMenuItem controlToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem SystemSpeakToolStripMenuItem;
 	}
 }
 

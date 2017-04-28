@@ -142,7 +142,7 @@
     <value>Zertifikat konnte nicht gefunden werden!</value>
   </data>
   <data name="ExceptionClass" xml:space="preserve">
-    <value>ToolboxLib</value>
+    <value>NetworkLib</value>
   </data>
   <data name="ExceptionConnection" xml:space="preserve">
     <value>Verbindung nicht initiiert!</value>

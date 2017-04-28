@@ -241,6 +241,15 @@ namespace Toolbox.Language {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Information ähnelt.
+        /// </summary>
+        public static string Information {
+            get {
+                return ResourceManager.GetString("Information", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die ipaddress ähnelt.
         /// </summary>
         public static string keyIPAddress {
@@ -250,11 +259,29 @@ namespace Toolbox.Language {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die language ähnelt.
+        /// </summary>
+        public static string keyLanguage {
+            get {
+                return ResourceManager.GetString("keyLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die mode ähnelt.
         /// </summary>
         public static string keyMode {
             get {
                 return ResourceManager.GetString("keyMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die none ähnelt.
+        /// </summary>
+        public static string keyNone {
+            get {
+                return ResourceManager.GetString("keyNone", resourceCulture);
             }
         }
         
@@ -345,6 +372,24 @@ namespace Toolbox.Language {
         public static string MsgIPFault {
             get {
                 return ResourceManager.GetString("MsgIPFault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Eingestelltes Sprachpaket konnte nicht gealden werden! ähnelt.
+        /// </summary>
+        public static string MsgLanguageNotFound {
+            get {
+                return ResourceManager.GetString("MsgLanguageNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sprache erfolgreich eingestellt, zum übernehmen ist ein Neustart der Toolbox erforderlich! ähnelt.
+        /// </summary>
+        public static string MsgLanguageSetup {
+            get {
+                return ResourceManager.GetString("MsgLanguageSetup", resourceCulture);
             }
         }
         
@@ -480,6 +525,33 @@ namespace Toolbox.Language {
         public static string SpacerPassword {
             get {
                 return ResourceManager.GetString("SpacerPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die de-AT ähnelt.
+        /// </summary>
+        public static string SpeakdeAT {
+            get {
+                return ResourceManager.GetString("SpeakdeAT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die en-GB ähnelt.
+        /// </summary>
+        public static string SpeakenGB {
+            get {
+                return ResourceManager.GetString("SpeakenGB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die es-ES ähnelt.
+        /// </summary>
+        public static string SpeakesES {
+            get {
+                return ResourceManager.GetString("SpeakesES", resourceCulture);
             }
         }
         

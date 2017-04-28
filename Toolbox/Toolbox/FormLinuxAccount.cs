@@ -11,7 +11,6 @@ using System.IO;
 using Toolbox.Language;
 using NetworkLib;
 
-
 namespace Toolbox
 {
 	public partial class FormLinuxAccount : Form
@@ -292,6 +291,13 @@ namespace Toolbox
 			if (textBoxCert.Text == ResourceText.ValueCertificate)
 				textBoxCert.Text = Path.GetFileNameWithoutExtension(_certificate);
 
+		}
+
+		private void buttonCertAdd_Click(object sender, EventArgs e)
+		{
+			if (_certificate == null)
+				return;
+
 			// string certificate_name = Path.GetFileName(_certificate);
 			// string certificate_path = ResourceText.CertificateFileFilter;
 
@@ -317,14 +323,7 @@ namespace Toolbox
 					return;
 				}
 			*/
-			
 
-		}
-
-		private void buttonCertAdd_Click(object sender, EventArgs e)
-		{
-			if (_certificate == null)
-				return;
 		}
 
 		private void buttonCertDelete_Click(object sender, EventArgs e)
@@ -333,6 +332,37 @@ namespace Toolbox
 		}
 
 		private void buttonNewCert_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void textBoxPhassphrase_Enter(object sender, EventArgs e)
+		{
+			if (textBoxPhassphrase.Text == ResourceText.EMPTY)
+				textBoxPort.Text = ResourceText.ValuePort;
+		}
+
+		private void textBoxPhassphrase_Leave(object sender, EventArgs e)
+		{
+
+		}
+
+		private void textBoxCertServer_Enter(object sender, EventArgs e)
+		{
+
+		}
+
+		private void textBoxCertServer_Leave(object sender, EventArgs e)
+		{
+
+		}
+
+		private void textBoxCertPort_Enter(object sender, EventArgs e)
+		{
+
+		}
+
+		private void textBoxCertPort_Leave(object sender, EventArgs e)
 		{
 
 		}

@@ -271,6 +271,8 @@
 			this.textBoxCertPort.Size = new System.Drawing.Size(34, 20);
 			this.textBoxCertPort.TabIndex = 15;
 			this.textBoxCertPort.Text = "Port";
+			this.textBoxCertPort.Enter += new System.EventHandler(this.textBoxCertPort_Enter);
+			this.textBoxCertPort.Leave += new System.EventHandler(this.textBoxCertPort_Leave);
 			// 
 			// buttonNewCert
 			// 
@@ -290,6 +292,8 @@
 			this.textBoxCertServer.Size = new System.Drawing.Size(129, 20);
 			this.textBoxCertServer.TabIndex = 13;
 			this.textBoxCertServer.Text = "Server";
+			this.textBoxCertServer.Enter += new System.EventHandler(this.textBoxCertServer_Enter);
+			this.textBoxCertServer.Leave += new System.EventHandler(this.textBoxCertServer_Leave);
 			// 
 			// textBoxPhassphrase
 			// 
@@ -300,6 +304,8 @@
 			this.textBoxPhassphrase.Size = new System.Drawing.Size(100, 20);
 			this.textBoxPhassphrase.TabIndex = 12;
 			this.textBoxPhassphrase.Text = "Passwort";
+			this.textBoxPhassphrase.Enter += new System.EventHandler(this.textBoxPhassphrase_Enter);
+			this.textBoxPhassphrase.Leave += new System.EventHandler(this.textBoxPhassphrase_Leave);
 			// 
 			// buttonCertAdd
 			// 
