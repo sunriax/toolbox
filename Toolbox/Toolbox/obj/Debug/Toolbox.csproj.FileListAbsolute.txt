@@ -97,3 +97,4 @@ C:\Users\local\Documents\GitHub\toolbox\Toolbox\Toolbox\obj\Debug\de-AT\Toolbox.
 C:\Users\local\Documents\GitHub\toolbox\Toolbox\Toolbox\bin\Debug\ToolboxLib.dll
 C:\Users\local\Documents\GitHub\toolbox\Toolbox\Toolbox\bin\Debug\ToolboxLib.pdb
 C:\Users\local\Documents\GitHub\toolbox\Toolbox\Toolbox\obj\Debug\Toolbox.ResourceFlag.resources
+C:\Users\local\Documents\GitHub\toolbox\Toolbox\Toolbox\obj\Debug\Toolbox.ResourceLinux.resources

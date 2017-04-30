@@ -8,44 +8,36 @@ using VersionLib.Language;
 
 namespace VersionLib
 {
-	public class Library
+	static public class Library
 	{
-		private string _ClassUART = null;
-		private string _ClassFIFO = null;
-		private string _ClassJTAG = null;
-		private string _ClassSSH = null;
-		private string _ClassIMAGE = null;
+		static private string _ClassUART = ResourceText.NotAvileable;
+		static private string _ClassFIFO = ResourceText.NotAvileable;
+		static private string _ClassJTAG = ResourceText.NotAvileable;
+		static private string _ClassSSH = ResourceText.NotAvileable;
+		static private string _ClassIMAGE = ResourceText.NotAvileable;
+		static private string _BashTool = ResourceText.NotAvileable;
 
-		private string _BashTool = null;
-		private SSH _ssh = new SSH();
+		// Klassen mit leeren Konstruktoren erzeugen
+		static private SSH _ssh = new SSH();
 
-		public Library()
-		{
-			_ClassUART = ResourceText.NotAvileable;
-			_ClassFIFO = ResourceText.NotAvileable;
-			_ClassJTAG = ResourceText.NotAvileable;
-			_ClassIMAGE = ResourceText.NotAvileable;
-			_BashTool = ResourceText.NotAvileable;
-
-			try
-			{
-				_ClassSSH = _ssh.GetSSHClassVersion;
-			}
-			catch
-			{
-				_ClassSSH = ResourceText.NotAvileable;
-			}
-		}
-
-		public string ClassSSH
+		static public string ClassSSH
 		{
 			get
 			{
+				try
+				{
+					_ClassSSH = _ssh.GetSSHClassVersion;
+				}
+				catch
+				{
+					_ClassSSH = ResourceText.NotAvileable;
+				}
+
 				return _ClassSSH;
 			}
 		}
 
-		public string ClassUART
+		static public string ClassUART
 		{
 			get
 			{
@@ -53,7 +45,7 @@ namespace VersionLib
 			}
 		}
 
-		public string ClassFIFO
+		static public string ClassFIFO
 		{
 			get
 			{
@@ -61,7 +53,7 @@ namespace VersionLib
 			}
 		}
 
-		public string ClassJTAG
+		static public string ClassJTAG
 		{
 			get
 			{
@@ -69,7 +61,7 @@ namespace VersionLib
 			}
 		}
 
-		public string ClassIMAGE
+		static public string ClassIMAGE
 		{
 			get
 			{
@@ -77,7 +69,7 @@ namespace VersionLib
 			}
 		}
 
-		public string BashTool
+		static public string BashTool
 		{
 			get
 			{

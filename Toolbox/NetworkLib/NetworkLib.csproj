@@ -50,6 +50,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ResourceText.resx</DependentUpon>
     </Compile>
+    <Compile Include="SSH.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ResourceText.resx">
@@ -57,6 +58,12 @@
       <LastGenOutput>ResourceText.Designer.cs</LastGenOutput>
       <CustomToolNamespace>NetworkLib.Language</CustomToolNamespace>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ToolboxLib\ToolboxLib.csproj">
+      <Project>{5a056c23-9b40-4cf1-a9ea-9ea72eaf3bf2}</Project>
+      <Name>ToolboxLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Chiper.cs" />
+    <Compile Include="Handler.cs" />
     <Compile Include="ResourceText.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

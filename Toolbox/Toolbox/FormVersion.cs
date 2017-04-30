@@ -14,13 +14,14 @@ namespace Toolbox
 {
 	public partial class FormVersion : Form
 	{
-		private Library _version;
 
-		public FormVersion(Library version)
+		Parameter _systemparameter;
+
+		public FormVersion(Parameter SystemParameter)
 		{
 			InitializeComponent();
 
-			_version = version;
+			_systemparameter = SystemParameter;
 
 			// Program Versionen aus Hauptprogramm entnehmen
 			labelTitle.Text = ResourceText.ProgramName;
@@ -28,12 +29,12 @@ namespace Toolbox
 			labelBuildVer.Text = ResourceText.ProgramBuild;
 
 			// Klassen Versionen aus Hauptprogramm entnehmen
-			labelClassSSHVer.Text = _version.ClassSSH;
-			labelClassUartVer.Text = _version.ClassUART;
-			labelClassFifoVer.Text = _version.ClassFIFO;
-			labelClassJtagVer.Text = _version.ClassJTAG;
-			labelClassImageVer.Text = _version.ClassIMAGE;
-			labelBashLinuxVer.Text = _version.BashTool;
+			labelClassSSHVer.Text = Library.ClassSSH;
+			labelClassUartVer.Text = Library.ClassUART;
+			labelClassFifoVer.Text = Library.ClassFIFO;
+			labelClassJtagVer.Text = Library.ClassJTAG;
+			labelClassImageVer.Text = Library.ClassIMAGE;
+			labelBashLinuxVer.Text = Library.BashTool;
 
 			// Weiteres aus Hauptprogramm entnehmen
 			linkLabelGithub.Text = ResourceText.LinkGithub;

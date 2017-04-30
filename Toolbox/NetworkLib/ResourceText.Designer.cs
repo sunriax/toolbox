@@ -61,47 +61,74 @@ namespace NetworkLib.Language {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 0744  ähnelt.
+        /// </summary>
+        internal static string _0744 {
+            get {
+                return ResourceManager.GetString("_0744", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die /toolbox ähnelt.
         /// </summary>
-        internal static string bashApp {
+        internal static string BashApp {
             get {
-                return ResourceManager.GetString("bashApp", resourceCulture);
+                return ResourceManager.GetString("BashApp", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die test ähnelt.
         /// </summary>
-        internal static string bashAppTest {
+        internal static string BashAppTest {
             get {
-                return ResourceManager.GetString("bashAppTest", resourceCulture);
+                return ResourceManager.GetString("BashAppTest", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die version ähnelt.
         /// </summary>
-        internal static string bashAppVersion {
+        internal static string BashAppVersion {
             get {
-                return ResourceManager.GetString("bashAppVersion", resourceCulture);
+                return ResourceManager.GetString("BashAppVersion", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die /home/ ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die chmod  ähnelt.
         /// </summary>
-        internal static string bashHome {
+        internal static string BashChmod {
             get {
-                return ResourceManager.GetString("bashHome", resourceCulture);
+                return ResourceManager.GetString("BashChmod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die stat -c &apos;%a&apos;  ähnelt.
+        /// </summary>
+        internal static string BashgetFilePremission {
+            get {
+                return ResourceManager.GetString("BashgetFilePremission", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die whoami ähnelt.
         /// </summary>
-        internal static string bashUser {
+        internal static string BashgetUser {
             get {
-                return ResourceManager.GetString("bashUser", resourceCulture);
+                return ResourceManager.GetString("BashgetUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die /home/ ähnelt.
+        /// </summary>
+        internal static string BashHome {
+            get {
+                return ResourceManager.GetString("BashHome", resourceCulture);
             }
         }
         
@@ -111,6 +138,15 @@ namespace NetworkLib.Language {
         internal static string EMPTY {
             get {
                 return ResourceManager.GetString("EMPTY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Benutzerabrage fehlgeschalgen ähnelt.
+        /// </summary>
+        internal static string ExceptionBashUserQuery {
+            get {
+                return ResourceManager.GetString("ExceptionBashUserQuery", resourceCulture);
             }
         }
         
@@ -282,6 +318,33 @@ namespace NetworkLib.Language {
         internal static string pingDATA {
             get {
                 return ResourceManager.GetString("pingDATA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die /home/ ähnelt.
+        /// </summary>
+        internal static string ServerBashHome {
+            get {
+                return ResourceManager.GetString("ServerBashHome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die toolbox ähnelt.
+        /// </summary>
+        internal static string ServerBashToolname {
+            get {
+                return ResourceManager.GetString("ServerBashToolname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die / ähnelt.
+        /// </summary>
+        internal static string Slash {
+            get {
+                return ResourceManager.GetString("Slash", resourceCulture);
             }
         }
         

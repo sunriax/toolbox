@@ -20,23 +20,21 @@ using VersionLib;
 
 namespace Toolbox
 {
+	// Datenstruktur für Fensterübergabeparameter
+	public struct Parameter
+	{
+		public Ressource SystemApp;
+		public SSH SystemSSH;
+		public SSH SystemSFTP;
+		public Chiper SystemSecure;
+		public List<string[]> SystemPorts;
+		public Dictionary<int, Dictionary<string, string>> SystemAccount;
+	}
+
 	public partial class FormMain : Form
 	{
-		// Array Liste zum Speichern der UART Porteinstellungen erzeugen
-		List<string[]> _SystemPorts = new List<string[]>();
-
-		// Toolboxressource erzeugen
-		private Ressource _SystemApp = new Ressource(Application.ExecutablePath);
-
-		// Versionskontrolle erzeugen
-		private Library _SystemVersion = new Library();
-
-		// Verschlüsselungstool erzeugen
-		private Chiper _SystemSecure = new Chiper();
-
-		// SSH Array und Verindungsvariable
-		Dictionary<int, Dictionary<string, string>> _Account = new Dictionary<int, Dictionary<string, string>>();
-		private SSH _SSHToolbox = null;
+		// Systemparameter Struktur erzeugen
+		Parameter _SystemParameter = new Parameter();
 
 		// Systemvariablen
 		private bool _restart = false;
@@ -44,6 +42,20 @@ namespace Toolbox
 		// Programmstart (Fensteraufruf)
 		public FormMain()
 		{
+			#region Parameter
+			//	+--------------------------------------------------+
+			//	|+++	System Parameter initialisieren			+++|
+			//	+--------------------------------------------------+
+
+			// Systemparameter Initialisieren
+			_SystemParameter.SystemApp = new Ressource(Application.ExecutablePath);                 // Toolboxressource erzeugen
+			_SystemParameter.SystemSSH = null;                                                      // SSH Verindungsvariable
+			_SystemParameter.SystemSecure = new Chiper();											// Verschlüsselungsklasse initialisieren
+			_SystemParameter.SystemPorts = new List<string[]>();                                    // Array Liste zum Speichern der UART Porteinstellungen erzeugen
+			_SystemParameter.SystemAccount = new Dictionary<int, Dictionary<string, string>>();     // SSH Account Dictionary
+			//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+			#endregion
+
 			#region Language
 			//	+--------------------------------------------------+
 			//	|+++	Sprache Initialisieren					+++|
@@ -60,8 +72,8 @@ namespace Toolbox
 				else
 				{
 					// Sprache aus App.config laden
-					Thread.CurrentThread.CurrentCulture = new CultureInfo(_SystemApp.GetValue(ResourceText.keyLanguage));
-					Thread.CurrentThread.CurrentUICulture = new CultureInfo(_SystemApp.GetValue(ResourceText.keyLanguage));
+					Thread.CurrentThread.CurrentCulture = new CultureInfo(_SystemParameter.SystemApp.GetValue(ResourceText.keyLanguage));
+					Thread.CurrentThread.CurrentUICulture = new CultureInfo(_SystemParameter.SystemApp.GetValue(ResourceText.keyLanguage));
 				}
 			}
 			catch
@@ -71,26 +83,25 @@ namespace Toolbox
 			//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 			#endregion
 
-			#region Language
+			#region Account
 			//	+--------------------------------------------------+
-			//	|+++	Standard accountdaten laden				+++|
+			//	|+++	Standard Accountdaten initialisieren	+++|
 			//	+--------------------------------------------------+
-			_Account[0] = new Dictionary<string, string>();
+			_SystemParameter.SystemAccount[0] = new Dictionary<string, string>();
 
 			// Standardbenutzeraccount aus Appconfig Initialiseren
-			_Account[0].Add(ResourceText.keyMode,		_SystemApp.GetValue(ResourceText.keyMode));
-			_Account[0].Add(ResourceText.keyUsername,	_SystemApp.GetValue(ResourceText.keyUsername));
-			_Account[0].Add(ResourceText.keyPassword,	_SystemApp.GetValue(ResourceText.keyPassword));
-			_Account[0].Add(ResourceText.keyServer,		_SystemApp.GetValue(ResourceText.keyServer));
-			_Account[0].Add(ResourceText.keyPort,		_SystemApp.GetValue(ResourceText.keyPort));
+			_SystemParameter.SystemAccount[0].Add(ResourceText.keyMode,		_SystemParameter.SystemApp.GetValue(ResourceText.keyMode));
+			_SystemParameter.SystemAccount[0].Add(ResourceText.keyUsername, _SystemParameter.SystemApp.GetValue(ResourceText.keyUsername));
+			_SystemParameter.SystemAccount[0].Add(ResourceText.keyPassword, _SystemParameter.SystemApp.GetValue(ResourceText.keyPassword));
+			_SystemParameter.SystemAccount[0].Add(ResourceText.keyServer,	_SystemParameter.SystemApp.GetValue(ResourceText.keyServer));
+			_SystemParameter.SystemAccount[0].Add(ResourceText.keyPort,		_SystemParameter.SystemApp.GetValue(ResourceText.keyPort));
 			//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 			#endregion
 
 			InitializeComponent();
 
-			string encrypt = _SystemSecure.Encrypt("Blablabla12345", "asasdkewez2i371o3fdhx");
-			string decrypt = _SystemSecure.Decrypt(encrypt ,"asasdkewez2i371o3fdhx");
-
+			//	string encrypt = _SystemSecure.Encrypt("Blablabla12345", "asasdkewez2i371o3fdhx");
+			//	string decrypt = _SystemSecure.Decrypt(encrypt ,"asasdkewez2i371o3fdhx");
 
 			// Prüfen ob Debugmodus aktiven
 #if (DEBUG)
@@ -170,7 +181,7 @@ namespace Toolbox
 		{
 			// Menüband -> Toolbox -> Network -> Control
 			// Versionsfenster öffnen
-			FormControl FormPointer = new FormControl(_SSHToolbox, _SystemVersion);
+			FormControl FormPointer = new FormControl(_SystemParameter);
 			DialogResult Form = FormPointer.ShowDialog();
 
 			// Rücksprung aus Versionsfenster behandeln
@@ -182,7 +193,7 @@ namespace Toolbox
 		{
 			// Menüband -> Toolbox -> Network -> Web
 			// Verlinkung auf Seite (Github)
-			System.Diagnostics.Process.Start(ResourceText.Linkhttp + _Account[0][ResourceText.keyIPAddress]);
+			System.Diagnostics.Process.Start(ResourceText.Linkhttp + _SystemParameter.SystemAccount[0][ResourceText.keyIPAddress]);
 		}
 
 		private void sshToolStripMenuItem_Click(object sender, EventArgs e)
@@ -217,14 +228,14 @@ namespace Toolbox
 		{
 			// Menüband -> Einstellungen -> Arietta G25
 			// SSH/Telnet Fenster öffnen
-			FormLinux FormPointer = new FormLinux(_Account,_SystemVersion, _SSHToolbox);
+			FormLinux FormPointer = new FormLinux(_SystemParameter);
 			DialogResult Form = FormPointer.ShowDialog();
 
 			// Verbindungen an Haupprogramm übergeben
-			_SSHToolbox = FormPointer.GetConnection;
+			_SystemParameter.SystemSSH = FormPointer.GetConnection;
 
 			// Überprüfen ob Verbindungen vorhanden
-			if (_SSHToolbox == null)
+			if (_SystemParameter.SystemSSH == null)
 			{
 				interfaceToolStripMenuItem.Enabled = false;
 				controlToolStripMenuItem.Enabled = false;
@@ -233,21 +244,18 @@ namespace Toolbox
 			}
 
 			// Erneute Überprüfung ob Verbindung auch in Unterklasse Renci vorhanden
-			if (!_SSHToolbox.CheckSSHConnnection)
+			if (!_SystemParameter.SystemSSH.CheckSSHConnnection)
 				return;
 
 			// Überprüfen ob IP Addresse vorhanden
-			if (_SSHToolbox.IPaddress != ResourceText.EMPTY)
+			if (_SystemParameter.SystemSSH.IPaddress != ResourceText.EMPTY)
 			{
-				_Account[0].Remove(ResourceText.keyIPAddress);							// Falls Key schon existiert entfernen
-				_Account[0].Add(ResourceText.keyIPAddress, _SSHToolbox.IPaddress);		// Neuen Key,Value hinzufügen
+				_SystemParameter.SystemAccount[0].Remove(ResourceText.keyIPAddress);									// Falls Key schon existiert entfernen
+				_SystemParameter.SystemAccount[0].Add(ResourceText.keyIPAddress, _SystemParameter.SystemSSH.IPaddress);	// Neuen Key,Value hinzufügen	
 
 				// Menüband -> Toolbox -> Network -> Web Freigeben
 				interfaceToolStripMenuItem.Enabled = true;
 			}
-
-			// Versionsverweis aktualisieren
-			_SystemVersion.BashTool = _SSHToolbox.GetBashToolVersion;
 
 			// SSH Funktionen in Toolstrip aktivieren
 			controlToolStripMenuItem.Enabled = true;    // Menüband -> Toolbox -> Network -> Control Freigeben
@@ -258,7 +266,7 @@ namespace Toolbox
 		{
 			// Menüband -> Einstellungen -> PORT Konfiguration
 			// PORT Konfiguration Fenster öffnen
-			FormPort FormPointer = new FormPort(_SystemVersion, _SystemPorts);
+			FormPort FormPointer = new FormPort(_SystemParameter);
 			DialogResult Form = FormPointer.ShowDialog();
 
 			// Rücksprung aus SSH/Telnet Fenster behandeln
@@ -266,9 +274,9 @@ namespace Toolbox
 				if(FormPointer.GetPorts == null)
 					return;
 
-			_SystemPorts = FormPointer.GetPorts;
+			_SystemParameter.SystemPorts = FormPointer.GetPorts;
 
-			MessageBox.Show(_SystemPorts.Count().ToString());
+			MessageBox.Show(_SystemParameter.SystemPorts.Count().ToString());
 
 		}
 
@@ -281,7 +289,7 @@ namespace Toolbox
 		{
 			// Menüband -> Einstellung -> Sprache -> Deutsch/Österreich
 			// Eingestellte Sprache in der App.config abspeichern
-			_SystemApp.Create(ResourceText.keyLanguage, ResourceText.SpeakdeAT);
+			_SystemParameter.SystemApp.Create(ResourceText.keyLanguage, ResourceText.SpeakdeAT);
 
 			// Ausgabe das Daten erfolgreich gespeichert
 			DialogResult Message = MessageBox.Show(ResourceText.MsgLanguageSetup, ResourceText.Information, MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
@@ -298,7 +306,7 @@ namespace Toolbox
 		{
 			// Menüband -> Einstellung -> Sprache -> English
 			// Eingestellte Sprache in der App.config abspeichern
-			_SystemApp.Create(ResourceText.keyLanguage, ResourceText.SpeakenGB);
+			_SystemParameter.SystemApp.Create(ResourceText.keyLanguage, ResourceText.SpeakenGB);
 
 			// Ausgabe das Daten erfolgreich gespeichert
 			DialogResult Message = MessageBox.Show(ResourceText.MsgLanguageSetup, ResourceText.Information, MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
@@ -315,7 +323,7 @@ namespace Toolbox
 		{
 			// Menüband -> Einstellung -> Sprache -> Espanol
 			// Eingestellte Sprache in der App.config abspeichern
-			_SystemApp.Create(ResourceText.keyLanguage, ResourceText.SpeakesES);
+			_SystemParameter.SystemApp.Create(ResourceText.keyLanguage, ResourceText.SpeakesES);
 
 			// Ausgabe das Daten erfolgreich gespeichert
 			DialogResult Message = MessageBox.Show(ResourceText.MsgLanguageSetup, ResourceText.Information, MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
@@ -332,7 +340,7 @@ namespace Toolbox
 		{
 			// Menüband -> Einstellung -> Sprache -> Systemsprache
 			// System Sprache in der App.config abspeichern
-			_SystemApp.Create(ResourceText.keyLanguage, ResourceText.keyNone);
+			_SystemParameter.SystemApp.Create(ResourceText.keyLanguage, ResourceText.keyNone);
 
 			// Ausgabe das Daten erfolgreich gespeichert
 			DialogResult Message = MessageBox.Show(ResourceText.MsgLanguageSetup, ResourceText.Information, MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
@@ -375,7 +383,7 @@ namespace Toolbox
 		{
 			// Menüband -> Hilfe -> Version
 			// Versionsfenster öffnen
-			FormVersion FormPointer = new FormVersion(_SystemVersion);
+			FormVersion FormPointer = new FormVersion(_SystemParameter);
 			DialogResult Form = FormPointer.ShowDialog();
 
 			// Rücksprung aus Versionsfenster behandeln

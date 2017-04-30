@@ -303,4 +303,13 @@
   <data name="SpeakesES" xml:space="preserve">
     <value>es-ES</value>
   </data>
+  <data name="ConnectionBashFail" xml:space="preserve">
+    <value>Fehler beim hochladen der Toolbox auf den Server</value>
+  </data>
+  <data name="ConnectionBashTool" xml:space="preserve">
+    <value>Bash Toolbox fehler</value>
+  </data>
+  <data name="Slash" xml:space="preserve">
+    <value>/</value>
+  </data>
 </root>

@@ -15,3 +15,5 @@ C:\Users\local\Documents\GitHub\toolbox\Toolbox\NetworkLib\obj\Debug\NetworkLib.
 C:\Users\local\Documents\GitHub\toolbox\Toolbox\NetworkLib\obj\Debug\NetworkLib.csproj.GenerateResource.Cache
 C:\Users\local\Documents\GitHub\toolbox\Toolbox\NetworkLib\obj\Debug\NetworkLib.dll
 C:\Users\local\Documents\GitHub\toolbox\Toolbox\NetworkLib\obj\Debug\NetworkLib.pdb
+C:\Users\local\Documents\GitHub\toolbox\Toolbox\NetworkLib\bin\Debug\ToolboxLib.dll
+C:\Users\local\Documents\GitHub\toolbox\Toolbox\NetworkLib\bin\Debug\ToolboxLib.pdb

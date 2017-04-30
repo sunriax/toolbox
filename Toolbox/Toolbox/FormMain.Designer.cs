@@ -320,7 +320,7 @@
             this.debugToolStripMenuItem1});
 			this.UARTToolStripMenuItem.Image = global::Toolbox.ResourceImage.Hardware;
 			this.UARTToolStripMenuItem.Name = "UARTToolStripMenuItem";
-			this.UARTToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+			this.UARTToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.UARTToolStripMenuItem.Text = "UART";
 			// 
 			// eepromToolStripMenuItem
@@ -356,7 +356,7 @@
             this.xilinxToolStripMenuItem});
 			this.JTAGToolStripMenuItem.Image = global::Toolbox.ResourceImage.Deploy;
 			this.JTAGToolStripMenuItem.Name = "JTAGToolStripMenuItem";
-			this.JTAGToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+			this.JTAGToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.JTAGToolStripMenuItem.Text = "JTAG";
 			// 
 			// xilinxToolStripMenuItem
@@ -376,7 +376,7 @@
             this.controlToolStripMenuItem});
 			this.NetworkToolStripMenuItem.Image = global::Toolbox.ResourceImage.NetworkDiagram;
 			this.NetworkToolStripMenuItem.Name = "NetworkToolStripMenuItem";
-			this.NetworkToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+			this.NetworkToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.NetworkToolStripMenuItem.Text = "Network";
 			this.NetworkToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
 			// 
@@ -423,7 +423,7 @@
             this.raw2ImageToolStripMenuItem});
 			this.ImageToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("ImageToolStripMenuItem.Image")));
 			this.ImageToolStripMenuItem.Name = "ImageToolStripMenuItem";
-			this.ImageToolStripMenuItem.Size = new System.Drawing.Size(94, 22);
+			this.ImageToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.ImageToolStripMenuItem.Text = "Bild";
 			// 
 			// image2RawToolStripMenuItem
@@ -533,6 +533,7 @@
 			// 
 			// VersionToolStripMenuItem
 			// 
+			this.VersionToolStripMenuItem.Image = global::Toolbox.ResourceImage.VersionTime;
 			this.VersionToolStripMenuItem.Name = "VersionToolStripMenuItem";
 			this.VersionToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.VersionToolStripMenuItem.Text = "Version";

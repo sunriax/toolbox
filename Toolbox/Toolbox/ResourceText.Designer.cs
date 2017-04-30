@@ -169,6 +169,24 @@ namespace Toolbox.Language {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Fehler beim hochladen der Toolbox auf den Server ähnelt.
+        /// </summary>
+        public static string ConnectionBashFail {
+            get {
+                return ResourceManager.GetString("ConnectionBashFail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Bash Toolbox fehler ähnelt.
+        /// </summary>
+        public static string ConnectionBashTool {
+            get {
+                return ResourceManager.GetString("ConnectionBashTool", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Verbindung hergestellt ähnelt.
         /// </summary>
         public static string ConnectionEstablished {
@@ -516,6 +534,15 @@ namespace Toolbox.Language {
         public static string RenciSSHText {
             get {
                 return ResourceManager.GetString("RenciSSHText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die / ähnelt.
+        /// </summary>
+        public static string Slash {
+            get {
+                return ResourceManager.GetString("Slash", resourceCulture);
             }
         }
         

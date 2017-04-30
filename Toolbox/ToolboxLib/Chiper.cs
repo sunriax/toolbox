@@ -20,34 +20,10 @@ namespace ToolboxLib
 		
 		public Chiper()
 		{
-			_keylength = 256;
-			_repeat = 2048;
-			_blocksize = 8;
+			_keylength = 256;	// Schlüssellänge
+			_repeat = 2048;		// Wiederholungen
+			_blocksize = 8;		// 2^_blocksize = 256
 		}
-
-		public Chiper(int key, int repeat)
-		{
-			if(key < 0 || key > _maxkeylength || repeat < 0 || repeat > _maxrepeat)
-				throw new Exception(CreateException(ResourceText.ExceptionClass, ResourceText.ExceptionChiper, ResourceText.ExceptionSize));
-
-			_keylength = key;
-			_repeat = repeat;
-			_blocksize = 8;
-		}
-
-
-		#region Lokal
-		//	+--------------------------------------------------+
-		//	|+++	Lokale Funktionen						+++|
-		//	+--------------------------------------------------+
-
-		// Funktion zum erzeugen von Exception Texten
-		private string CreateException(string ExceptionClass, string ExceptionFunction, string ExceptionFault)
-		{
-			string create = ExceptionClass + "->" + ExceptionFunction + "(" + ResourceText.Message + ": " + ExceptionFault + ")";
-			return create;
-		}
-		#endregion
 
 		// Nachstehende funktionen gefunden auf http://stackoverflow.com/questions/10168240/encrypting-decrypting-a-string-in-c-sharp
 		public string Encrypt(string plaintext, string passphrase)
@@ -124,5 +100,18 @@ namespace ToolboxLib
 
 			return randomBytes;
 		}
+
+		#region Lokal
+		//	+--------------------------------------------------+
+		//	|+++	Lokale Funktionen						+++|
+		//	+--------------------------------------------------+
+
+		// Funktion zum erzeugen von Exception Texten
+		private string CreateException(string ExceptionClass, string ExceptionFunction, string ExceptionFault)
+		{
+			string create = ExceptionClass + "->" + ExceptionFunction + "(" + ResourceText.Message + ": " + ExceptionFault + ")";
+			return create;
+		}
+		#endregion
 	}
 }

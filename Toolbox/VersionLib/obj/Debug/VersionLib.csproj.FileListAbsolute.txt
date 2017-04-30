@@ -20,3 +20,5 @@ C:\Users\local\Documents\GitHub\toolbox\Toolbox\VersionLib\obj\Debug\VersionLib.
 C:\Users\local\Documents\GitHub\toolbox\Toolbox\VersionLib\obj\Debug\VersionLib.csproj.GenerateResource.Cache
 C:\Users\local\Documents\GitHub\toolbox\Toolbox\VersionLib\obj\Debug\VersionLib.dll
 C:\Users\local\Documents\GitHub\toolbox\Toolbox\VersionLib\obj\Debug\VersionLib.pdb
+C:\Users\local\Documents\GitHub\toolbox\Toolbox\VersionLib\bin\Debug\ToolboxLib.dll
+C:\Users\local\Documents\GitHub\toolbox\Toolbox\VersionLib\bin\Debug\ToolboxLib.pdb

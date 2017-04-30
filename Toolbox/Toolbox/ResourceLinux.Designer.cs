@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ToolboxLib.Language {
+namespace Toolbox {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace ToolboxLib.Language {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class ResourceText {
+    internal class ResourceLinux {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal ResourceText() {
+        internal ResourceLinux() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace ToolboxLib.Language {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ToolboxLib.ResourceText", typeof(ResourceText).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Toolbox.ResourceLinux", typeof(ResourceLinux).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,65 +61,38 @@ namespace ToolboxLib.Language {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die \ ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die chmod  ähnelt.
         /// </summary>
-        internal static string Backslash {
+        internal static string chmod {
             get {
-                return ResourceManager.GetString("Backslash", resourceCulture);
+                return ResourceManager.GetString("chmod", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Chiper() ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die chown  ähnelt.
         /// </summary>
-        internal static string ExceptionChiper {
+        internal static string chown {
             get {
-                return ResourceManager.GetString("ExceptionChiper", resourceCulture);
+                return ResourceManager.GetString("chown", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die ToolboxLib ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die ls  ähnelt.
         /// </summary>
-        internal static string ExceptionClass {
+        internal static string ls {
             get {
-                return ResourceManager.GetString("ExceptionClass", resourceCulture);
+                return ResourceManager.GetString("ls", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Variable IP Adresse leer! ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die apt-get update &amp;&amp; apt-get upgrade ähnelt.
         /// </summary>
-        internal static string ExceptionIP {
+        internal static string update {
             get {
-                return ResourceManager.GetString("ExceptionIP", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Eingabe fehlerhaft (Daten zu groß/klein) ähnelt.
-        /// </summary>
-        internal static string ExceptionSize {
-            get {
-                return ResourceManager.GetString("ExceptionSize", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Meldung ähnelt.
-        /// </summary>
-        internal static string Message {
-            get {
-                return ResourceManager.GetString("Message", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die / ähnelt.
-        /// </summary>
-        internal static string Slash {
-            get {
-                return ResourceManager.GetString("Slash", resourceCulture);
+                return ResourceManager.GetString("update", resourceCulture);
             }
         }
     }

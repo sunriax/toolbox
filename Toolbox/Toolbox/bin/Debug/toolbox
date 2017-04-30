@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if [ "$1" = "test" ]; then
+  echo -e "true"
+
+elif [ "$1" = "version" ]; then
+  echo -e "V1.0|LaFy"
+
+fi
+
+
+
+

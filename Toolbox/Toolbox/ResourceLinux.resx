@@ -117,125 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BashApp" xml:space="preserve">
-    <value>/toolbox</value>
-  </data>
-  <data name="BashAppTest" xml:space="preserve">
-    <value>test</value>
-  </data>
-  <data name="BashAppVersion" xml:space="preserve">
-    <value>version</value>
-  </data>
-  <data name="BashHome" xml:space="preserve">
-    <value>/home/</value>
-  </data>
-  <data name="BashgetUser" xml:space="preserve">
-    <value>whoami</value>
-  </data>
-  <data name="EMPTY" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ExceptionCertificate" xml:space="preserve">
-    <value>Variable Zertifikat leer!</value>
-  </data>
-  <data name="ExceptionCertificateExist" xml:space="preserve">
-    <value>Zertifikat konnte nicht gefunden werden!</value>
-  </data>
-  <data name="ExceptionClass" xml:space="preserve">
-    <value>NetworkLib</value>
-  </data>
-  <data name="ExceptionConnection" xml:space="preserve">
-    <value>Verbindung nicht initiiert!</value>
-  </data>
-  <data name="ExceptionConnectionFailed" xml:space="preserve">
-    <value>Verbindung fehlgeschlagen!</value>
-  </data>
-  <data name="ExceptionIP" xml:space="preserve">
-    <value>Variable IP Adresse leer!</value>
-  </data>
-  <data name="ExceptionPort" xml:space="preserve">
-    <value>Variable Port leer</value>
-  </data>
-  <data name="ExceptionSFTPclient" xml:space="preserve">
-    <value>SFTP Client authentifizierung fehlgeschlagen</value>
-  </data>
-  <data name="ExceptionSFTPconnect" xml:space="preserve">
-    <value>SFTP Verbindung zum Server fehlgeschlagen</value>
-  </data>
-  <data name="ExceptionSSH" xml:space="preserve">
-    <value>SSH()</value>
-  </data>
-  <data name="ExceptionSSHclient" xml:space="preserve">
-    <value>SSH Client authenzifizierung fehlgeschlagen</value>
-  </data>
-  <data name="ExceptionSSHconnect" xml:space="preserve">
-    <value>SSH Verbindung zum Server fehlgeschlagen</value>
-  </data>
-  <data name="ExceptionUser" xml:space="preserve">
-    <value>Variable Benutzername leer!</value>
-  </data>
-  <data name="IPdelimiter" xml:space="preserve">
-    <value>.</value>
-  </data>
-  <data name="Message" xml:space="preserve">
-    <value>Meldung</value>
-  </data>
-  <data name="NewLineLinux" xml:space="preserve">
-    <value>\n</value>
-  </data>
-  <data name="NewLineWindows" xml:space="preserve">
-    <value>\r</value>
-  </data>
-  <data name="NotAvileable" xml:space="preserve">
-    <value>n.A.</value>
-  </data>
-  <data name="pingDATA" xml:space="preserve">
-    <value>AB</value>
-  </data>
-  <data name="sshCERTIFICATE" xml:space="preserve">
-    <value>/_cert/arietta.key</value>
-  </data>
-  <data name="sshFaultNoConnection" xml:space="preserve">
-    <value>__nocon__</value>
-  </data>
-  <data name="sshIP" xml:space="preserve">
-    <value>192.168.0.1</value>
-  </data>
-  <data name="sshPASSPHRASE" xml:space="preserve">
-    <value>elmProject</value>
-  </data>
-  <data name="sshPORT" xml:space="preserve">
-    <value>22</value>
-  </data>
-  <data name="sshUSERNAME" xml:space="preserve">
-    <value>root</value>
-  </data>
-  <data name="TRUE" xml:space="preserve">
-    <value>true</value>
-  </data>
-  <data name="ExceptionBashUserQuery" xml:space="preserve">
-    <value>Benutzerabrage fehlgeschalgen</value>
-  </data>
-  <data name="BashChmod" xml:space="preserve">
+  <data name="chmod" xml:space="preserve">
     <value>chmod </value>
   </data>
-  <data name="ServerBashToolname" xml:space="preserve">
-    <value>toolbox</value>
+  <data name="chown" xml:space="preserve">
+    <value>chown </value>
   </data>
-  <data name="Slash" xml:space="preserve">
-    <value>/</value>
+  <data name="ls" xml:space="preserve">
+    <value>ls </value>
   </data>
-  <data name="_0744" xml:space="preserve">
-    <value>0744 </value>
-  </data>
-  <data name="BashgetFilePremission" xml:space="preserve">
-    <value>stat -c '%a' </value>
-  </data>
-  <data name="ServerBashHome" xml:space="preserve">
-    <value>/home/</value>
-    <comment>Globales Benutzerverzeichnis</comment>
-  </data>
-  <data name="sshPASSWORD" xml:space="preserve">
-    <value>acmesystems</value>
+  <data name="update" xml:space="preserve">
+    <value>apt-get update &amp;&amp; apt-get upgrade</value>
   </data>
 </root>

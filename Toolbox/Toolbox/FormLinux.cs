@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Configuration;
+using System.IO;
 using Toolbox.Language;
 using Toolbox.UART;
 using NetworkLib;
@@ -23,29 +24,20 @@ namespace Toolbox
 		private int _IPByte4 = 130;
 
 		private int _IPport = 22;
+		private int _accountid = -1;
 
 		private bool _AuthCERT = false;
 		private bool _AuthPWD = false;
 
-		private Library _version;
+		private Parameter _systemparameter;
 
-		Dictionary<int, Dictionary<string, string>> _account = new Dictionary<int, Dictionary<string, string>>();
-		SSH _sshopen;
-
-		public FormLinux(Dictionary<int, Dictionary<string, string>> account, Library version, SSH sshopen)
+		public FormLinux(Parameter SystemParameter)
 		{
 			InitializeComponent();
 
-			// Versionsvariablen übergeben
-			_version = version;
+			_systemparameter = SystemParameter;
 
-			// SSHvariablen übergeben
-			_account = account;
-
-			// Falls bereits bestehnde Verbindung vorhanden, übernhemen
-			_sshopen = sshopen;
-
-			if(_sshopen != null)
+			if(_systemparameter.SystemSSH != null)
 			{
 				makelabel(labelConnection, Color.Green, ResourceText.ConnectionEstablished);
 			}
@@ -58,21 +50,23 @@ namespace Toolbox
 			textBoxPort.Text = _IPport.ToString();
 
 			// Überprüfen ob Authentifizierung eingestellt
-			if (_account[0][ResourceText.keyMode] == ResourceText.AuthModeCERT)
+			if (_systemparameter.SystemAccount[0][ResourceText.keyMode] == ResourceText.AuthModeCERT)
 			{
 				_AuthCERT = true;
 				labelAuthMethod.Visible = true;
 				labelAuthMethod.Text = ResourceText.AuthCERT;
 
 			}
-			else if (_account[0][ResourceText.keyMode] == ResourceText.AuthModePWD)
+			else if (_systemparameter.SystemAccount[0][ResourceText.keyMode] == ResourceText.AuthModePWD)
 			{
 				_AuthPWD = true;
 				labelAuthMethod.Visible = true;
 				labelAuthMethod.Text = ResourceText.AuthPWD;
 			}
 			else
+			{
 				groupBoxSetting.Enabled = false;
+			}
 		}
 
 		#region Start
@@ -94,7 +88,7 @@ namespace Toolbox
 			DialogResult result = DialogResult.OK;
 
 			// Abfragen ob Dialog wirklich geschlossen werden soll wenn keine Verbindung hergestellt
-			if (_sshopen == null)
+			if (_systemparameter.SystemSSH == null)
 				result = MessageBox.Show(ResourceText.MsgDialogExit, ResourceText.Hint, MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
 
 			// Wenn Abbrechen dann Schließen unterbrechen
@@ -116,10 +110,10 @@ namespace Toolbox
 		{
 			// Menüband -> Einstellungen -> Account
 			// PORT Konfiguration Fenster öffnen
-			FormLinuxAccount FormPointer = new FormLinuxAccount(_account);
+			FormLinuxAccount FormPointer = new FormLinuxAccount(_systemparameter);
 			DialogResult Form = FormPointer.ShowDialog();
 
-			MessageBox.Show(FormPointer.GetId.ToString());
+			_accountid = FormPointer.GetId;
 
 			// Rücksprung aus Account Fenster behandeln
 			if (Form == DialogResult.Cancel || Form == DialogResult.Abort)
@@ -156,7 +150,7 @@ namespace Toolbox
 		{
 			// Menüband -> Hilfe -> Version
 			// Versionsfenster öffnen
-			FormVersion FormPointer = new FormVersion(_version);
+			FormVersion FormPointer = new FormVersion(_systemparameter);
 			DialogResult Form = FormPointer.ShowDialog();
 
 			// Rücksprung aus Versionsfenster behandeln
@@ -179,35 +173,53 @@ namespace Toolbox
 			string port = textBoxPort.Text;
 
 			makelabel(labelConnection, Color.Empty, ResourceText.ConnectionRun);
-			_sshopen = new SSH(ip, port, _account[0][ResourceText.keyUsername], _account[0][ResourceText.keyPassword]);
+			_systemparameter.SystemSSH = new SSH(ip, port, _systemparameter.SystemAccount[0][ResourceText.keyUsername], _systemparameter.SystemAccount[0][ResourceText.keyPassword]);
+			_systemparameter.SystemSFTP = new SSH(ip, port, _systemparameter.SystemAccount[0][ResourceText.keyUsername], _systemparameter.SystemAccount[0][ResourceText.keyPassword]);
 
 			try
 			{
-				_sshopen.SSHconnect();
+				_systemparameter.SystemSSH.SSHconnect();
+				_systemparameter.SystemSFTP.SFTPconnect();
 				makelabel(labelConnection, Color.Green, ResourceText.ConnectionEstablished);
 
 				// Überprüfen ob Toolbox bereits auf Server vorhanden
-				//MessageBox.Show(_sshopen.SSHexec("/home/" + _ssh[0] + "/toolbox check"));
-
-				if (_sshopen.GetBashTool)
+				if (_systemparameter.SystemSSH.GetBashTool)
 				{
-					// ***** Zusatzfunktion einbauen die prüft ob sich eine neuer version im aktuellen Programm
-					// ***** befindet, da sich das Programm via Update erneuern lässt!!!
-
-					labelVersion.Text = _sshopen.GetBashToolVersion;
+					labelVersion.Text = _systemparameter.SystemSSH.GetBashToolVersion;
+					Library.BashTool = _systemparameter.SystemSSH.GetBashToolVersion;
 				}
 				else
 				{
-					labelVersion.Text = ResourceText.NotAvileable;
+
 					// Toolbox File (toolbox) hochladen falls nicht vorhanden
-					//_sshopen.SFTPupload("toolbox.sh", "/home/local/");
-					//_sshopen.SFTPdisconnect();
+					try
+					{
+						if (_systemparameter.SystemSSH.UploadBashTool(_systemparameter.SystemSSH, _systemparameter.SystemSFTP, _systemparameter.SystemSSH.GetBashUser, Application.StartupPath))
+						{
+							labelVersion.Text = _systemparameter.SystemSSH.GetBashToolVersion;
+						}
+						else
+						{
+							labelVersion.Text = ResourceText.NotAvileable;
+							makelabel(labelConnection, Color.Red, ResourceText.ConnectionBashTool);
+							MessageBox.Show(ResourceText.ConnectionBashFail, ResourceText.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+							return;
+						}
+					}
+					catch
+					{
+						labelVersion.Text = ResourceText.NotAvileable;
+						makelabel(labelConnection, Color.Red, ResourceText.ConnectionBashTool);
+						MessageBox.Show(ResourceText.ConnectionBashFail, ResourceText.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+						return;
+					}
 				}
-				
 			}
 			catch
 			{
-				_sshopen = null;
+				_systemparameter.SystemSSH = null;
 
 				makelabel(labelConnection, Color.Red, ResourceText.ConnectionFailed);
 				MessageBox.Show(ResourceText.ConnectionFault, ResourceText.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -221,7 +233,7 @@ namespace Toolbox
 			DialogResult result = DialogResult.OK;
 
 			// Abfragen ob Dialog wirklich geschlossen werden soll wenn keine Verbindung hergestellt
-			if (_sshopen == null)
+			if (_systemparameter.SystemSSH == null)
 				result = MessageBox.Show(ResourceText.MsgDialogExit, ResourceText.Hint, MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
 
 			// Wenn Abbrechen dann Schließen unterbrechen
@@ -281,9 +293,18 @@ namespace Toolbox
 		{
 			get
 			{
-				return _sshopen;
+				return _systemparameter.SystemSSH;
 			}
 		}
+
+		public int GetAccountId
+		{
+			get
+			{
+				return _accountid;
+			}
+		}
+
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		#endregion
 

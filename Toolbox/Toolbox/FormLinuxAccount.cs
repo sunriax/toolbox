@@ -16,25 +16,26 @@ namespace Toolbox
 	public partial class FormLinuxAccount : Form
 	{
 
-		private Dictionary<int, Dictionary<string, string>> _account = new Dictionary<int, Dictionary<string, string>>();
+		//private Dictionary<int, Dictionary<string, string>> _account = new Dictionary<int, Dictionary<string, string>>();
 		private Network _network = new Network();
 		private int _selectedid;
 		private string _certificate = null;
+		private Parameter _systemparameter;
 
-		public FormLinuxAccount(Dictionary<int, Dictionary<string, string>> account)
+		public FormLinuxAccount(Parameter SystemParameter)
 		{
 			InitializeComponent();
-			
-			_account = account;
+
+			_systemparameter = SystemParameter;
 
 			// TextBoxen mit Standardparameteren belegen
 			textboxinit();
 
-			for(int i=0; i < _account.Count; i++)
+			for(int i=0; i < _systemparameter.SystemAccount.Count; i++)
 			{
-				if (_account[i][ResourceText.keyMode] == ResourceText.AuthModePWD)
+				if (_systemparameter.SystemAccount[i][ResourceText.keyMode] == ResourceText.AuthModePWD)
 				{
-					string[] listviewitem = { listViewAccount.Items.Count.ToString(), _account[i][ResourceText.keyUsername], ResourceText.SpacerPassword, _account[i][ResourceText.keyServer], _account[i][ResourceText.keyPort] };
+					string[] listviewitem = { listViewAccount.Items.Count.ToString(), _systemparameter.SystemAccount[i][ResourceText.keyUsername], ResourceText.SpacerPassword, _systemparameter.SystemAccount[i][ResourceText.keyServer], _systemparameter.SystemAccount[i][ResourceText.keyPort] };
 
 					ListViewItem item;
 					item = new ListViewItem(listviewitem);
@@ -101,12 +102,12 @@ namespace Toolbox
 			listViewAccount.Items.Add(item);
 
 			// Account Liste mit neuem Eintrag ergänzen
-			_account[listviewid] = new Dictionary<string, string>();
-			_account[listviewid].Add(ResourceText.keyMode,		ResourceText.AuthModePWD);
-			_account[listviewid].Add(ResourceText.keyUsername,	textBoxUsername.Text);
-			_account[listviewid].Add(ResourceText.keyPassword,	textBoxPassword.Text);
-			_account[listviewid].Add(ResourceText.keyServer,	textBoxServer.Text);
-			_account[listviewid].Add(ResourceText.keyPort,		textBoxPort.Text);
+			_systemparameter.SystemAccount[listviewid] = new Dictionary<string, string>();
+			_systemparameter.SystemAccount[listviewid].Add(ResourceText.keyMode,		ResourceText.AuthModePWD);
+			_systemparameter.SystemAccount[listviewid].Add(ResourceText.keyUsername,	textBoxUsername.Text);
+			_systemparameter.SystemAccount[listviewid].Add(ResourceText.keyPassword,	textBoxPassword.Text);
+			_systemparameter.SystemAccount[listviewid].Add(ResourceText.keyServer,		textBoxServer.Text);
+			_systemparameter.SystemAccount[listviewid].Add(ResourceText.keyPort,		textBoxPort.Text);
 
 			// TextBoxen mit Standardparameteren belegen
 			textboxinit();
@@ -122,7 +123,7 @@ namespace Toolbox
 
 			int listviewid = Convert.ToInt16(listViewAccount.SelectedItems[0].SubItems[0].Text);
 
-			_account.Remove(listviewid);
+			_systemparameter.SystemAccount.Remove(listviewid);
 
 			listViewAccount.SelectedItems[0].Remove();
 
@@ -363,6 +364,11 @@ namespace Toolbox
 		}
 
 		private void textBoxCertPort_Leave(object sender, EventArgs e)
+		{
+
+		}
+
+		private void VersionToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 
 		}

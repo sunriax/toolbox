@@ -16,22 +16,19 @@ namespace Toolbox
 {
 	public partial class FormPort : Form
 	{
-		private Library _version = null;
-		private List<string[]> _ports = null;
 		private bool _saved = false;
+		private Parameter _systemparameter;
 
 		private string[] _combobox_type = { ResourceText.PleaseChoose, ResourceUART.Config, ResourceUART.Console, ResourceUART.Debug, ResourceUART.Update, ResourceUART.Hardware };
 		private string[] _combobox_speed = { ResourceUART.SPEED_921600, ResourceUART.SPEED_115200, ResourceUART.SPEED_19200, ResourceUART.SPEED_9600 };
 		private string[] _combobox_method = { ResourceUART.COM8N1, ResourceUART.COM8N2, ResourceUART.COM8E1, ResourceUART.COM8E2, ResourceUART.COM8O1, ResourceUART.COM8O2 };
 		private string[] _combobox_ports = SerialPort.GetPortNames();
 
-		public FormPort(Library version, List<string[]> ports)
+		public FormPort(Parameter SystemParameter)
 		{
 			InitializeComponent();
 
-			// Versionsvariablen übergeben
-			_version = version;
-			_ports = ports;
+			_systemparameter = SystemParameter;
 
 			// ComboBox Beschreibung Initialisieren
 			comboBoxPort.DataSource = _combobox_ports;	
@@ -40,10 +37,10 @@ namespace Toolbox
 			comboBoxMethod.DataSource = _combobox_method;
 
 			// Listbox Beschreibung Initialisieren
-			if (_ports != null)
+			if (_systemparameter.SystemPorts != null)
 			{
-				for (int i = 0; i < _ports.Count; i++)
-					listBoxUART.Items.Add(string.Format("Type: {0} \tPort: {1}\tFormat:{2}|{3}", _ports[i][0], _ports[i][1], _ports[i][2], _ports[i][3]));
+				for (int i = 0; i < _systemparameter.SystemPorts.Count; i++)
+					listBoxUART.Items.Add(string.Format("Type: {0} \tPort: {1}\tFormat:{2}|{3}", _systemparameter.SystemPorts[i][0], _systemparameter.SystemPorts[i][1], _systemparameter.SystemPorts[i][2], _systemparameter.SystemPorts[i][3]));
 
 				buttonRemove.Enabled = true;
 			}
@@ -70,7 +67,7 @@ namespace Toolbox
 		{
 			// Menüband -> Hilfe -> Version
 			// Versionsfenster öffnen
-			FormVersion FormPointer = new FormVersion(_version);
+			FormVersion FormPointer = new FormVersion(_systemparameter);
 			DialogResult Form = FormPointer.ShowDialog();
 
 			// Rücksprung aus Versionsfenster behandeln
@@ -91,7 +88,7 @@ namespace Toolbox
 			buttonRemove.Enabled = true;
 
 			string[] _item = { comboBoxType.Text, comboBoxPort.Text, comboBoxMethod.Text, comboBoxSpeed.Text };
-			_ports.Add(_item);
+			_systemparameter.SystemPorts.Add(_item);
 
 		}
 
@@ -102,7 +99,7 @@ namespace Toolbox
 			if (listBoxUART.Items.Count <= 0)
 			{
 				buttonRemove.Enabled = false;
-				_ports.RemoveRange(0, _ports.Count);
+				_systemparameter.SystemPorts.RemoveRange(0, _systemparameter.SystemPorts.Count);
 			}
 			else
 				MessageBox.Show(ResourceText.MsgObjectMark, ResourceText.Hint, MessageBoxButtons.OK);
@@ -161,7 +158,7 @@ namespace Toolbox
 		{
 			get
 			{
-				return _ports;
+				return _systemparameter.SystemPorts;
 			}
 		}
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

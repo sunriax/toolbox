@@ -17,16 +17,14 @@ namespace Toolbox
 
 	public partial class FormControl : Form
 	{
-		// SSH Parameter
-		private SSH _sshtoolbox;
-		private Library _version;
+		// Systemparameter
+		private Parameter _systemparameter;
 
-		public FormControl(SSH sshtoolbox, Library version)
+		public FormControl(Parameter SystemParameter)
 		{
 			InitializeComponent();
-			
-			_sshtoolbox = sshtoolbox;	// SSH Verbindung aus Hauptform übergeben
-			_version = version;			// Version übergeben
+
+			_systemparameter = SystemParameter;
 		}
 
 		#region Start
@@ -66,7 +64,7 @@ namespace Toolbox
 		{
 			// Menüband -> Hilfe -> Version
 			// Versionsfenster öffnen
-			FormVersion FormPointer = new FormVersion(_version);
+			FormVersion FormPointer = new FormVersion(_systemparameter);
 			DialogResult Form = FormPointer.ShowDialog();
 
 			// Rücksprung aus Versionsfenster behandeln

@@ -430,14 +430,15 @@
 			// VersionToolStripMenuItem
 			// 
 			this.VersionToolStripMenuItem.Name = "VersionToolStripMenuItem";
-			this.VersionToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+			this.VersionToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.VersionToolStripMenuItem.Text = "Version";
+			this.VersionToolStripMenuItem.Click += new System.EventHandler(this.VersionToolStripMenuItem_Click);
 			// 
 			// HelpSupportToolStripMenuItem
 			// 
 			this.HelpSupportToolStripMenuItem.Image = global::Toolbox.ResourceImage.Star;
 			this.HelpSupportToolStripMenuItem.Name = "HelpSupportToolStripMenuItem";
-			this.HelpSupportToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+			this.HelpSupportToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.HelpSupportToolStripMenuItem.Text = "Hilfe/Support";
 			// 
 			// labelChoose

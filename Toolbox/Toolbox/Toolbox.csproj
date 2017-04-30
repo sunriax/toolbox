@@ -101,6 +101,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ResourceImage.resx</DependentUpon>
     </Compile>
+    <Compile Include="ResourceLinux.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResourceLinux.resx</DependentUpon>
+    </Compile>
     <Compile Include="ResourceText.de-AT.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -150,6 +155,10 @@
     <EmbeddedResource Include="ResourceImage.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ResourceImage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResourceLinux.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResourceLinux.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="ResourceText.de-AT.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -542,6 +551,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
+    <None Include="Resources\version2.png" />
+    <None Include="Resources\version.png" />
     <None Include="Resources\es_ES.png" />
     <None Include="Resources\de_AT.png" />
     <None Include="Resources\en_GB.png" />
