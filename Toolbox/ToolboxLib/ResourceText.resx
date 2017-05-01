@@ -120,17 +120,44 @@
   <data name="Backslash" xml:space="preserve">
     <value>\</value>
   </data>
+  <data name="EMPTY" xml:space="preserve">
+    <value />
+  </data>
   <data name="ExceptionChiper" xml:space="preserve">
     <value>Chiper()</value>
   </data>
   <data name="ExceptionClass" xml:space="preserve">
     <value>ToolboxLib</value>
   </data>
+  <data name="ExceptionDataLength" xml:space="preserve">
+    <value>Datensatz zu lange (&gt;&gt;int.MaxLength)</value>
+  </data>
+  <data name="ExceptionDirectoryNotExist" xml:space="preserve">
+    <value>Der angegebene Pfad ist nicht verfügbar</value>
+  </data>
+  <data name="ExceptionFileNameEmpty" xml:space="preserve">
+    <value>Der Dateiname enthält keinen Wert</value>
+  </data>
+  <data name="ExceptionFileNotFound" xml:space="preserve">
+    <value>Datei wurde nicht gefunden</value>
+  </data>
+  <data name="ExceptionFileSize" xml:space="preserve">
+    <value>Dateigröße überschreitet zulässigen Maximalwert (&gt;&gt;int.MaxLength)</value>
+  </data>
+  <data name="ExceptionHandler" xml:space="preserve">
+    <value>Handler()</value>
+  </data>
   <data name="ExceptionIP" xml:space="preserve">
     <value>Variable IP Adresse leer!</value>
   </data>
+  <data name="ExceptionReadCSV" xml:space="preserve">
+    <value>ReadCSV()</value>
+  </data>
   <data name="ExceptionSize" xml:space="preserve">
     <value>Eingabe fehlerhaft (Daten zu groß/klein)</value>
+  </data>
+  <data name="ExceptionWriteCSV" xml:space="preserve">
+    <value>WriteCSV()</value>
   </data>
   <data name="Message" xml:space="preserve">
     <value>Meldung</value>

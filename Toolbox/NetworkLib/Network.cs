@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Net;
 using System.Net.NetworkInformation;
+using ToolboxLib;
 using NetworkLib.Language;
 using Renci.SshNet;
 
@@ -16,18 +17,18 @@ namespace NetworkLib
 	//	|+++	NETWORK Klasse							+++|
 	//	+--------------------------------------------------+
 
-	public class Network
+	public static class Network
     {
-		private int[] _ipaddress;
-		private string _data = ResourceText.pingDATA;
+		private static int[] _ipaddress;
+		private static string _data = ResourceText.pingDATA;
 
-		#region checkip
+		#region CheckIP
 		//	+--------------------------------------------------+
 		//	|+++	Funktionen -> checkip					+++|
 		//	+--------------------------------------------------+
 
 		// Prüft eine IP-Adresse auf ihre Richtigkeit
-		public bool checkip(string ipaddress)
+		public static bool CheckIP(string ipaddress)
 		{
 			char[] delimeter = new char[] { Convert.ToChar(ResourceText.IPdelimiter) };	// IP-Adresse Trennzeichen in Array ablegen
 			string[] ipbuffer = new string[4];											// Interner Funktionspuffer für IP-Adresse
@@ -50,13 +51,13 @@ namespace NetworkLib
 			}
 
 			// Überprüfen ob IP-Bytes gültig sind
-			if (!checknumber(ipbytes[0], 1, 254))
+			if (!Tool.checknumber(ipbytes[0], 1, 254))
 				return false;
-			if (!checknumber(ipbytes[1], 0, 254))
+			if (!Tool.checknumber(ipbytes[1], 0, 254))
 				return false;
-			if (!checknumber(ipbytes[2], 0, 254))
+			if (!Tool.checknumber(ipbytes[2], 0, 254))
 				return false;
-			if (!checknumber(ipbytes[3], 1, 254))
+			if (!Tool.checknumber(ipbytes[3], 1, 254))
 				return false;
 
 			// Rückgabe wenn alle Bedingungne erfüllt sind
@@ -65,13 +66,13 @@ namespace NetworkLib
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		#endregion
 
-		#region pinghost
+		#region PingHost
 		//	+--------------------------------------------------+
 		//	|+++	Funktionen -> pinghost					+++|
 		//	+--------------------------------------------------+
 
 		// Versucht einen hostnamen begrenzt durch einen Timeout anzupingen
-		public bool pinghost(string hostname, int timeout)
+		public static bool PingHost(string hostname, int timeout)
 		{
 			Ping ping = new Ping();
 
@@ -82,7 +83,7 @@ namespace NetworkLib
 
 			if (reply.Status == IPStatus.Success)
 			{
-				if (checkip(reply.Address.ToString()))
+				if (CheckIP(reply.Address.ToString()))
 					return true;
 				return false;
 			}
@@ -91,13 +92,13 @@ namespace NetworkLib
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		#endregion
 
-		#region pingip
+		#region PingIP
 		//	+--------------------------------------------------+
 		//	|+++	Funktionen -> pingip					+++|
 		//	+--------------------------------------------------+
 
 		// Versucht eine IP-Adresse begrenzt durch einen Timeout anzupingen
-		public bool pingip(string ipaddress, int timeout)
+		public static bool PingIP(string ipaddress, int timeout)
 		{
 			Ping ping = new Ping();
 			IPAddress address = IPAddress.Parse(ipaddress);
@@ -109,14 +110,14 @@ namespace NetworkLib
 
 			if (reply.Status == IPStatus.Success)
 			{
-				if (checkip(reply.Address.ToString()))
+				if (CheckIP(reply.Address.ToString()))
 					return true;
 				return false;
 			}
 			return true;
 		}
 
-		public bool pingip(byte[] ipaddress, int timeout)
+		public static bool PingIP(byte[] ipaddress, int timeout)
 		{
 			Ping ping = new Ping();
 			IPAddress address = IPAddress.Parse(ipaddress[0].ToString() + ResourceText.IPdelimiter + ipaddress[1].ToString() + ResourceText.IPdelimiter + ipaddress[2].ToString() + ResourceText.IPdelimiter + ipaddress[3].ToString());
@@ -129,7 +130,7 @@ namespace NetworkLib
 
 			if (reply.Status == IPStatus.Success)
 			{
-				if (checkip(reply.Address.ToString()))
+				if (CheckIP(reply.Address.ToString()))
 					return true;
 				return false;
 			}
@@ -138,13 +139,13 @@ namespace NetworkLib
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		#endregion
 
-		#region resolvehost
+		#region ResolveHost
 		//	+--------------------------------------------------+
-		//	|+++	Funktionen -> resolvehost				+++|
+		//	|+++	Funktionen -> ResolveHost				+++|
 		//	+--------------------------------------------------+
 
 		// Versucht einen Namen in eine IP-Adresse aufzulösen
-		public IPAddress[] resolvehost(string hostname)
+		public static IPAddress[] ResolveHost(string hostname)
 		{
 			IPHostEntry hostentry = Dns.GetHostEntry(hostname);
 			IPAddress[] iparray = new IPAddress[hostentry.AddressList.Length];
@@ -167,7 +168,7 @@ namespace NetworkLib
 		//	+--------------------------------------------------+
 
 		// Gibt die eingetragene IP-Adresse zurück
-		public int[] GetIP
+		public static int[] GetIP
 		{
 			// IP Adresse zurückgeben
 			get
@@ -177,22 +178,6 @@ namespace NetworkLib
 		}
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		#endregion
-
-		#region Private
-		//	+--------------------------------------------------+
-		//	|+++	System -> Interne Funktionen			+++|
-		//	+--------------------------------------------------+
-
-		// Überprüft ob eine Zahl einen bestimmten min/max Grenzwert überschreitet
-		private bool checknumber(int number, int MIN, int MAX)
-		{
-			if (number <= MAX && number >= MIN)
-				return true;
-			return false;
-		}
-		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		#endregion
-
 	}
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	#endregion

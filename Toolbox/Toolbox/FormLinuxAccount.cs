@@ -1,4 +1,7 @@
-﻿using System;
+﻿#define DEBUG
+//#undef DEBUG
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,23 +18,36 @@ namespace Toolbox
 {
 	public partial class FormLinuxAccount : Form
 	{
-
-		//private Dictionary<int, Dictionary<string, string>> _account = new Dictionary<int, Dictionary<string, string>>();
-		private Network _network = new Network();
+		#region Deklaration
+		//	+--------------------------------------------------+
+		//	|+++	Variablendeklartion						+++|
+		//	+--------------------------------------------------+
+		
 		private int _selectedid;
 		private string _certificate = null;
 		private Parameter _systemparameter;
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		#endregion
 
+		#region Initialisierung
+		//	+--------------------------------------------------+
+		//	|+++	Initialisierung							+++|
+		//	+--------------------------------------------------+
+		
 		public FormLinuxAccount(Parameter SystemParameter)
 		{
 			InitializeComponent();
-
 			_systemparameter = SystemParameter;
 
 			// TextBoxen mit Standardparameteren belegen
 			textboxinit();
 
-			for(int i=0; i < _systemparameter.SystemAccount.Count; i++)
+			#region Account
+			//	+--------------------------------------------------+
+			//	|+++	Account									+++|
+			//	+--------------------------------------------------+
+			
+			for (int i=0; i < _systemparameter.SystemAccount.Count; i++)
 			{
 				if (_systemparameter.SystemAccount[i][ResourceText.keyMode] == ResourceText.AuthModePWD)
 				{
@@ -45,7 +61,71 @@ namespace Toolbox
 
 			listViewAccount.Items[0].Focused = true;
 			listViewAccount.Items[0].Selected = true;
+			//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+			#endregion
 		}
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		#endregion
+
+		#region Start
+		//	+--------------------------------------------------+
+		//	|+++	Menüband - > Start						+++|
+		//	+--------------------------------------------------+
+
+		private void QuitToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			DialogResult result = MessageBox.Show(ResourceText.MsgDialogExit, ResourceText.Hint, MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+
+			// Wenn Abbrechen dann Schließen unterbrechen
+			if (result == DialogResult.Cancel)
+				return;
+
+			// Programm beenden
+			Close();
+		}
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		#endregion
+
+		#region Hilfe
+		//	+--------------------------------------------------+
+		//	|+++	Menüband - > Hilfe						+++|
+		//	+--------------------------------------------------+
+		private void VersionToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void HelpSupportToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+
+		}
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		#endregion
+
+		#region Form
+		//	+--------------------------------------------------+
+		//	|+++	Form -> Funktionen						+++|
+		//	+--------------------------------------------------+
+		private void FormLinuxAccount_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			DialogResult result = MessageBox.Show(ResourceText.MsgDialogExit, ResourceText.Hint, MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+
+			// Wenn Abbrechen dann Schließen unterbrechen
+			if (result == DialogResult.Cancel)
+				e.Cancel = true;
+		}
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		#endregion
+
+		#region Events
+		//	+--------------------------------------------------+
+		//	|+++	Events									+++|
+		//	+--------------------------------------------------+
+
+		#region Benutzer
+		//	+--------------------------------------------------+
+		//	|+++	Tab -> Benutzer							+++|
+		//	+--------------------------------------------------+
 
 		private void listViewAccount_SelectedIndexChanged(object sender, EventArgs e)
 		{
@@ -60,22 +140,21 @@ namespace Toolbox
 			listViewAccount.Invalidate();
 		}
 
-
 		private void buttonAdd_Click(object sender, EventArgs e)
 		{
 			DialogResult datapattern = DialogResult.OK;
 
 			// Überprüfen ob Eingabefelder leer sind
-			if (!checkfield(textBoxUsername, ResourceText.EMPTY)	||
-				!checkfield(textBoxPassword, ResourceText.EMPTY)	||
-				!checkfield(textBoxServer, ResourceText.EMPTY)		||
+			if (!checkfield(textBoxUsername, ResourceText.EMPTY) ||
+				!checkfield(textBoxPassword, ResourceText.EMPTY) ||
+				!checkfield(textBoxServer, ResourceText.EMPTY) ||
 				!checkfield(textBoxPort, ResourceText.EMPTY))
-					return;
+				return;
 
 			// Überprüfen ob Eingabefelder gleich den Standardeingabefeldern
 			if (textBoxUsername.Text == ResourceText.ValueUsername &&
 				textBoxPassword.Text == ResourceText.ValuePassword)
-					datapattern = MessageBox.Show(ResourceText.MsgSameData, ResourceText.Warning, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+				datapattern = MessageBox.Show(ResourceText.MsgSameData, ResourceText.Warning, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
 			// Überprüfen ob bei Standardeingabe Abbruch erfolgen soll
 			if (datapattern == DialogResult.No)
@@ -90,11 +169,11 @@ namespace Toolbox
 				// Überprüfen ob ungültige Zeichen eingegeben wurden
 
 				// Überprüfen ob eingegebene IP-Addresse zulässig
-				if (_network.checkip(textBoxServer.Text) == false)
+				if (Network.CheckIP(textBoxServer.Text) == false)
 					return;
 
 			int listviewid = listViewAccount.Items.Count;
-			string[] listviewitem = { listviewid.ToString(), textBoxUsername.Text, ResourceText.SpacerPassword, textBoxServer.Text, textBoxPort.Text};
+			string[] listviewitem = { listviewid.ToString(), textBoxUsername.Text, ResourceText.SpacerPassword, textBoxServer.Text, textBoxPort.Text };
 
 			// ListView mit neuem Eintrag ergänzen
 			ListViewItem item;
@@ -103,11 +182,11 @@ namespace Toolbox
 
 			// Account Liste mit neuem Eintrag ergänzen
 			_systemparameter.SystemAccount[listviewid] = new Dictionary<string, string>();
-			_systemparameter.SystemAccount[listviewid].Add(ResourceText.keyMode,		ResourceText.AuthModePWD);
-			_systemparameter.SystemAccount[listviewid].Add(ResourceText.keyUsername,	textBoxUsername.Text);
-			_systemparameter.SystemAccount[listviewid].Add(ResourceText.keyPassword,	textBoxPassword.Text);
-			_systemparameter.SystemAccount[listviewid].Add(ResourceText.keyServer,		textBoxServer.Text);
-			_systemparameter.SystemAccount[listviewid].Add(ResourceText.keyPort,		textBoxPort.Text);
+			_systemparameter.SystemAccount[listviewid].Add(ResourceText.keyMode, ResourceText.AuthModePWD);
+			_systemparameter.SystemAccount[listviewid].Add(ResourceText.keyUsername, textBoxUsername.Text);
+			_systemparameter.SystemAccount[listviewid].Add(ResourceText.keyPassword, textBoxPassword.Text);
+			_systemparameter.SystemAccount[listviewid].Add(ResourceText.keyServer, textBoxServer.Text);
+			_systemparameter.SystemAccount[listviewid].Add(ResourceText.keyPort, textBoxPort.Text);
 
 			// TextBoxen mit Standardparameteren belegen
 			textboxinit();
@@ -139,7 +218,7 @@ namespace Toolbox
 
 		private void textBoxUsername_Enter(object sender, EventArgs e)
 		{
-			if(textBoxUsername.Text == ResourceText.ValueUsername)
+			if (textBoxUsername.Text == ResourceText.ValueUsername)
 				textBoxUsername.Text = ResourceText.EMPTY;
 
 			textBoxUsername.ForeColor = Color.Black;
@@ -177,6 +256,17 @@ namespace Toolbox
 				textBoxServer.Text = ResourceText.ValueServer;
 		}
 
+		private void textBoxServer_MouseEnter(object sender, EventArgs e)
+		{
+			labelHelp.Text = ResourceText.MsgServerHelp;
+			labelHelp.Visible = true;
+		}
+
+		private void textBoxServer_MouseLeave(object sender, EventArgs e)
+		{
+			labelHelp.Visible = false;
+		}
+
 		private void textBoxPort_Enter(object sender, EventArgs e)
 		{
 			if (textBoxPort.Text == ResourceText.ValuePort)
@@ -189,94 +279,13 @@ namespace Toolbox
 			if (textBoxPort.Text == ResourceText.EMPTY)
 				textBoxPort.Text = ResourceText.ValuePort;
 		}
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		#endregion
 
-		private bool checkfield(TextBox inputTextBox, string check)
-		{
-			inputTextBox.BackColor = Color.Empty;
-
-				if (inputTextBox.Text != ResourceText.EMPTY)
-					return true;
-			
-			inputTextBox.BackColor = Color.Red;
-			inputTextBox.SelectAll();
-
-			MessageBox.Show(ResourceText.MsgIPFault, ResourceText.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
-			return false;
-		}
-
-		private bool checkfield(TextBox inputTextBox, int MIN, int MAX)
-		{
-			int variable = 0;
-			inputTextBox.BackColor = Color.Empty;
-
-			if (int.TryParse(inputTextBox.Text, out variable))
-			{
-				if (variable <= MAX && variable >= MIN)
-					return true;
-			}
-
-			inputTextBox.BackColor = Color.Red;
-			inputTextBox.SelectAll();
-
-			MessageBox.Show(ResourceText.MsgIPFault, ResourceText.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
-			return false;
-		}
-
-		private void textBoxServer_MouseEnter(object sender, EventArgs e)
-		{
-			labelHelp.Text = ResourceText.MsgServerHelp;
-			labelHelp.Visible = true;
-		}
-
-		private void textBoxServer_MouseLeave(object sender, EventArgs e)
-		{
-			labelHelp.Visible = false;
-			
-		}
-
-		private void textboxinit()
-		{
-			textBoxUsername.Text = ResourceText.ValueUsername;
-			textBoxPassword.Text = ResourceText.ValuePassword;
-			textBoxServer.Text = ResourceText.ValueServer;
-			textBoxPort.Text = ResourceText.ValuePort;
-
-			textBoxCert.Text = ResourceText.ValueCertificate;
-
-			textBoxUsername.ForeColor = Color.LightGray;
-			textBoxPassword.ForeColor = Color.LightGray;
-			textBoxServer.ForeColor = Color.LightGray;
-			textBoxPort.ForeColor = Color.LightGray;
-		}
-
-		private void QuitToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			DialogResult result = MessageBox.Show(ResourceText.MsgDialogExit, ResourceText.Hint, MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
-
-			// Wenn Abbrechen dann Schließen unterbrechen
-			if (result == DialogResult.Cancel)
-				return;
-
-			// Programm beenden
-			Close();
-		}
-
-		private void FormLinuxAccount_FormClosing(object sender, FormClosingEventArgs e)
-		{
-			DialogResult result = MessageBox.Show(ResourceText.MsgDialogExit, ResourceText.Hint, MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
-
-			// Wenn Abbrechen dann Schließen unterbrechen
-			if (result == DialogResult.Cancel)
-				e.Cancel = true;
-		}
-
-		public int GetId
-		{
-			get
-			{
-				return _selectedid;
-			}
-		}
+		#region Zertifikat
+		//	+--------------------------------------------------+
+		//	|+++	Tab -> Zertifikat						+++|
+		//	+--------------------------------------------------+
 
 		private void buttonCert_Click(object sender, EventArgs e)
 		{
@@ -367,10 +376,79 @@ namespace Toolbox
 		{
 
 		}
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		#endregion
 
-		private void VersionToolStripMenuItem_Click(object sender, EventArgs e)
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		#endregion
+
+		#region Funktionen
+		//	+--------------------------------------------------+
+		//	|+++	Menüband - > Start						+++|
+		//	+--------------------------------------------------+
+
+		private bool checkfield(TextBox inputTextBox, string check)
 		{
+			inputTextBox.BackColor = Color.Empty;
 
+			if (inputTextBox.Text != ResourceText.EMPTY)
+				return true;
+
+			inputTextBox.BackColor = Color.Red;
+			inputTextBox.SelectAll();
+
+			MessageBox.Show(ResourceText.MsgIPFault, ResourceText.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+			return false;
 		}
+
+		private bool checkfield(TextBox inputTextBox, int MIN, int MAX)
+		{
+			int variable = 0;
+			inputTextBox.BackColor = Color.Empty;
+
+			if (int.TryParse(inputTextBox.Text, out variable))
+			{
+				if (variable <= MAX && variable >= MIN)
+					return true;
+			}
+
+			inputTextBox.BackColor = Color.Red;
+			inputTextBox.SelectAll();
+
+			MessageBox.Show(ResourceText.MsgIPFault, ResourceText.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+			return false;
+		}
+
+		private void textboxinit()
+		{
+			textBoxUsername.Text = ResourceText.ValueUsername;
+			textBoxPassword.Text = ResourceText.ValuePassword;
+			textBoxServer.Text = ResourceText.ValueServer;
+			textBoxPort.Text = ResourceText.ValuePort;
+
+			textBoxCert.Text = ResourceText.ValueCertificate;
+
+			textBoxUsername.ForeColor = Color.LightGray;
+			textBoxPassword.ForeColor = Color.LightGray;
+			textBoxServer.ForeColor = Color.LightGray;
+			textBoxPort.ForeColor = Color.LightGray;
+		}
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		#endregion
+
+		#region Properties
+		//	+--------------------------------------------------+
+		//	|+++	System -> Properties					+++|
+		//	+--------------------------------------------------+
+
+		public int GetId
+		{
+			get
+			{
+				return _selectedid;
+			}
+		}
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		#endregion
 	}
 }

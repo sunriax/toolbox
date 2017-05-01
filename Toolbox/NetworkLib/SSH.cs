@@ -52,11 +52,11 @@ namespace NetworkLib
 		{
 			// Variablen überprüfen
 			if (ipadress == ResourceText.EMPTY)
-				throw new Exception(CreateException(ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionIP));
+				throw new Exception(Handler.CreateException(ResourceText.Message, ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionIP));
 			if (username == ResourceText.EMPTY)
-				throw new Exception(CreateException(ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionUser));
-			if (String2Int(port, 22) > _maxport)
-				throw new Exception(CreateException(ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionPort));
+				throw new Exception(Handler.CreateException(ResourceText.Message, ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionUser));
+			if (Tool.String2Int(port, 22) > _maxport)
+				throw new Exception(Handler.CreateException(ResourceText.Message, ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionPort));
 
 			// Klassenvariablen beschreiben
 			_ipaddress = ipadress;
@@ -65,7 +65,7 @@ namespace NetworkLib
 			_password = password;
 
 			// Passwort basierte Verbindung erstellen
-			_connection = new ConnectionInfo(ipadress, String2Int(port, 22), username, new AuthenticationMethod[] { new PasswordAuthenticationMethod(username, password) });
+			_connection = new ConnectionInfo(ipadress, Tool.String2Int(port, 22), username, new AuthenticationMethod[] { new PasswordAuthenticationMethod(username, password) });
 		}
 
 		// Konstruktor zur Verbindungseinstellung mittels Zertifikat
@@ -73,13 +73,13 @@ namespace NetworkLib
 		{
 			// Variablen überprüfen
 			if (ipadress == ResourceText.EMPTY)
-				throw new Exception(CreateException(ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionIP));
+				throw new Exception(Handler.CreateException(ResourceText.Message, ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionIP));
 			if (username == ResourceText.EMPTY)
-				throw new Exception(CreateException(ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionUser));
-			if (String2Int(port, 22) > _maxport)
-				throw new Exception(CreateException(ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionPort));
+				throw new Exception(Handler.CreateException(ResourceText.Message, ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionUser));
+			if (Tool.String2Int(port, 22) > _maxport)
+				throw new Exception(Handler.CreateException(ResourceText.Message, ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionPort));
 			if (certificate == ResourceText.EMPTY)
-				throw new Exception(CreateException(ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionCertificate));
+				throw new Exception(Handler.CreateException(ResourceText.Message, ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionCertificate));
 
 			// Klassenvariablen beschreiben
 			_ipaddress = ipadress;
@@ -89,7 +89,7 @@ namespace NetworkLib
 			_passphrase = passphrase;
 
 			// Zertifikat basierte Verbindung erstellen
-			_connection = new ConnectionInfo(ipadress, String2Int(port, 22), username, new PrivateKeyAuthenticationMethod(username, new PrivateKeyFile[] { new PrivateKeyFile(@certificate, passphrase) }));
+			_connection = new ConnectionInfo(ipadress, Tool.String2Int(port, 22), username, new PrivateKeyAuthenticationMethod(username, new PrivateKeyFile[] { new PrivateKeyFile(@certificate, passphrase) }));
 		}
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		#endregion
@@ -103,7 +103,7 @@ namespace NetworkLib
 		public bool SSHconnect()
 		{
 			if (_connection == null)
-				throw new Exception(CreateException(ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionConnectionFailed));
+				throw new Exception(Handler.CreateException(ResourceText.Message, ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionConnectionFailed));
 
 			try
 			{
@@ -113,7 +113,7 @@ namespace NetworkLib
 			{
 				_connection = null;
 				_ssh = null;
-				throw new Exception(CreateException(ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionSSHclient));
+				throw new Exception(Handler.CreateException(ResourceText.Message, ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionSSHclient));
 			}
 
 			try
@@ -124,9 +124,8 @@ namespace NetworkLib
 			{
 				_connection = null;
 				_ssh = null;
-				throw new Exception(CreateException(ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionSSHconnect));
+				throw new Exception(Handler.CreateException(ResourceText.Message, ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionSSHconnect));
 			}
-
 			return true;
 		}
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -141,7 +140,7 @@ namespace NetworkLib
 		public bool SFTPconnect()
 		{
 			if (_connection == null)
-				throw new Exception(CreateException(ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionConnectionFailed));
+				throw new Exception(Handler.CreateException(ResourceText.Message, ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionConnectionFailed));
 
 			try
 			{
@@ -151,7 +150,7 @@ namespace NetworkLib
 			{
 				_connection = null;
 				_sftp = null;
-				throw new Exception(CreateException(ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionSFTPclient));
+				throw new Exception(Handler.CreateException(ResourceText.Message, ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionSFTPclient));
 			}
 
 			try
@@ -162,7 +161,7 @@ namespace NetworkLib
 			{
 				_connection = null;
 				_sftp = null;
-				throw new Exception(CreateException(ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionSFTPconnect));
+				throw new Exception(Handler.CreateException(ResourceText.Message, ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionSFTPconnect));
 			}
 
 			return true;
@@ -179,7 +178,7 @@ namespace NetworkLib
 		public string SSHexec(string command)
 		{
 			if (_ssh == null)
-				throw new Exception(CreateException(ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionSSHconnect));
+				throw new Exception(Handler.CreateException(ResourceText.Message, ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionSSHconnect));
 
 			if (!_ssh.IsConnected)
 				return ResourceText.sshFaultNoConnection;
@@ -198,7 +197,7 @@ namespace NetworkLib
 		public void SFTPupload(string localdir, string filename, string uploaddir)
 		{
 			if (_sftp == null)
-				throw new Exception(CreateException(ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionSFTPclient));
+				throw new Exception(Handler.CreateException(ResourceText.Message, ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionSFTPclient));
 
 			if (!_sftp.IsConnected)
 				return;
@@ -332,7 +331,7 @@ namespace NetworkLib
 		{
 			get
 			{
-				return String2Int(_port, -1);
+				return Tool.String2Int(_port, -1);
 			}
 		}
 
@@ -360,14 +359,14 @@ namespace NetworkLib
 			get
 			{
 				if (_ssh == null)
-					throw new Exception(CreateException(ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionSSHconnect));
+					throw new Exception(Handler.CreateException(ResourceText.Message, ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionSSHconnect));
 
 				if (_ssh.IsConnected)
 				{
-					string username = ReplaceLinebreak(SSHexec(ResourceText.BashgetUser));
+					string username = Tool.ReplaceLinebreak(SSHexec(ResourceText.BashgetUser));
 
-					if (ReplaceLinebreak(SSHexec(ResourceText.BashHome + username + ResourceText.BashApp + " " + ResourceText.BashAppTest)) == ResourceText.TRUE)
-						if(ReplaceLinebreak(SSHexec(ResourceText.BashgetFilePremission + ResourceText.BashHome + username + ResourceText.BashApp)) == "744")
+					if (Tool.ReplaceLinebreak(SSHexec(ResourceText.BashHome + username + ResourceText.BashApp + " " + ResourceText.BashAppTest)) == ResourceText.TRUE)
+						if(Tool.ReplaceLinebreak(SSHexec(ResourceText.BashgetFilePremission + ResourceText.BashHome + username + ResourceText.BashApp)) == "744")
 							return true;
 					return false;
 				}
@@ -381,11 +380,11 @@ namespace NetworkLib
 			get
 			{
 				if (_ssh == null)
-					throw new Exception(CreateException(ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionSSHconnect));
+					throw new Exception(Handler.CreateException(ResourceText.Message, ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionSSHconnect));
 
 				if (_ssh.IsConnected)
 				{
-					string username = ReplaceLinebreak(SSHexec(ResourceText.BashgetUser));
+					string username = Tool.ReplaceLinebreak(SSHexec(ResourceText.BashgetUser));
 
 					if (GetBashTool == true)
 						return SSHexec(ResourceText.BashHome + username + ResourceText.BashApp + " " + ResourceText.BashAppVersion);
@@ -409,45 +408,14 @@ namespace NetworkLib
 			get
 			{
 				if (_ssh == null)
-					throw new Exception(CreateException(ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionBashUserQuery));
+					throw new Exception(Handler.CreateException(ResourceText.Message, ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionBashUserQuery));
 
 				if (_ssh.IsConnected)
 				{
-					return ReplaceLinebreak(SSHexec(ResourceText.BashgetUser));
+					return Tool.ReplaceLinebreak(SSHexec(ResourceText.BashgetUser));
 				}
 				return ResourceText.NotAvileable;
 			}
-		}
-		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		#endregion
-
-		#region Lokal
-		//	+--------------------------------------------------+
-		//	|+++	Lokale Funktionen						+++|
-		//	+--------------------------------------------------+
-
-		// Funktion zum erzeugen von Exception Texten
-		private string CreateException(string ExceptionClass, string ExceptionFunction, string ExceptionFault)
-		{
-			string create = ExceptionClass + "->" + ExceptionFunction + "(" + ResourceText.Message + ": " + ExceptionFault + ")";
-			return create;
-		}
-
-		// Funktion zum umwandeln von String 2 Int
-		private int String2Int(string text, int convert)
-		{
-			// Überprüfen ob Variable konvertierbar ist
-			if (int.TryParse(text, out convert))
-				if (convert < int.MaxValue && convert > int.MinValue)
-					return convert;
-
-			return convert;
-		}
-
-		// Funktion zum ersezten von Zeilenumbrüchen und Wagenrücklauf
-		private string ReplaceLinebreak(string InputString)
-		{
-			return InputString.Replace("\r\n", null).Replace("\r", null).Replace("\n", null);
 		}
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		#endregion

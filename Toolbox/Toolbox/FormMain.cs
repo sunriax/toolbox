@@ -1,4 +1,5 @@
 ﻿#define DEBUG
+//#undef DEBUG
 
 using System;
 using System.Collections.Generic;
@@ -20,26 +21,40 @@ using VersionLib;
 
 namespace Toolbox
 {
+	#region Datensruktur
+	//	+--------------------------------------------------+
+	//	|+++	Menüband - > Start						+++|
+	//	+--------------------------------------------------+
+
 	// Datenstruktur für Fensterübergabeparameter
 	public struct Parameter
 	{
 		public Ressource SystemApp;
 		public SSH SystemSSH;
 		public SSH SystemSFTP;
-		public Chiper SystemSecure;
 		public List<string[]> SystemPorts;
 		public Dictionary<int, Dictionary<string, string>> SystemAccount;
 	}
+	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	#endregion
 
 	public partial class FormMain : Form
 	{
-		// Systemparameter Struktur erzeugen
-		Parameter _SystemParameter = new Parameter();
+		#region Deklaration
+		//	+--------------------------------------------------+
+		//	|+++	Variablendeklaration					+++|
+		//	+--------------------------------------------------+
 
-		// Systemvariablen
-		private bool _restart = false;
+		Parameter _SystemParameter = new Parameter();   // Systemparameter Struktur erzeugen
+		private bool _restart = false;                  // Systemvariablen
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		#endregion
 
-		// Programmstart (Fensteraufruf)
+		#region Initialisierung
+		//	+--------------------------------------------------+
+		//	|+++	Komponenteninitialisierung				+++|
+		//	+--------------------------------------------------+
+
 		public FormMain()
 		{
 			#region Parameter
@@ -50,7 +65,6 @@ namespace Toolbox
 			// Systemparameter Initialisieren
 			_SystemParameter.SystemApp = new Ressource(Application.ExecutablePath);                 // Toolboxressource erzeugen
 			_SystemParameter.SystemSSH = null;                                                      // SSH Verindungsvariable
-			_SystemParameter.SystemSecure = new Chiper();											// Verschlüsselungsklasse initialisieren
 			_SystemParameter.SystemPorts = new List<string[]>();                                    // Array Liste zum Speichern der UART Porteinstellungen erzeugen
 			_SystemParameter.SystemAccount = new Dictionary<int, Dictionary<string, string>>();     // SSH Account Dictionary
 			//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -100,20 +114,27 @@ namespace Toolbox
 
 			InitializeComponent();
 
-			//	string encrypt = _SystemSecure.Encrypt("Blablabla12345", "asasdkewez2i371o3fdhx");
-			//	string decrypt = _SystemSecure.Decrypt(encrypt ,"asasdkewez2i371o3fdhx");
-
-			// Prüfen ob Debugmodus aktiven
+			#region Debug
+			//	+--------------------------------------------------+
+			//	|+++	Menüband - > Start						+++|
+			//	+--------------------------------------------------+
 #if (DEBUG)
 			MessageBox.Show(ResourceText.MsgDebugMode, ResourceText.Warning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
 			// Debug Modus aktiviert in Main Frame anzeigen
 			groupBoxDebug.Visible = true;
 #endif
+			//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+			#endregion
+
+			//	string encrypt = _SystemSecure.Encrypt("Blablabla12345", "asasdkewez2i371o3fdhx");
+			//	string decrypt = _SystemSecure.Decrypt(encrypt ,"asasdkewez2i371o3fdhx");
 
 			// Version auf Mainframe einstellen
 			labelVersionNr.Text = ResourceText.ProgramVersion;
 		}
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		#endregion
 
 		#region Start
 		//	+--------------------------------------------------+
@@ -357,10 +378,10 @@ namespace Toolbox
 			#endregion
 			#endregion
 
-			#region Hilfe
-			//	+--------------------------------------------------+
-			//	|+++	Menüband - > Hilfe						+++|
-			//	+--------------------------------------------------+
+		#region Hilfe
+		//	+--------------------------------------------------+
+		//	|+++	Menüband - > Hilfe						+++|
+		//	+--------------------------------------------------+
 
 		private void GithubToolStripMenuItem_Click(object sender, EventArgs e)
 		{
@@ -397,6 +418,7 @@ namespace Toolbox
 		//	+--------------------------------------------------+
 		//	|+++	Form -> Funktionen						+++|
 		//	+--------------------------------------------------+
+
 		private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			if (_restart == true)

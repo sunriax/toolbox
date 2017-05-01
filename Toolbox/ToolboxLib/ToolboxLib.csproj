@@ -50,6 +50,7 @@
     </Compile>
     <Compile Include="Ressource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tool.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ResourceText.resx">

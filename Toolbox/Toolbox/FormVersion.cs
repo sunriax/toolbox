@@ -1,4 +1,7 @@
-﻿using System;
+﻿#define DEBUG
+//#undef DEBUG
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,13 +17,23 @@ namespace Toolbox
 {
 	public partial class FormVersion : Form
 	{
+		#region Deklaration
+		//	+--------------------------------------------------+
+		//	|+++	Variablendeklaration					+++|
+		//	+--------------------------------------------------+
 
 		Parameter _systemparameter;
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		#endregion
+
+		#region Initialisierung
+		//	+--------------------------------------------------+
+		//	|+++	Komponenteninitialisierung				+++|
+		//	+--------------------------------------------------+
 
 		public FormVersion(Parameter SystemParameter)
 		{
 			InitializeComponent();
-
 			_systemparameter = SystemParameter;
 
 			// Program Versionen aus Hauptprogramm entnehmen
@@ -42,5 +55,7 @@ namespace Toolbox
 			labelRenciSSH.Text = ResourceText.RenciSSHText;
 			linkLabelRenciSSH.Text = ResourceText.RenciSSHLink;
 		}
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		#endregion
 	}
 }

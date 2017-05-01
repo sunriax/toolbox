@@ -9,24 +9,17 @@ using ToolboxLib.Language;
 
 namespace ToolboxLib
 {
-	public class Chiper
+	public static class Chiper
 	{
 		private const int _maxkeylength = 2048;
 		private const int _maxrepeat = 4096;
 
-		private int _keylength;
-		private int _repeat;
-		private int _blocksize;
-		
-		public Chiper()
-		{
-			_keylength = 256;	// Schlüssellänge
-			_repeat = 2048;		// Wiederholungen
-			_blocksize = 8;		// 2^_blocksize = 256
-		}
+		private static int _keylength = 256;
+		private static int _repeat = 2048;
+		private static int _blocksize = 8;
 
 		// Nachstehende funktionen gefunden auf http://stackoverflow.com/questions/10168240/encrypting-decrypting-a-string-in-c-sharp
-		public string Encrypt(string plaintext, string passphrase)
+		public static string Encrypt(string plaintext, string passphrase)
 		{
 			byte[] saltbytes = Generate256BitsOfRandomEntropy();
 			byte[] ivbytes = Generate256BitsOfRandomEntropy();
@@ -60,7 +53,7 @@ namespace ToolboxLib
 			return Convert.ToBase64String(chiperbytes);
 		}
 
-		public string Decrypt(string chiperstring, string passphrase)
+		public static string Decrypt(string chiperstring, string passphrase)
 		{
 			byte[] chiperbytessaltiv = Convert.FromBase64String(chiperstring);
 			byte[] saltbytes = chiperbytessaltiv.Take(_keylength / 8).ToArray();
@@ -101,13 +94,24 @@ namespace ToolboxLib
 			return randomBytes;
 		}
 
+
+		public static int CalcPolynom(double a, double b, double c, double d, int x, bool direction)
+		{
+			double polynom_0 = (a * Math.Pow(x, 3) + b * Math.Pow(x, 2) + c * x + d);
+			double polynom_1 = (3 * a * Math.Pow(x ,2) + 2 * b * x + c);
+			double polynom_2 = (6 * a * x + 2 * b);
+
+			return (int)(polynom_0 + polynom_1 + polynom_2);
+		}
+
+
 		#region Lokal
 		//	+--------------------------------------------------+
 		//	|+++	Lokale Funktionen						+++|
 		//	+--------------------------------------------------+
 
 		// Funktion zum erzeugen von Exception Texten
-		private string CreateException(string ExceptionClass, string ExceptionFunction, string ExceptionFault)
+		private static string CreateException(string ExceptionClass, string ExceptionFunction, string ExceptionFault)
 		{
 			string create = ExceptionClass + "->" + ExceptionFunction + "(" + ResourceText.Message + ": " + ExceptionFault + ")";
 			return create;

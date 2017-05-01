@@ -1,4 +1,7 @@
-﻿using System;
+﻿#define DEBUG
+//#undef DEBUG
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -18,37 +21,60 @@ namespace Toolbox
 {
 	public partial class FormLinux : Form
 	{
+		#region Deklaration
+		//	+--------------------------------------------------+
+		//	|+++	Variablendeklaration					+++|
+		//	+--------------------------------------------------+
+
+		// Standard IP Adresse
 		private int _IPByte1 = 192;
 		private int _IPByte2 = 168;
 		private int _IPByte3 = 132;
 		private int _IPByte4 = 130;
 
-		private int _IPport = 22;
-		private int _accountid = -1;
+		private int _IPport = 22;				// Standard IP Port für SSH Verbindungen
+		private int _accountid = -1;			// Variable zum anzeigen welcher Account ausgewählt wurde
 
-		private bool _AuthCERT = false;
-		private bool _AuthPWD = false;
+		private bool _AuthCERT = false;			// Flag Variable zum anzeigen ob Zertifikat Authentifizierung
+		private bool _AuthPWD = false;			// Flag Variable zum anzeigen ob Paswort Authentifizierung
 
-		private Parameter _systemparameter;
+		private Parameter _systemparameter;		// Lokale Systemparameter Variable
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		#endregion
+
+		#region Initialisierung
+		//	+--------------------------------------------------+
+		//	|+++	Komponenteninitialisierung				+++|
+		//	+--------------------------------------------------+
 
 		public FormLinux(Parameter SystemParameter)
 		{
 			InitializeComponent();
-
 			_systemparameter = SystemParameter;
 
 			if(_systemparameter.SystemSSH != null)
-			{
 				makelabel(labelConnection, Color.Green, ResourceText.ConnectionEstablished);
-			}
 
+			#region Debug
+			//	+--------------------------------------------------+
+			//	|+++	Debugmodus								+++|
+			//	+--------------------------------------------------+
+#if (DEBUG)
 			// IP Adresse Initialisieren
 			textBoxIPByte1.Text = _IPByte1.ToString();
 			textBoxIPByte2.Text = _IPByte2.ToString();
 			textBoxIPByte3.Text = _IPByte3.ToString();
 			textBoxIPByte4.Text = _IPByte4.ToString();
 			textBoxPort.Text = _IPport.ToString();
+#endif
+			//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+			#endregion
 
+			#region Authentifizierung
+			//	+--------------------------------------------------+
+			//	|+++	Menüband - > Start						+++|
+			//	+--------------------------------------------------+
+			
 			// Überprüfen ob Authentifizierung eingestellt
 			if (_systemparameter.SystemAccount[0][ResourceText.keyMode] == ResourceText.AuthModeCERT)
 			{
@@ -67,7 +93,11 @@ namespace Toolbox
 			{
 				groupBoxSetting.Enabled = false;
 			}
+			//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+			#endregion
 		}
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		#endregion
 
 		#region Start
 		//	+--------------------------------------------------+
@@ -157,6 +187,11 @@ namespace Toolbox
 			if (Form == DialogResult.Cancel || Form == DialogResult.Abort)
 				return;
 		}
+
+		private void HelpSupportToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			// Menüband -> Hilfe -> Hilfe/Support
+		}
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		#endregion
 
@@ -164,6 +199,27 @@ namespace Toolbox
 		//	+--------------------------------------------------+
 		//	|+++	Form -> Funktionen						+++|
 		//	+--------------------------------------------------+
+
+		private void FormLinux_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			DialogResult result = DialogResult.OK;
+
+			// Abfragen ob Dialog wirklich geschlossen werden soll wenn keine Verbindung hergestellt
+			if (_systemparameter.SystemSSH == null)
+				result = MessageBox.Show(ResourceText.MsgDialogExit, ResourceText.Hint, MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+
+			// Wenn Abbrechen dann Schließen unterbrechen
+			if (result == DialogResult.Cancel)
+				e.Cancel = true;
+		}
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		#endregion
+
+		#region Events
+		//	+--------------------------------------------------+
+		//	|+++	Form -> Events							+++|
+		//	+--------------------------------------------------+
+
 		private void buttonConnect_Click(object sender, EventArgs e)
 		{
 			if (!checkipaddress(textBoxIPByte1, textBoxIPByte2, textBoxIPByte3, textBoxIPByte4, textBoxPort))
@@ -227,19 +283,6 @@ namespace Toolbox
 				return;
 			}
 		}
-
-		private void FormLinux_FormClosing(object sender, FormClosingEventArgs e)
-		{
-			DialogResult result = DialogResult.OK;
-
-			// Abfragen ob Dialog wirklich geschlossen werden soll wenn keine Verbindung hergestellt
-			if (_systemparameter.SystemSSH == null)
-				result = MessageBox.Show(ResourceText.MsgDialogExit, ResourceText.Hint, MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
-
-			// Wenn Abbrechen dann Schließen unterbrechen
-			if (result == DialogResult.Cancel)
-				e.Cancel = true;
-		}
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		#endregion
 
@@ -289,6 +332,8 @@ namespace Toolbox
 		//	+--------------------------------------------------+
 		//	|+++	System -> Properties					+++|
 		//	+--------------------------------------------------+
+
+		// Rückgabe der aufgebauten SSH Verbindung
 		public SSH GetConnection
 		{
 			get
@@ -297,6 +342,7 @@ namespace Toolbox
 			}
 		}
 
+		// Rückgabe welcher Account verwendet
 		public int GetAccountId
 		{
 			get
@@ -304,9 +350,7 @@ namespace Toolbox
 				return _accountid;
 			}
 		}
-
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		#endregion
-
 	}
 }

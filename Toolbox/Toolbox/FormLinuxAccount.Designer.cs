@@ -440,6 +440,7 @@
 			this.HelpSupportToolStripMenuItem.Name = "HelpSupportToolStripMenuItem";
 			this.HelpSupportToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.HelpSupportToolStripMenuItem.Text = "Hilfe/Support";
+			this.HelpSupportToolStripMenuItem.Click += new System.EventHandler(this.HelpSupportToolStripMenuItem_Click);
 			// 
 			// labelChoose
 			// 

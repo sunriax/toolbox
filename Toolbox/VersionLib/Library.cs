@@ -10,17 +10,17 @@ namespace VersionLib
 {
 	static public class Library
 	{
-		static private string _ClassUART = ResourceText.NotAvileable;
-		static private string _ClassFIFO = ResourceText.NotAvileable;
-		static private string _ClassJTAG = ResourceText.NotAvileable;
-		static private string _ClassSSH = ResourceText.NotAvileable;
-		static private string _ClassIMAGE = ResourceText.NotAvileable;
-		static private string _BashTool = ResourceText.NotAvileable;
+		private static string _ClassUART = ResourceText.NotAvileable;
+		private static string _ClassFIFO = ResourceText.NotAvileable;
+		private static string _ClassJTAG = ResourceText.NotAvileable;
+		private static string _ClassSSH = ResourceText.NotAvileable;
+		private static string _ClassIMAGE = ResourceText.NotAvileable;
+		private static string _BashTool = ResourceText.NotAvileable;
 
 		// Klassen mit leeren Konstruktoren erzeugen
-		static private SSH _ssh = new SSH();
+		private static SSH _ssh = new SSH();
 
-		static public string ClassSSH
+		public static string ClassSSH
 		{
 			get
 			{
@@ -37,7 +37,7 @@ namespace VersionLib
 			}
 		}
 
-		static public string ClassUART
+		public static string ClassUART
 		{
 			get
 			{
@@ -45,7 +45,7 @@ namespace VersionLib
 			}
 		}
 
-		static public string ClassFIFO
+		public static string ClassFIFO
 		{
 			get
 			{
@@ -53,7 +53,7 @@ namespace VersionLib
 			}
 		}
 
-		static public string ClassJTAG
+		public static string ClassJTAG
 		{
 			get
 			{
@@ -61,7 +61,7 @@ namespace VersionLib
 			}
 		}
 
-		static public string ClassIMAGE
+		public static string ClassIMAGE
 		{
 			get
 			{
@@ -69,7 +69,7 @@ namespace VersionLib
 			}
 		}
 
-		static public string BashTool
+		public static string BashTool
 		{
 			get
 			{

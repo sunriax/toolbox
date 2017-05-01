@@ -1,4 +1,7 @@
-﻿using System;
+﻿#define DEBUG
+//#undef DEBUG
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,6 +19,11 @@ namespace Toolbox
 {
 	public partial class FormPort : Form
 	{
+		#region Deklaration
+		//	+--------------------------------------------------+
+		//	|+++	Variablendeklaration					+++|
+		//	+--------------------------------------------------+
+
 		private bool _saved = false;
 		private Parameter _systemparameter;
 
@@ -23,11 +31,17 @@ namespace Toolbox
 		private string[] _combobox_speed = { ResourceUART.SPEED_921600, ResourceUART.SPEED_115200, ResourceUART.SPEED_19200, ResourceUART.SPEED_9600 };
 		private string[] _combobox_method = { ResourceUART.COM8N1, ResourceUART.COM8N2, ResourceUART.COM8E1, ResourceUART.COM8E2, ResourceUART.COM8O1, ResourceUART.COM8O2 };
 		private string[] _combobox_ports = SerialPort.GetPortNames();
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		#endregion
+
+		#region Initialisierung
+		//	+--------------------------------------------------+
+		//	|+++	Initialisierung							+++|
+		//	+--------------------------------------------------+
 
 		public FormPort(Parameter SystemParameter)
 		{
 			InitializeComponent();
-
 			_systemparameter = SystemParameter;
 
 			// ComboBox Beschreibung Initialisieren
@@ -45,6 +59,8 @@ namespace Toolbox
 				buttonRemove.Enabled = true;
 			}
 		}
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		#endregion
 
 		#region Start
 		//	+--------------------------------------------------+
@@ -77,9 +93,9 @@ namespace Toolbox
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		#endregion
 
-		#region Form
+		#region Events
 		//	+--------------------------------------------------+
-		//	|+++	Form -> Funktionen						+++|
+		//	|+++	Form -> Events							+++|
 		//	+--------------------------------------------------+
 		private void buttonAdd_Click(object sender, EventArgs e)
 		{
@@ -134,7 +150,13 @@ namespace Toolbox
 				}
 			}
 		}
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		#endregion
 
+		#region Form
+		//	+--------------------------------------------------+
+		//	|+++	Form -> Funktionen						+++|
+		//	+--------------------------------------------------+
 		private void FormPort_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			DialogResult result = DialogResult.OK;

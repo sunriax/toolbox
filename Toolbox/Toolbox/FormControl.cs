@@ -1,4 +1,7 @@
-﻿using System;
+﻿#define DEBUG
+//#undef DEBUG
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,18 +17,30 @@ using VersionLib;
 
 namespace Toolbox
 {
-
 	public partial class FormControl : Form
 	{
+		#region Deklaration
+		//	+--------------------------------------------------+
+		//	|+++	Variablendeklaration					+++|
+		//	+--------------------------------------------------+
+		
 		// Systemparameter
 		private Parameter _systemparameter;
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		#endregion
 
+		#region Initialisierung
+		//	+--------------------------------------------------+
+		//	|+++	Komponenteninitialisierung				+++|
+		//	+--------------------------------------------------+
+		
 		public FormControl(Parameter SystemParameter)
 		{
 			InitializeComponent();
-
 			_systemparameter = SystemParameter;
 		}
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		#endregion
 
 		#region Start
 		//	+--------------------------------------------------+
@@ -76,7 +91,6 @@ namespace Toolbox
 		{
 
 		}
-
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		#endregion
 

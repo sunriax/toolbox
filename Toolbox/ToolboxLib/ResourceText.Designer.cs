@@ -70,6 +70,15 @@ namespace ToolboxLib.Language {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  ähnelt.
+        /// </summary>
+        internal static string EMPTY {
+            get {
+                return ResourceManager.GetString("EMPTY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Chiper() ähnelt.
         /// </summary>
         internal static string ExceptionChiper {
@@ -88,6 +97,60 @@ namespace ToolboxLib.Language {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Datensatz zu lange (&gt;&gt;int.MaxLength) ähnelt.
+        /// </summary>
+        internal static string ExceptionDataLength {
+            get {
+                return ResourceManager.GetString("ExceptionDataLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Der angegebene Pfad ist nicht verfügbar ähnelt.
+        /// </summary>
+        internal static string ExceptionDirectoryNotExist {
+            get {
+                return ResourceManager.GetString("ExceptionDirectoryNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Der Dateiname enthält keinen Wert ähnelt.
+        /// </summary>
+        internal static string ExceptionFileNameEmpty {
+            get {
+                return ResourceManager.GetString("ExceptionFileNameEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Datei wurde nicht gefunden ähnelt.
+        /// </summary>
+        internal static string ExceptionFileNotFound {
+            get {
+                return ResourceManager.GetString("ExceptionFileNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Dateigröße überschreitet zulässigen Maximalwert (&gt;&gt;int.MaxLength) ähnelt.
+        /// </summary>
+        internal static string ExceptionFileSize {
+            get {
+                return ResourceManager.GetString("ExceptionFileSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Handler() ähnelt.
+        /// </summary>
+        internal static string ExceptionHandler {
+            get {
+                return ResourceManager.GetString("ExceptionHandler", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Variable IP Adresse leer! ähnelt.
         /// </summary>
         internal static string ExceptionIP {
@@ -97,11 +160,29 @@ namespace ToolboxLib.Language {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die ReadCSV() ähnelt.
+        /// </summary>
+        internal static string ExceptionReadCSV {
+            get {
+                return ResourceManager.GetString("ExceptionReadCSV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Eingabe fehlerhaft (Daten zu groß/klein) ähnelt.
         /// </summary>
         internal static string ExceptionSize {
             get {
                 return ResourceManager.GetString("ExceptionSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die WriteCSV() ähnelt.
+        /// </summary>
+        internal static string ExceptionWriteCSV {
+            get {
+                return ResourceManager.GetString("ExceptionWriteCSV", resourceCulture);
             }
         }
         
