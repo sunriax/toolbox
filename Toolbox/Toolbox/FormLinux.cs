@@ -26,25 +26,26 @@ namespace Toolbox
 		//	|+++	Variablendeklaration					+++|
 		//	+--------------------------------------------------+
 
-		// Standard IP Adresse
-		private int _IPByte1 = 192;
-		private int _IPByte2 = 168;
-		private int _IPByte3 = 132;
-		private int _IPByte4 = 130;
+		// Wird nur Initialisiert wenn DEBUG definiert, ansonsten wird
+		// die standard IP-Adresse übernommen die in den jeweiligen
+		// Textboxen hinterlegt sind.
+		private int _IPByte1 = 192;			// IP-Adresse 1. Byte (192)
+		private int _IPByte2 = 168;         // IP-Adresse 2. Byte (168)
+		private int _IPByte3 = 132;         // IP-Adresse 3. Byte (0)
+		private int _IPByte4 = 130;         // IP-Adresse 4. Byte (1)
 
-		private int _IPport = 22;				// Standard IP Port für SSH Verbindungen
-		private int _accountid = -1;			// Variable zum anzeigen welcher Account ausgewählt wurde
+		private int _IPport = 22;			// Standard IP Port für SSH Verbindungen
+		private int _accountid = -1;        // Variable zum anzeigen welcher Account ausgewählt wurde
 
-		private bool _AuthCERT = false;			// Flag Variable zum anzeigen ob Zertifikat Authentifizierung
-		private bool _AuthPWD = false;			// Flag Variable zum anzeigen ob Paswort Authentifizierung
+		private bool _mode = false;			// False = Passwort / True = Zertifikat
 
-		private Parameter _systemparameter;		// Lokale Systemparameter Variable
+		private Parameter _systemparameter; // Lokale Systemparameter Variable
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		#endregion
 
 		#region Initialisierung
 		//	+--------------------------------------------------+
-		//	|+++	Komponenteninitialisierung				+++|
+		//	|+++	Form/Komponenteninitialisierung			+++|
 		//	+--------------------------------------------------+
 
 		public FormLinux(Parameter SystemParameter)
@@ -52,49 +53,43 @@ namespace Toolbox
 			InitializeComponent();
 			_systemparameter = SystemParameter;
 
+			// Überprüfen ob SSH Verbindung vorhanden
 			if(_systemparameter.SystemSSH != null)
 				makelabel(labelConnection, Color.Green, ResourceText.ConnectionEstablished);
 
-			#region Debug
-			//	+--------------------------------------------------+
-			//	|+++	Debugmodus								+++|
-			//	+--------------------------------------------------+
 #if (DEBUG)
-			// IP Adresse Initialisieren
+			// IP Adresse (Textbox) mit internen Werten beschreiben
 			textBoxIPByte1.Text = _IPByte1.ToString();
 			textBoxIPByte2.Text = _IPByte2.ToString();
 			textBoxIPByte3.Text = _IPByte3.ToString();
 			textBoxIPByte4.Text = _IPByte4.ToString();
+
+			// Port (Textbox) mit internen Werten beschreiben
 			textBoxPort.Text = _IPport.ToString();
 #endif
-			//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-			#endregion
 
-			#region Authentifizierung
-			//	+--------------------------------------------------+
-			//	|+++	Menüband - > Start						+++|
-			//	+--------------------------------------------------+
-			
-			// Überprüfen ob Authentifizierung eingestellt
-			if (_systemparameter.SystemAccount[0][ResourceText.keyMode] == ResourceText.AuthModeCERT)
+			// Überprüfen ob Passwort-Authentifizierung eingestellt
+			if (_systemparameter.SystemAccount[0][ResourceText.keyMode] == ResourceText.AuthModePWD)
 			{
-				_AuthCERT = true;
 				labelAuthMethod.Visible = true;
-				labelAuthMethod.Text = ResourceText.AuthCERT;
+				makelabel(labelAuthMethod, Color.Empty, ResourceText.AuthPWD);
+				_mode = false;
+			}
+			// Überprüfen ob Zertifikat-Authentifizierung eingestellt
+			else if (_systemparameter.SystemAccount[0][ResourceText.keyMode] == ResourceText.AuthModeCERT)
+			{
+				labelAuthMethod.Visible = true;
+				makelabel(labelAuthMethod, Color.Empty, ResourceText.AuthCERT);
+				_mode = true;
 
 			}
-			else if (_systemparameter.SystemAccount[0][ResourceText.keyMode] == ResourceText.AuthModePWD)
-			{
-				_AuthPWD = true;
-				labelAuthMethod.Visible = true;
-				labelAuthMethod.Text = ResourceText.AuthPWD;
-			}
+			// Wenn kein Authentifizierungsmodus gewählt Groupbox deaktivieren
 			else
 			{
-				groupBoxSetting.Enabled = false;
+				makelabel(labelAuthMethod, Color.Red, ResourceText.ConnectionNoAuthMode);
+				buttonConnect.Enabled = false;		// Verbindungstest Button deaktivieren
+				groupBoxSetting.Enabled = false;    // Authentifizierungsgroupbox deaktivieren
 			}
-			//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-			#endregion
 		}
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		#endregion
@@ -140,34 +135,110 @@ namespace Toolbox
 		{
 			// Menüband -> Einstellungen -> Account
 			// PORT Konfiguration Fenster öffnen
-			FormLinuxAccount FormPointer = new FormLinuxAccount(_systemparameter);
+			FormAuthMethod FormPointer = new FormAuthMethod(_systemparameter);
 			DialogResult Form = FormPointer.ShowDialog();
 
-			_accountid = FormPointer.GetId;
+			_accountid = FormPointer.GetAccountId;
 
 			// Rücksprung aus Account Fenster behandeln
-			if (Form == DialogResult.Cancel || Form == DialogResult.Abort)
-				return;
+			// if (Form == DialogResult.Cancel || Form == DialogResult.Abort)
+			//	return;
+
+			// Überprüfen ob Passwort-Authentifizierung eingestellt
+			if (_systemparameter.SystemAccount[_accountid][ResourceText.keyMode] == ResourceText.AuthModePWD)
+			{
+				labelAuthMethod.Visible = true;
+				makelabel(labelAuthMethod, Color.Empty, ResourceText.AuthPWD);
+			}
+			// Überprüfen ob Zertifikat-Authentifizierung eingestellt
+			else if (_systemparameter.SystemAccount[_accountid][ResourceText.keyMode] == ResourceText.AuthModeCERT)
+			{
+				labelAuthMethod.Visible = true;
+				makelabel(labelAuthMethod, Color.Empty, ResourceText.AuthCERT);
+
+			}
+			// Wenn kein Authentifizierungsmodus gewählt Groupbox deaktivieren
+			else
+			{
+				makelabel(labelAuthMethod, Color.Red, ResourceText.ConnectionNoAuthMode);
+				buttonConnect.Enabled = false;      // Verbindungstest Button deaktivieren
+				groupBoxSetting.Enabled = false;    // Authentifizierungsgroupbox deaktivieren
+			}
+
 		}
 
 		private void certToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			// Menüband -> Einstellungen -> Authetifizierung -> Zertifikat
-			groupBoxSetting.Enabled = true;
-			labelAuthMethod.Visible = true;
-			labelAuthMethod.Text = ResourceText.AuthCERT;
-			_AuthCERT = true;
-			_AuthPWD = false;
+			_mode = true;
+
+			if (_accountid < 0)
+			{
+				for(int i=0; i < _systemparameter.SystemAccount.Count; i++)
+				{
+					if(_systemparameter.SystemAccount[i][ResourceText.keyMode] == ResourceText.AuthCERT)
+					{
+						_accountid = i;
+						break;
+					}
+					else
+					{
+						_accountid = -1;
+					}
+				}
+			}
+
+			// Überprüfen ob Account gefunden
+			if(_accountid >= 0 && _systemparameter.SystemAccount[_accountid][ResourceText.keyMode] == ResourceText.AuthModeCERT)
+			{
+				buttonConnect.Enabled = true;
+				groupBoxSetting.Enabled = true;
+				labelAuthMethod.Visible = true;
+				makelabel(labelAuthMethod, Color.Empty, ResourceText.AuthCERT);
+			}
+			else
+			{
+				buttonConnect.Enabled = false;
+				groupBoxSetting.Enabled = false;
+				makelabel(labelAuthMethod, Color.Red, ResourceText.ConnectionNoAccount);
+			}
 		}
 
 		private void usernamePasswortToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			// Menüband -> Einstellungen -> Authentifizierung -> Benutzer/Passwort
-			groupBoxSetting.Enabled = true;
-			labelAuthMethod.Visible = true;
-			labelAuthMethod.Text = ResourceText.AuthPWD;
-			_AuthPWD = true;
-			_AuthCERT = false;
+			_mode = false;
+
+			if (_accountid < 0)
+			{
+				for (int i = 0; i < _systemparameter.SystemAccount.Count; i++)
+				{
+					if (_systemparameter.SystemAccount[i][ResourceText.keyMode] == ResourceText.AuthPWD)
+					{
+						_accountid = i;
+						break;
+					}
+					else
+					{
+						_accountid = -1;
+					}
+				}
+			}
+
+			// Überprüfen ob Account gefunden
+			if (_accountid >= 0 && _systemparameter.SystemAccount[_accountid][ResourceText.keyMode] == ResourceText.AuthModePWD)
+			{
+				buttonConnect.Enabled = true;
+				groupBoxSetting.Enabled = true;
+				labelAuthMethod.Visible = true;
+				makelabel(labelAuthMethod, Color.Empty, ResourceText.AuthPWD);
+			}
+			else
+			{
+				buttonConnect.Enabled = false;
+				groupBoxSetting.Enabled = false;
+				makelabel(labelAuthMethod, Color.Red, ResourceText.ConnectionNoAccount);
+			}
 		}
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		#endregion

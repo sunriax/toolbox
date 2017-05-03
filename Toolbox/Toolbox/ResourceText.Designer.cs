@@ -142,6 +142,24 @@ namespace Toolbox.Language {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die tabPageCertificate ähnelt.
+        /// </summary>
+        public static string AuthTabCertificate {
+            get {
+                return ResourceManager.GetString("AuthTabCertificate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die tabPageUser ähnelt.
+        /// </summary>
+        public static string AuthTabUser {
+            get {
+                return ResourceManager.GetString("AuthTabUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die toolbox ähnelt.
         /// </summary>
         public static string AuthUsername {
@@ -214,6 +232,24 @@ namespace Toolbox.Language {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die kein Account gefunden ähnelt.
+        /// </summary>
+        public static string ConnectionNoAccount {
+            get {
+                return ResourceManager.GetString("ConnectionNoAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die kein Authentifizierungsmodus ähnelt.
+        /// </summary>
+        public static string ConnectionNoAuthMode {
+            get {
+                return ResourceManager.GetString("ConnectionNoAuthMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Verbinden... ähnelt.
         /// </summary>
         public static string ConnectionRun {
@@ -264,6 +300,15 @@ namespace Toolbox.Language {
         public static string Information {
             get {
                 return ResourceManager.GetString("Information", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die certificate ähnelt.
+        /// </summary>
+        public static string keyCertificate {
+            get {
+                return ResourceManager.GetString("keyCertificate", resourceCulture);
             }
         }
         
@@ -435,6 +480,15 @@ namespace Toolbox.Language {
         public static string MsgSameData {
             get {
                 return ResourceManager.GetString("MsgSameData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die IP-Adresse/Namen konnte nicht aufgelöst werden ähnelt.
+        /// </summary>
+        public static string MsgServerFault {
+            get {
+                return ResourceManager.GetString("MsgServerFault", resourceCulture);
             }
         }
         

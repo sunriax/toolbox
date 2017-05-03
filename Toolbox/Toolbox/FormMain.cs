@@ -34,6 +34,7 @@ namespace Toolbox
 		public SSH SystemSFTP;
 		public List<string[]> SystemPorts;
 		public Dictionary<int, Dictionary<string, string>> SystemAccount;
+		public Dictionary<int, Dictionary<string, string>> SystemCertificate;
 	}
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	#endregion
@@ -57,23 +58,7 @@ namespace Toolbox
 
 		public FormMain()
 		{
-			#region Parameter
-			//	+--------------------------------------------------+
-			//	|+++	System Parameter initialisieren			+++|
-			//	+--------------------------------------------------+
-
-			// Systemparameter Initialisieren
-			_SystemParameter.SystemApp = new Ressource(Application.ExecutablePath);                 // Toolboxressource erzeugen
-			_SystemParameter.SystemSSH = null;                                                      // SSH Verindungsvariable
-			_SystemParameter.SystemPorts = new List<string[]>();                                    // Array Liste zum Speichern der UART Porteinstellungen erzeugen
-			_SystemParameter.SystemAccount = new Dictionary<int, Dictionary<string, string>>();     // SSH Account Dictionary
-			//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-			#endregion
-
-			#region Language
-			//	+--------------------------------------------------+
-			//	|+++	Sprache Initialisieren					+++|
-			//	+--------------------------------------------------+
+			// Sprache Initialisieren
 			try
 			{
 				// Überprüfen ob Systemsprache verwendet werden soll
@@ -94,38 +79,29 @@ namespace Toolbox
 			{
 				MessageBox.Show(ResourceText.MsgLanguageNotFound, ResourceText.Information, MessageBoxButtons.OK ,MessageBoxIcon.Information);
 			}
-			//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-			#endregion
-
-			#region Account
-			//	+--------------------------------------------------+
-			//	|+++	Standard Accountdaten initialisieren	+++|
-			//	+--------------------------------------------------+
-			_SystemParameter.SystemAccount[0] = new Dictionary<string, string>();
-
-			// Standardbenutzeraccount aus Appconfig Initialiseren
-			_SystemParameter.SystemAccount[0].Add(ResourceText.keyMode,		_SystemParameter.SystemApp.GetValue(ResourceText.keyMode));
-			_SystemParameter.SystemAccount[0].Add(ResourceText.keyUsername, _SystemParameter.SystemApp.GetValue(ResourceText.keyUsername));
-			_SystemParameter.SystemAccount[0].Add(ResourceText.keyPassword, _SystemParameter.SystemApp.GetValue(ResourceText.keyPassword));
-			_SystemParameter.SystemAccount[0].Add(ResourceText.keyServer,	_SystemParameter.SystemApp.GetValue(ResourceText.keyServer));
-			_SystemParameter.SystemAccount[0].Add(ResourceText.keyPort,		_SystemParameter.SystemApp.GetValue(ResourceText.keyPort));
-			//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-			#endregion
 
 			InitializeComponent();
 
-			#region Debug
-			//	+--------------------------------------------------+
-			//	|+++	Menüband - > Start						+++|
-			//	+--------------------------------------------------+
+			// Systemparameter Initialisieren
+			_SystemParameter.SystemApp = new Ressource(Application.ExecutablePath);                 // Toolboxressource erzeugen
+			_SystemParameter.SystemSSH = null;                                                      // SSH Verindungsvariable
+			_SystemParameter.SystemPorts = new List<string[]>();                                    // Array Liste zum Speichern der UART Porteinstellungen erzeugen
+			_SystemParameter.SystemAccount = new Dictionary<int, Dictionary<string, string>>();     // SSH Account Dictionary
+
+			// Standardbenutzeraccount aus Appconfig laden
+			_SystemParameter.SystemAccount[0] = new Dictionary<string, string>();
+			_SystemParameter.SystemAccount[0].Add(ResourceText.keyMode,		_SystemParameter.SystemApp.GetValue(ResourceText.keyMode));
+			_SystemParameter.SystemAccount[0].Add(ResourceText.keyUsername,	_SystemParameter.SystemApp.GetValue(ResourceText.keyUsername));
+			_SystemParameter.SystemAccount[0].Add(ResourceText.keyPassword,	_SystemParameter.SystemApp.GetValue(ResourceText.keyPassword));
+			_SystemParameter.SystemAccount[0].Add(ResourceText.keyServer,	_SystemParameter.SystemApp.GetValue(ResourceText.keyServer));
+			_SystemParameter.SystemAccount[0].Add(ResourceText.keyPort,		_SystemParameter.SystemApp.GetValue(ResourceText.keyPort));
+
 #if (DEBUG)
 			MessageBox.Show(ResourceText.MsgDebugMode, ResourceText.Warning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
 			// Debug Modus aktiviert in Main Frame anzeigen
 			groupBoxDebug.Visible = true;
 #endif
-			//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-			#endregion
 
 			//	string encrypt = _SystemSecure.Encrypt("Blablabla12345", "asasdkewez2i371o3fdhx");
 			//	string decrypt = _SystemSecure.Decrypt(encrypt ,"asasdkewez2i371o3fdhx");

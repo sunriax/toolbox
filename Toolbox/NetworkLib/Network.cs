@@ -51,13 +51,13 @@ namespace NetworkLib
 			}
 
 			// Überprüfen ob IP-Bytes gültig sind
-			if (!Tool.checknumber(ipbytes[0], 1, 254))
+			if (!Tool.CheckNumeric(ipbytes[0], 1, 254))
 				return false;
-			if (!Tool.checknumber(ipbytes[1], 0, 254))
+			if (!Tool.CheckNumeric(ipbytes[1], 0, 254))
 				return false;
-			if (!Tool.checknumber(ipbytes[2], 0, 254))
+			if (!Tool.CheckNumeric(ipbytes[2], 0, 254))
 				return false;
-			if (!Tool.checknumber(ipbytes[3], 1, 254))
+			if (!Tool.CheckNumeric(ipbytes[3], 1, 254))
 				return false;
 
 			// Rückgabe wenn alle Bedingungne erfüllt sind
@@ -66,12 +66,20 @@ namespace NetworkLib
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		#endregion
 
-		#region PingHost
-		//	+--------------------------------------------------+
-		//	|+++	Funktionen -> pinghost					+++|
-		//	+--------------------------------------------------+
+		// Prüft einen Hostnamen auf Richtigkeit
+		public static bool CheckHost(string hostname)
+		{
+			if(Uri.CheckHostName(hostname) == UriHostNameType.Unknown)
+				return false;
+			return true;
+		}
 
-		// Versucht einen hostnamen begrenzt durch einen Timeout anzupingen
+		#region PingHost
+			//	+--------------------------------------------------+
+			//	|+++	Funktionen -> pinghost					+++|
+			//	+--------------------------------------------------+
+
+			// Versucht einen hostnamen begrenzt durch einen Timeout anzupingen
 		public static bool PingHost(string hostname, int timeout)
 		{
 			Ping ping = new Ping();
@@ -85,9 +93,8 @@ namespace NetworkLib
 			{
 				if (CheckIP(reply.Address.ToString()))
 					return true;
-				return false;
 			}
-			return true;
+			return false;
 		}
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		#endregion
@@ -101,7 +108,10 @@ namespace NetworkLib
 		public static bool PingIP(string ipaddress, int timeout)
 		{
 			Ping ping = new Ping();
-			IPAddress address = IPAddress.Parse(ipaddress);
+			IPAddress address = null;
+
+			if (!IPAddress.TryParse(ipaddress, out address))
+				return false;
 
 			// Buffer mit 2 Bytes erzeugen
 			byte[] buffer = Encoding.ASCII.GetBytes(_data);
@@ -112,15 +122,18 @@ namespace NetworkLib
 			{
 				if (CheckIP(reply.Address.ToString()))
 					return true;
-				return false;
 			}
-			return true;
+			return false;
 		}
 
 		public static bool PingIP(byte[] ipaddress, int timeout)
 		{
 			Ping ping = new Ping();
-			IPAddress address = IPAddress.Parse(ipaddress[0].ToString() + ResourceText.IPdelimiter + ipaddress[1].ToString() + ResourceText.IPdelimiter + ipaddress[2].ToString() + ResourceText.IPdelimiter + ipaddress[3].ToString());
+			IPAddress address = null;
+			string ipstring = ipaddress[0].ToString() + ResourceText.IPdelimiter + ipaddress[1].ToString() + ResourceText.IPdelimiter + ipaddress[2].ToString() + ResourceText.IPdelimiter + ipaddress[3].ToString();
+
+			if (!IPAddress.TryParse(ipstring, out address))
+				return false;
 
 			// Buffer mit 2 Bytes erzeugen
 			string data = ResourceText.pingDATA;
@@ -132,9 +145,8 @@ namespace NetworkLib
 			{
 				if (CheckIP(reply.Address.ToString()))
 					return true;
-				return false;
 			}
-			return true;
+			return false;
 		}
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		#endregion

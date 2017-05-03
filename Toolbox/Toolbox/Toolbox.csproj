@@ -53,6 +53,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormAuthMethod.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAuthMethod.Designer.cs">
+      <DependentUpon>FormAuthMethod.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormControl.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -64,12 +70,6 @@
     </Compile>
     <Compile Include="FormLinux.Designer.cs">
       <DependentUpon>FormLinux.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormLinuxAccount.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormLinuxAccount.Designer.cs">
-      <DependentUpon>FormLinuxAccount.cs</DependentUpon>
     </Compile>
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
@@ -121,14 +121,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ResourceUART.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="FormAuthMethod.resx">
+      <DependentUpon>FormAuthMethod.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormControl.resx">
       <DependentUpon>FormControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormLinux.resx">
       <DependentUpon>FormLinux.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormLinuxAccount.resx">
-      <DependentUpon>FormLinuxAccount.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>

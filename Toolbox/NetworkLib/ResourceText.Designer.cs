@@ -313,7 +313,7 @@ namespace NetworkLib.Language {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die AB ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die AAAA ähnelt.
         /// </summary>
         internal static string pingDATA {
             get {

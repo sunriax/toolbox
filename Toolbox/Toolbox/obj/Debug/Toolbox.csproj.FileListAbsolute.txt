@@ -83,7 +83,6 @@ C:\Users\local\Documents\GitHub\toolbox\Toolbox\Toolbox\bin\Debug\VersionLib.pdb
 C:\Users\local\Documents\GitHub\toolbox\Toolbox\Toolbox\obj\Debug\Toolbox.csprojResolveAssemblyReference.cache
 C:\Users\local\Documents\GitHub\toolbox\Toolbox\Toolbox\obj\Debug\Toolbox.FormControl.resources
 C:\Users\local\Documents\GitHub\toolbox\Toolbox\Toolbox\obj\Debug\Toolbox.FormLinux.resources
-C:\Users\local\Documents\GitHub\toolbox\Toolbox\Toolbox\obj\Debug\Toolbox.FormLinuxAccount.resources
 C:\Users\local\Documents\GitHub\toolbox\Toolbox\Toolbox\obj\Debug\Toolbox.FormMain.resources
 C:\Users\local\Documents\GitHub\toolbox\Toolbox\Toolbox\obj\Debug\Toolbox.FormPort.resources
 C:\Users\local\Documents\GitHub\toolbox\Toolbox\Toolbox\obj\Debug\Toolbox.FormVersion.resources
@@ -98,3 +97,4 @@ C:\Users\local\Documents\GitHub\toolbox\Toolbox\Toolbox\bin\Debug\ToolboxLib.dll
 C:\Users\local\Documents\GitHub\toolbox\Toolbox\Toolbox\bin\Debug\ToolboxLib.pdb
 C:\Users\local\Documents\GitHub\toolbox\Toolbox\Toolbox\obj\Debug\Toolbox.ResourceFlag.resources
 C:\Users\local\Documents\GitHub\toolbox\Toolbox\Toolbox\obj\Debug\Toolbox.ResourceLinux.resources
+C:\Users\local\Documents\GitHub\toolbox\Toolbox\Toolbox\obj\Debug\Toolbox.FormAuthMethod.resources

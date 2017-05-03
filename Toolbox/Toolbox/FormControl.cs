@@ -24,14 +24,14 @@ namespace Toolbox
 		//	|+++	Variablendeklaration					+++|
 		//	+--------------------------------------------------+
 		
-		// Systemparameter
 		private Parameter _systemparameter;
+
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		#endregion
 
 		#region Initialisierung
 		//	+--------------------------------------------------+
-		//	|+++	Komponenteninitialisierung				+++|
+		//	|+++	Form/Komponenteninitialisierung			+++|
 		//	+--------------------------------------------------+
 		
 		public FormControl(Parameter SystemParameter)

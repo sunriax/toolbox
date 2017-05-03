@@ -312,4 +312,22 @@
   <data name="Slash" xml:space="preserve">
     <value>/</value>
   </data>
+  <data name="ConnectionNoAuthMode" xml:space="preserve">
+    <value>kein Authentifizierungsmodus</value>
+  </data>
+  <data name="ConnectionNoAccount" xml:space="preserve">
+    <value>kein Account gefunden</value>
+  </data>
+  <data name="keyCertificate" xml:space="preserve">
+    <value>certificate</value>
+  </data>
+  <data name="MsgServerFault" xml:space="preserve">
+    <value>IP-Adresse/Namen konnte nicht aufgelöst werden</value>
+  </data>
+  <data name="AuthTabCertificate" xml:space="preserve">
+    <value>tabPageCertificate</value>
+  </data>
+  <data name="AuthTabUser" xml:space="preserve">
+    <value>tabPageUser</value>
+  </data>
 </root>
