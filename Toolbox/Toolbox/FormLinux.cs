@@ -36,8 +36,7 @@ namespace Toolbox
 
 		private int _IPport = 22;			// Standard IP Port für SSH Verbindungen
 		private int _accountid = -1;        // Variable zum anzeigen welcher Account ausgewählt wurde
-
-		private bool _mode = false;			// False = Passwort / True = Zertifikat
+		private bool _authentification= false;
 
 		private Parameter _systemparameter; // Lokale Systemparameter Variable
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -52,6 +51,9 @@ namespace Toolbox
 		{
 			InitializeComponent();
 			_systemparameter = SystemParameter;
+
+			_authentification = _systemparameter.AccountType;
+			_accountid = _systemparameter.AccountId;
 
 			// Überprüfen ob SSH Verbindung vorhanden
 			if(_systemparameter.SystemSSH != null)
@@ -69,19 +71,18 @@ namespace Toolbox
 #endif
 
 			// Überprüfen ob Passwort-Authentifizierung eingestellt
-			if (_systemparameter.SystemAccount[0][ResourceText.keyMode] == ResourceText.AuthModePWD)
+			if (_authentification == false && _systemparameter.SystemAccount[_accountid][ResourceText.keyMode] == ResourceText.AuthModePWD)
 			{
 				labelAuthMethod.Visible = true;
 				makelabel(labelAuthMethod, Color.Empty, ResourceText.AuthPWD);
-				_mode = false;
+				_authentification = false;
 			}
 			// Überprüfen ob Zertifikat-Authentifizierung eingestellt
-			else if (_systemparameter.SystemAccount[0][ResourceText.keyMode] == ResourceText.AuthModeCERT)
+			else if (_authentification == true && _systemparameter.SystemCertificate[_accountid][ResourceText.keyMode] == ResourceText.AuthModeCERT)
 			{
 				labelAuthMethod.Visible = true;
 				makelabel(labelAuthMethod, Color.Empty, ResourceText.AuthCERT);
-				_mode = true;
-
+				_authentification = true;
 			}
 			// Wenn kein Authentifizierungsmodus gewählt Groupbox deaktivieren
 			else
@@ -139,19 +140,23 @@ namespace Toolbox
 			DialogResult Form = FormPointer.ShowDialog();
 
 			_accountid = FormPointer.GetAccountId;
+			_authentification = FormPointer.GetAuthentification;
+
+			_systemparameter.AccountId = _accountid;
+			_systemparameter.AccountType = _authentification;
 
 			// Rücksprung aus Account Fenster behandeln
 			// if (Form == DialogResult.Cancel || Form == DialogResult.Abort)
 			//	return;
 
 			// Überprüfen ob Passwort-Authentifizierung eingestellt
-			if (_systemparameter.SystemAccount[_accountid][ResourceText.keyMode] == ResourceText.AuthModePWD)
+			if (_authentification == false &&  _systemparameter.SystemAccount[_accountid][ResourceText.keyMode] == ResourceText.AuthModePWD)
 			{
 				labelAuthMethod.Visible = true;
 				makelabel(labelAuthMethod, Color.Empty, ResourceText.AuthPWD);
 			}
 			// Überprüfen ob Zertifikat-Authentifizierung eingestellt
-			else if (_systemparameter.SystemAccount[_accountid][ResourceText.keyMode] == ResourceText.AuthModeCERT)
+			else if (_authentification == true && _systemparameter.SystemCertificate[_accountid][ResourceText.keyMode] == ResourceText.AuthModeCERT)
 			{
 				labelAuthMethod.Visible = true;
 				makelabel(labelAuthMethod, Color.Empty, ResourceText.AuthCERT);
@@ -164,17 +169,16 @@ namespace Toolbox
 				buttonConnect.Enabled = false;      // Verbindungstest Button deaktivieren
 				groupBoxSetting.Enabled = false;    // Authentifizierungsgroupbox deaktivieren
 			}
-
 		}
 
 		private void certToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			// Menüband -> Einstellungen -> Authetifizierung -> Zertifikat
-			_mode = true;
+			_authentification = true;
 
 			if (_accountid < 0)
 			{
-				for(int i=0; i < _systemparameter.SystemAccount.Count; i++)
+				for(int i=0; i < _systemparameter.SystemCertificate.Count; i++)
 				{
 					if(_systemparameter.SystemAccount[i][ResourceText.keyMode] == ResourceText.AuthCERT)
 					{
@@ -189,7 +193,7 @@ namespace Toolbox
 			}
 
 			// Überprüfen ob Account gefunden
-			if(_accountid >= 0 && _systemparameter.SystemAccount[_accountid][ResourceText.keyMode] == ResourceText.AuthModeCERT)
+			if(_accountid >= 0 && _systemparameter.SystemCertificate[_accountid][ResourceText.keyMode] == ResourceText.AuthModeCERT)
 			{
 				buttonConnect.Enabled = true;
 				groupBoxSetting.Enabled = true;
@@ -207,7 +211,7 @@ namespace Toolbox
 		private void usernamePasswortToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			// Menüband -> Einstellungen -> Authentifizierung -> Benutzer/Passwort
-			_mode = false;
+			_authentification = false;
 
 			if (_accountid < 0)
 			{
@@ -419,6 +423,14 @@ namespace Toolbox
 			get
 			{
 				return _accountid;
+			}
+		}
+
+		public bool GetAccountType
+		{
+			get
+			{
+				return _authentification;
 			}
 		}
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

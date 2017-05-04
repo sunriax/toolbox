@@ -83,11 +83,19 @@ namespace NetworkLib
 		public static bool PingHost(string hostname, int timeout)
 		{
 			Ping ping = new Ping();
+			PingReply reply;
 
 			// Buffer mit 2 Bytes erzeugen
 			byte[] buffer = Encoding.ASCII.GetBytes(_data);
 
-			PingReply reply = ping.Send(hostname, timeout, buffer);
+			try
+			{
+				reply = ping.Send(hostname, timeout, buffer);
+			}
+			catch
+			{
+				return false;
+			}
 
 			if (reply.Status == IPStatus.Success)
 			{
@@ -108,6 +116,7 @@ namespace NetworkLib
 		public static bool PingIP(string ipaddress, int timeout)
 		{
 			Ping ping = new Ping();
+			PingReply reply;
 			IPAddress address = null;
 
 			if (!IPAddress.TryParse(ipaddress, out address))
@@ -115,8 +124,15 @@ namespace NetworkLib
 
 			// Buffer mit 2 Bytes erzeugen
 			byte[] buffer = Encoding.ASCII.GetBytes(_data);
-
-			PingReply reply = ping.Send(address, timeout, buffer);
+			
+			try
+			{
+				reply = ping.Send(address, timeout, buffer);
+			}
+			catch
+			{
+				return false;
+			}
 
 			if (reply.Status == IPStatus.Success)
 			{
@@ -129,6 +145,7 @@ namespace NetworkLib
 		public static bool PingIP(byte[] ipaddress, int timeout)
 		{
 			Ping ping = new Ping();
+			PingReply reply;
 			IPAddress address = null;
 			string ipstring = ipaddress[0].ToString() + ResourceText.IPdelimiter + ipaddress[1].ToString() + ResourceText.IPdelimiter + ipaddress[2].ToString() + ResourceText.IPdelimiter + ipaddress[3].ToString();
 
@@ -139,7 +156,14 @@ namespace NetworkLib
 			string data = ResourceText.pingDATA;
 			byte[] buffer = Encoding.ASCII.GetBytes(data);
 
-			PingReply reply = ping.Send(address, timeout, buffer);
+			try
+			{
+				reply = ping.Send(address, timeout, buffer);
+			}
+			catch
+			{
+				return false;
+			}
 
 			if (reply.Status == IPStatus.Success)
 			{

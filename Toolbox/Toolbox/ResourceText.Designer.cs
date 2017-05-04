@@ -61,11 +61,11 @@ namespace Toolbox.Language {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die * ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Account|*.act;*.acn;*.elm;*.assh|Alle Dateien (*.*)|*.* ähnelt.
         /// </summary>
-        public static string AuthAllServer {
+        public static string AccountFileFilter {
             get {
-                return ResourceManager.GetString("AuthAllServer", resourceCulture);
+                return ResourceManager.GetString("AccountFileFilter", resourceCulture);
             }
         }
         
@@ -75,6 +75,15 @@ namespace Toolbox.Language {
         public static string AuthCERT {
             get {
                 return ResourceManager.GetString("AuthCERT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die /Certificate/ ähnelt.
+        /// </summary>
+        public static string AuthCertificatePath {
+            get {
+                return ResourceManager.GetString("AuthCertificatePath", resourceCulture);
             }
         }
         
@@ -165,15 +174,6 @@ namespace Toolbox.Language {
         public static string AuthUsername {
             get {
                 return ResourceManager.GetString("AuthUsername", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Certificate/ ähnelt.
-        /// </summary>
-        public static string CertificateDirPath {
-            get {
-                return ResourceManager.GetString("CertificateDirPath", resourceCulture);
             }
         }
         
@@ -313,6 +313,24 @@ namespace Toolbox.Language {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die path ähnelt.
+        /// </summary>
+        public static string keyCertificateName {
+            get {
+                return ResourceManager.GetString("keyCertificateName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die empty ähnelt.
+        /// </summary>
+        public static string keyEmpty {
+            get {
+                return ResourceManager.GetString("keyEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die ipaddress ähnelt.
         /// </summary>
         public static string keyIPAddress {
@@ -345,6 +363,15 @@ namespace Toolbox.Language {
         public static string keyNone {
             get {
                 return ResourceManager.GetString("keyNone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die passphrase ähnelt.
+        /// </summary>
+        public static string keyPassphrase {
+            get {
+                return ResourceManager.GetString("keyPassphrase", resourceCulture);
             }
         }
         
@@ -430,6 +457,15 @@ namespace Toolbox.Language {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Fehler beim kopieren des Zertifikates ähnelt.
+        /// </summary>
+        public static string MsgFileCopyFault {
+            get {
+                return ResourceManager.GetString("MsgFileCopyFault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Fehler in der IP-Adresse ähnelt.
         /// </summary>
         public static string MsgIPFault {
@@ -453,6 +489,15 @@ namespace Toolbox.Language {
         public static string MsgLanguageSetup {
             get {
                 return ResourceManager.GetString("MsgLanguageSetup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Kein Zertifikat hinzugefügt ähnelt.
+        /// </summary>
+        public static string MsgNoFileSelected {
+            get {
+                return ResourceManager.GetString("MsgNoFileSelected", resourceCulture);
             }
         }
         
@@ -534,6 +579,15 @@ namespace Toolbox.Language {
         public static string NotFound {
             get {
                 return ResourceManager.GetString("NotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die safhjweuds92723bsa2 ähnelt.
+        /// </summary>
+        public static string Passphrase {
+            get {
+                return ResourceManager.GetString("Passphrase", resourceCulture);
             }
         }
         

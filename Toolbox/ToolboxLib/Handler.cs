@@ -39,6 +39,40 @@ namespace ToolboxLib
 			return false.ToString();
 		}
 
+		public static bool WriteCSV(string path, string filename, char delimeter, string[][] data, bool append = false)
+		{
+			if (filename == ResourceText.EMPTY)
+				throw new Exception(CreateException(ResourceText.Message, ResourceText.ExceptionClass, ResourceText.ExceptionWriteCSV, ResourceText.ExceptionFileNameEmpty));
+
+			if (!CheckDirectory(path))
+				throw new Exception(CreateException(ResourceText.Message, ResourceText.ExceptionClass, ResourceText.ExceptionWriteCSV, ResourceText.ExceptionDirectoryNotExist));
+
+			// Weitere Prüfungen nichtnotwendig da später über Filedialog alles bereits abgeprüft
+			path = CheckDirectory(path, true);
+
+			StreamWriter datastream = new StreamWriter(path + filename, append);
+
+			// Zeile Eingabedaten + Seperator (ASCII)
+
+			if (data.Length >= int.MaxValue)
+				throw new Exception(CreateException(ResourceText.Message, ResourceText.ExceptionClass, ResourceText.ExceptionWriteCSV, ResourceText.ExceptionFileSize));
+
+			for (int i = 0; i < data.Length; i++)
+			{
+				if (data[i].Length > int.MaxValue)
+					throw new Exception(CreateException(ResourceText.Message, ResourceText.ExceptionClass, ResourceText.ExceptionWriteCSV, ResourceText.ExceptionDataLength));
+
+				for (int j = 0; j < data[i].Length; j++)
+				{
+					datastream.Write(data[i][j] + delimeter);
+				}
+				datastream.WriteLine();
+			}
+			datastream.Close();
+
+			return true;
+		}
+
 		public static bool WriteCSV(string path, string filename, char delimeter, List<string[]> data, bool append = false)
 		{
 			if(filename == ResourceText.EMPTY)
@@ -61,7 +95,7 @@ namespace ToolboxLib
 				if(data[i].Length > int.MaxValue)
 					throw new Exception(CreateException(ResourceText.Message, ResourceText.ExceptionClass, ResourceText.ExceptionWriteCSV, ResourceText.ExceptionDataLength));
 
-				for (int j = 0; j < data[0].Length; j++)
+				for (int j = 0; j < data[i].Length; j++)
 				{
 					datastream.Write(data[i][j] + delimeter);
 				}
@@ -100,12 +134,26 @@ namespace ToolboxLib
 			return true;
 		}
 
-		#region Lokal
-		//	+--------------------------------------------------+
-		//	|+++	Lokale Funktionen						+++|
-		//	+--------------------------------------------------+
+		public static bool FileCopy(string filename, string topath, bool delete = false)
+		{
+			if (!CheckDirectory(topath))
+				return false;
 
-		// Funktion zum erzeugen von Exception Texten
+			string filecopy = Path.GetFileName(filename);
+
+			if (delete == true)
+				File.Delete(topath + filecopy);
+			File.Copy(filename, topath + filecopy);
+
+			return true;
+		}
+
+		#region Lokal
+			//	+--------------------------------------------------+
+			//	|+++	Lokale Funktionen						+++|
+			//	+--------------------------------------------------+
+
+			// Funktion zum erzeugen von Exception Texten
 		public static string CreateException(string ExceptionMessage, string ExceptionClass, string ExceptionFunction, string ExceptionFault)
 		{
 			string create = ExceptionClass + "->" + ExceptionFunction + "(" + ExceptionMessage + ": " + ExceptionFault + ")";

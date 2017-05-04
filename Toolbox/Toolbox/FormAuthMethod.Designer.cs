@@ -71,6 +71,8 @@
 			this.labelAuthParameter = new System.Windows.Forms.Label();
 			this.labelChoosed = new System.Windows.Forms.Label();
 			this.openFileDialogCertificate = new System.Windows.Forms.OpenFileDialog();
+			this.saveFileDialogData = new System.Windows.Forms.SaveFileDialog();
+			this.openFileDialogData = new System.Windows.Forms.OpenFileDialog();
 			this.menuStrip1.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.tabPageUser.SuspendLayout();
@@ -555,5 +557,7 @@
 		private System.Windows.Forms.Button buttonCertificateAdd;
 		private System.Windows.Forms.Button buttonCertificateDelete;
 		private System.Windows.Forms.OpenFileDialog openFileDialogCertificate;
+		private System.Windows.Forms.SaveFileDialog saveFileDialogData;
+		private System.Windows.Forms.OpenFileDialog openFileDialogData;
 	}
 }

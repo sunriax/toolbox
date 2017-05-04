@@ -264,14 +264,8 @@
   <data name="ValuePort" xml:space="preserve">
     <value>22</value>
   </data>
-  <data name="AuthAllServer" xml:space="preserve">
-    <value>*</value>
-  </data>
   <data name="MsgSameData" xml:space="preserve">
     <value>Daten entsprechen den Standardeingabedaten, wirklich fortsetzten?</value>
-  </data>
-  <data name="CertificateDirPath" xml:space="preserve">
-    <value>Certificate/</value>
   </data>
   <data name="CertificateFileFilter" xml:space="preserve">
     <value>Zertifikate|*.crt;*.pem;*.cert;*.ssh|Alle Dateien (*.*)|*.*</value>
@@ -329,5 +323,29 @@
   </data>
   <data name="AuthTabUser" xml:space="preserve">
     <value>tabPageUser</value>
+  </data>
+  <data name="keyPassphrase" xml:space="preserve">
+    <value>passphrase</value>
+  </data>
+  <data name="AuthCertificatePath" xml:space="preserve">
+    <value>/Certificate/</value>
+  </data>
+  <data name="MsgNoFileSelected" xml:space="preserve">
+    <value>Kein Zertifikat hinzugefügt</value>
+  </data>
+  <data name="MsgFileCopyFault" xml:space="preserve">
+    <value>Fehler beim kopieren des Zertifikates</value>
+  </data>
+  <data name="keyCertificateName" xml:space="preserve">
+    <value>path</value>
+  </data>
+  <data name="keyEmpty" xml:space="preserve">
+    <value>empty</value>
+  </data>
+  <data name="AccountFileFilter" xml:space="preserve">
+    <value>Account|*.act;*.acn;*.elm;*.assh|Alle Dateien (*.*)|*.*</value>
+  </data>
+  <data name="Passphrase" xml:space="preserve">
+    <value>safhjweuds92723bsa2</value>
   </data>
 </root>

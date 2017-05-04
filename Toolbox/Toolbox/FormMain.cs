@@ -29,6 +29,9 @@ namespace Toolbox
 	// Datenstruktur für Fensterübergabeparameter
 	public struct Parameter
 	{
+		public int AccountId;
+		public bool AccountType;
+
 		public Ressource SystemApp;
 		public SSH SystemSSH;
 		public SSH SystemSFTP;
@@ -83,10 +86,13 @@ namespace Toolbox
 			InitializeComponent();
 
 			// Systemparameter Initialisieren
-			_SystemParameter.SystemApp = new Ressource(Application.ExecutablePath);                 // Toolboxressource erzeugen
-			_SystemParameter.SystemSSH = null;                                                      // SSH Verindungsvariable
-			_SystemParameter.SystemPorts = new List<string[]>();                                    // Array Liste zum Speichern der UART Porteinstellungen erzeugen
-			_SystemParameter.SystemAccount = new Dictionary<int, Dictionary<string, string>>();     // SSH Account Dictionary
+			_SystemParameter.SystemApp = new Ressource(Application.ExecutablePath);					// Toolboxressource erzeugen
+			_SystemParameter.SystemSSH = null;														// SSH Verindungsvariable
+			_SystemParameter.SystemPorts = new List<string[]>();									// Array Liste zum Speichern der UART Porteinstellungen erzeugen
+			_SystemParameter.SystemAccount = new Dictionary<int, Dictionary<string, string>>();		// SSH Account Dictionary
+			_SystemParameter.SystemCertificate = new Dictionary<int, Dictionary<string, string>>(); // SSH Account Dictionary
+			_SystemParameter.AccountId = 0;															// Primär verwendete AccountId
+			_SystemParameter.AccountType = false;													// Primär verwendeter Account Type
 
 			// Standardbenutzeraccount aus Appconfig laden
 			_SystemParameter.SystemAccount[0] = new Dictionary<string, string>();
@@ -95,6 +101,7 @@ namespace Toolbox
 			_SystemParameter.SystemAccount[0].Add(ResourceText.keyPassword,	_SystemParameter.SystemApp.GetValue(ResourceText.keyPassword));
 			_SystemParameter.SystemAccount[0].Add(ResourceText.keyServer,	_SystemParameter.SystemApp.GetValue(ResourceText.keyServer));
 			_SystemParameter.SystemAccount[0].Add(ResourceText.keyPort,		_SystemParameter.SystemApp.GetValue(ResourceText.keyPort));
+			_SystemParameter.SystemAccount[0].Add(ResourceText.keyEmpty,	ResourceText.EMPTY);
 
 #if (DEBUG)
 			MessageBox.Show(ResourceText.MsgDebugMode, ResourceText.Warning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -230,6 +237,8 @@ namespace Toolbox
 
 			// Verbindungen an Haupprogramm übergeben
 			_SystemParameter.SystemSSH = FormPointer.GetConnection;
+			_SystemParameter.AccountId = FormPointer.GetAccountId;
+			_SystemParameter.AccountType = FormPointer.GetAccountType;
 
 			// Überprüfen ob Verbindungen vorhanden
 			if (_SystemParameter.SystemSSH == null)
