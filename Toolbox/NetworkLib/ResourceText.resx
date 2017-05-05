@@ -238,4 +238,7 @@
   <data name="sshPASSWORD" xml:space="preserve">
     <value>acmesystems</value>
   </data>
+  <data name="Passphrase" xml:space="preserve">
+    <value>safhjweuds92723bsa2</value>
+  </data>
 </root>

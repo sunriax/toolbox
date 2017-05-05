@@ -111,7 +111,7 @@ namespace Toolbox
 #endif
 
 			//	string encrypt = _SystemSecure.Encrypt("Blablabla12345", "asasdkewez2i371o3fdhx");
-			//	string decrypt = _SystemSecure.Decrypt(encrypt ,"asasdkewez2i371o3fdhx");
+			//	string decrypt = Chiper.Decrypt("t5mfxj4Cyb5tWP8oUZlobtdGhPQZPTwm9UTeyxvf+NvROIHrmSSuS3p722zlpdVXAPuuUGmp+xY67rwIb8hycd13ophxL8lm4fToCahxOLv0rHHcBc6qIp9giXcaGKys", ResourceText.Passphrase);
 
 			// Version auf Mainframe einstellen
 			labelVersionNr.Text = ResourceText.ProgramVersion;

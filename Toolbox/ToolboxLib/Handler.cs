@@ -39,7 +39,7 @@ namespace ToolboxLib
 			return false.ToString();
 		}
 
-		public static bool WriteCSV(string path, string filename, char delimeter, string[][] data, bool append = false)
+		public static bool WriteCSV(string path, string filename, char delimeter, string[][] data, bool encrypt = false, bool append = false)
 		{
 			if (filename == ResourceText.EMPTY)
 				throw new Exception(CreateException(ResourceText.Message, ResourceText.ExceptionClass, ResourceText.ExceptionWriteCSV, ResourceText.ExceptionFileNameEmpty));
@@ -50,6 +50,7 @@ namespace ToolboxLib
 			// Weitere Prüfungen nichtnotwendig da später über Filedialog alles bereits abgeprüft
 			path = CheckDirectory(path, true);
 
+			string stream = null;
 			StreamWriter datastream = new StreamWriter(path + filename, append);
 
 			// Zeile Eingabedaten + Seperator (ASCII)
@@ -64,10 +65,17 @@ namespace ToolboxLib
 
 				for (int j = 0; j < data[i].Length; j++)
 				{
-					datastream.Write(data[i][j] + delimeter);
+					stream += (data[i][j] + delimeter);
+					// datastream.Write(data[i][j] + delimeter);
 				}
-				datastream.WriteLine();
+				stream += '\n'.ToString();
+				// datastream.WriteLine();
 			}
+
+			if(encrypt == true)
+				stream = Chiper.Encrypt(stream, ResourceText.Passphrase);
+
+			datastream.Write(stream);
 			datastream.Close();
 
 			return true;
@@ -82,6 +90,7 @@ namespace ToolboxLib
 				throw new Exception(CreateException(ResourceText.Message, ResourceText.ExceptionClass, ResourceText.ExceptionWriteCSV, ResourceText.ExceptionDirectoryNotExist));
 
 			// Weitere Prüfungen nichtnotwendig da später über Filedialog alles bereits abgeprüft
+			path = CheckDirectory(path, true);
 
 			StreamWriter datastream = new StreamWriter(path + filename, append);
 
@@ -106,9 +115,38 @@ namespace ToolboxLib
 			return true;
 		}
 
+		public static string[][] ReadCSV(string path, string filename, char delimeter)
+		{
+			List<string[]> data = new List<string[]>();
+			string linedata = null;
+
+			path = CheckDirectory(path, true);
+
+			if (filename == ResourceText.EMPTY)
+				throw new Exception(CreateException(ResourceText.Message, ResourceText.ExceptionClass, ResourceText.ExceptionReadCSV, ResourceText.ExceptionFileNameEmpty));
+
+			if (!CheckDirectory(path) || !CheckFile(path + filename))
+				throw new Exception(CreateException(ResourceText.Message, ResourceText.ExceptionClass, ResourceText.ExceptionReadCSV, ResourceText.ExceptionFileNotFound));
+
+			// Weitere Prüfungen nichtnotwendig da später über Filedialog alles bereits abgeprüft
+
+			StreamReader datastream = new StreamReader(path + filename);	
+
+			while ((linedata = datastream.ReadLine()) != null)
+			{
+				string[] seperateddata = linedata.Split(delimeter);
+				data.Add(seperateddata);
+			}
+			datastream.Close();
+
+			return data.ToArray();
+		}
+
 		public static bool ReadCSV(string path, string filename, char delimeter, List<string[]> data)
 		{
 			string linedata;
+
+			path = CheckDirectory(path, true);
 
 			if (filename == ResourceText.EMPTY)
 				throw new Exception(CreateException(ResourceText.Message, ResourceText.ExceptionClass, ResourceText.ExceptionReadCSV, ResourceText.ExceptionFileNameEmpty));
@@ -123,11 +161,7 @@ namespace ToolboxLib
 			while((linedata = datastream.ReadLine()) != null)
 			{
 				string[] seperateddata = linedata.Split(delimeter);
-
-				for(int i=0; i < seperateddata.Length; i++)
-				{
-					data[data.Count][i] = seperateddata[i];
-				}
+				data.Add(seperateddata);
 			}
 			datastream.Close();
 

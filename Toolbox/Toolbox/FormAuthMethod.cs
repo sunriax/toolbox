@@ -119,35 +119,112 @@ namespace Toolbox
 				for(int i=0; i < _systemparameter.SystemAccount.Count; i++)
 				{
 					data[i] = new string[_systemparameter.SystemAccount[i].Count + 1];
-					data[i][0] = i.ToString();
-					data[i][1] = _systemparameter.SystemAccount[i][ResourceText.keyMode];
-					data[i][2] = _systemparameter.SystemAccount[i][ResourceText.keyUsername];
-					data[i][3] = Chiper.Encrypt(_systemparameter.SystemAccount[i][ResourceText.keyPassword], ResourceText.Passphrase);
-					data[i][4] = _systemparameter.SystemAccount[i][ResourceText.keyServer];
-					data[i][5] = _systemparameter.SystemAccount[i][ResourceText.keyPort];
-					data[i][6] = _systemparameter.SystemAccount[i][ResourceText.keyEmpty];
+					data[i] = _systemparameter.SystemAccount[i].Values.ToArray();
 				}
 
 			if (_systemparameter.SystemCertificate.Count > 0)
 				for (int j = 0; j < _systemparameter.SystemCertificate.Count; j++)
 				{
 					data[_systemparameter.SystemAccount.Count + j] = new string[_systemparameter.SystemCertificate[j].Count + 1];
-					data[_systemparameter.SystemAccount.Count + j][0] = j.ToString();
-					data[_systemparameter.SystemAccount.Count + j][1] = _systemparameter.SystemCertificate[j][ResourceText.keyMode];
-					data[_systemparameter.SystemAccount.Count + j][2] = _systemparameter.SystemCertificate[j][ResourceText.keyCertificate];
-					data[_systemparameter.SystemAccount.Count + j][2] = _systemparameter.SystemCertificate[j][ResourceText.keyCertificateName];
-					data[_systemparameter.SystemAccount.Count + j][3] = Chiper.Encrypt(_systemparameter.SystemCertificate[j][ResourceText.keyPassphrase], ResourceText.Passphrase);
-					data[_systemparameter.SystemAccount.Count + j][4] = _systemparameter.SystemCertificate[j][ResourceText.keyServer];
-					data[_systemparameter.SystemAccount.Count + j][5] = _systemparameter.SystemCertificate[j][ResourceText.keyPort];
+					data[_systemparameter.SystemAccount.Count + j] = _systemparameter.SystemCertificate[j].Values.ToArray();
 				}
 
-			if(!Handler.WriteCSV(Path.GetDirectoryName(filename), Path.GetFileName(filename), '|', data))
+			if (!Handler.WriteCSV(Path.GetDirectoryName(filename), Path.GetFileName(filename), '|', data, false))
 				MessageBox.Show(ResourceText.MsgDialogExit, ResourceText.Hint, MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
 
 		}
 
 		private void FileOpenToolStripMenuItem_Click(object sender, EventArgs e)
 		{
+			int count = 0;
+
+			DialogResult Abort = DialogResult.OK;
+
+			if (listViewAccount.Items.Count > 0 || listViewCertificate.Items.Count > 0)
+				Abort = MessageBox.Show(ResourceText.MsgFileOpenOverwrite, ResourceText.Warning, MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+
+			if (Abort == DialogResult.Cancel)
+				return;
+
+			openFileDialogData.Filter = ResourceText.AccountFileFilter;
+
+			DialogResult FilePointer = openFileDialogData.ShowDialog();
+
+			if (FilePointer == DialogResult.Cancel || FilePointer == DialogResult.Abort)
+				return;
+
+			string filename = openFileDialogData.FileName;
+			string[][] data;
+
+			data = Handler.ReadCSV(Path.GetDirectoryName(filename), Path.GetFileName(filename), '|');
+
+			_systemparameter.SystemAccount.Clear();
+			_systemparameter.SystemCertificate.Clear();
+			listViewAccount.Items.Clear();
+			listViewCertificate.Items.Clear();
+
+			for (int i = 0; i < data.Length; i++)
+			{
+				if (data[i][0] == ResourceText.AuthModePWD)
+				{
+					_systemparameter.SystemAccount[count] = new Dictionary<string, string>();
+					_systemparameter.SystemAccount[count].Add(ResourceText.keyMode,		data[i][0]);
+					_systemparameter.SystemAccount[count].Add(ResourceText.keyUsername,	data[i][1]);
+					_systemparameter.SystemAccount[count].Add(ResourceText.keyPassword,	data[i][2]);
+					_systemparameter.SystemAccount[count].Add(ResourceText.keyServer,	data[i][3]);
+					_systemparameter.SystemAccount[count].Add(ResourceText.keyPort,		data[i][4]);
+					_systemparameter.SystemAccount[count].Add(ResourceText.keyEmpty,	ResourceText.EMPTY);
+
+					count++;
+				}
+			}
+
+			count = 0;
+
+			for (int i = 0; i < data.Length; i++)
+			{
+				if (data[i][0] == ResourceText.AuthModeCERT)
+				{
+					_systemparameter.SystemAccount[count] = new Dictionary<string, string>();
+					_systemparameter.SystemAccount[count].Add(ResourceText.keyMode,				data[i][0]);
+					_systemparameter.SystemAccount[count].Add(ResourceText.keyCertificate,		data[i][1]);
+					_systemparameter.SystemAccount[count].Add(ResourceText.keyCertificateName,	data[i][2]);
+					_systemparameter.SystemAccount[count].Add(ResourceText.keyPassword,			data[i][3]);
+					_systemparameter.SystemAccount[count].Add(ResourceText.keyServer,			data[i][4]);
+					_systemparameter.SystemAccount[count].Add(ResourceText.keyPort,				data[i][5]);
+
+					count++;
+				}
+			}
+
+			// Listview mit bestehenden Elementen füllen
+			for (int i = 0; i < _systemparameter.SystemAccount.Count; i++)
+			{
+				if (_systemparameter.SystemAccount[i][ResourceText.keyMode] == ResourceText.AuthModePWD)
+				{
+					string[] listviewitem = { listViewAccount.Items.Count.ToString(), _systemparameter.SystemAccount[i][ResourceText.keyUsername], ResourceText.SpacerPassword, _systemparameter.SystemAccount[i][ResourceText.keyServer], _systemparameter.SystemAccount[i][ResourceText.keyPort] };
+
+					ListViewItem item;
+					item = new ListViewItem(listviewitem);
+					listViewAccount.Items.Add(item);
+				}
+			}
+
+			// Listview mit bestehenden Elementen füllen
+			for (int i = 0; i < _systemparameter.SystemCertificate.Count; i++)
+			{
+				if (_systemparameter.SystemCertificate[i][ResourceText.keyMode] == ResourceText.AuthModeCERT)
+				{
+					string[] listviewitem = { listViewCertificate.Items.Count.ToString(), _systemparameter.SystemCertificate[i][ResourceText.keyCertificate], ResourceText.SpacerPassword, _systemparameter.SystemCertificate[i][ResourceText.keyServer], _systemparameter.SystemCertificate[i][ResourceText.keyPort] };
+
+					ListViewItem item;
+					item = new ListViewItem(listviewitem);
+					listViewCertificate.Items.Add(item);
+				}
+			}
+
+			_accountid = 0;
+			_authentification = false;
 
 		}
 
@@ -316,7 +393,7 @@ namespace Toolbox
 			_systemparameter.SystemAccount[listviewid] = new Dictionary<string, string>();
 			_systemparameter.SystemAccount[listviewid].Add(ResourceText.keyMode,		ResourceText.AuthModePWD);
 			_systemparameter.SystemAccount[listviewid].Add(ResourceText.keyUsername,	textBoxAccountUsername.Text);
-			_systemparameter.SystemAccount[listviewid].Add(ResourceText.keyPassword,	textBoxAccountPassword.Text);
+			_systemparameter.SystemAccount[listviewid].Add(ResourceText.keyPassword,	Chiper.Encrypt(textBoxAccountPassword.Text, ResourceText.Passphrase));
 			_systemparameter.SystemAccount[listviewid].Add(ResourceText.keyServer,		textBoxAccountServer.Text);
 			_systemparameter.SystemAccount[listviewid].Add(ResourceText.keyPort,		textBoxAccountPort.Text);
 			_systemparameter.SystemAccount[listviewid].Add(ResourceText.keyEmpty,		ResourceText.EMPTY);
@@ -532,7 +609,7 @@ namespace Toolbox
 			_systemparameter.SystemCertificate[listviewid].Add(ResourceText.keyMode, ResourceText.AuthModeCERT);
 			_systemparameter.SystemCertificate[listviewid].Add(ResourceText.keyCertificate, textBoxCertificateName.Text);
 			_systemparameter.SystemCertificate[listviewid].Add(ResourceText.keyCertificateName, Path.GetFileName(_certificate));
-			_systemparameter.SystemCertificate[listviewid].Add(ResourceText.keyPassphrase, textBoxCertificatePassphrase.Text);
+			_systemparameter.SystemCertificate[listviewid].Add(ResourceText.keyPassphrase, Chiper.Encrypt(textBoxCertificatePassphrase.Text, ResourceText.Passphrase));
 			_systemparameter.SystemCertificate[listviewid].Add(ResourceText.keyServer, textBoxCertificateServer.Text);
 			_systemparameter.SystemCertificate[listviewid].Add(ResourceText.keyPort, textBoxCertificatePort.Text);
 

@@ -62,7 +62,7 @@ namespace NetworkLib
 			_ipaddress = ipadress;
 			_username = username;
 			_port = port;
-			_password = password;
+			_password = Chiper.Decrypt(password, ResourceText.Passphrase);
 
 			// Passwort basierte Verbindung erstellen
 			_connection = new ConnectionInfo(ipadress, Tool.String2Int(port, 22), username, new AuthenticationMethod[] { new PasswordAuthenticationMethod(username, password) });
@@ -86,7 +86,7 @@ namespace NetworkLib
 			_port = port;
 			_username = username;
 			_certificate = certificate;
-			_passphrase = passphrase;
+			_passphrase = Chiper.Decrypt(passphrase, ResourceText.Passphrase);
 
 			// Zertifikat basierte Verbindung erstellen
 			_connection = new ConnectionInfo(ipadress, Tool.String2Int(port, 22), username, new PrivateKeyAuthenticationMethod(username, new PrivateKeyFile[] { new PrivateKeyFile(@certificate, passphrase) }));

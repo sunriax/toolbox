@@ -466,6 +466,15 @@ namespace Toolbox.Language {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Alle bestehenden Einträge werden überschrieben ähnelt.
+        /// </summary>
+        public static string MsgFileOpenOverwrite {
+            get {
+                return ResourceManager.GetString("MsgFileOpenOverwrite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Fehler in der IP-Adresse ähnelt.
         /// </summary>
         public static string MsgIPFault {

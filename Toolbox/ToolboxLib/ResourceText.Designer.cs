@@ -196,6 +196,15 @@ namespace ToolboxLib.Language {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die assaduewtmcvxcwemvch ähnelt.
+        /// </summary>
+        internal static string Passphrase {
+            get {
+                return ResourceManager.GetString("Passphrase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die / ähnelt.
         /// </summary>
         internal static string Slash {

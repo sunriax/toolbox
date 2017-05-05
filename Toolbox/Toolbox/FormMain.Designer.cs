@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
 			this.groupBoxDebug = new System.Windows.Forms.GroupBox();
 			this.labelError = new System.Windows.Forms.Label();
@@ -41,9 +42,6 @@
 			this.groupBoxFPGA = new System.Windows.Forms.GroupBox();
 			this.gb_FPGA_Text = new System.Windows.Forms.Label();
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-			this.labelVersionNr = new System.Windows.Forms.Label();
-			this.labelVersion = new System.Windows.Forms.Label();
-			this.pictureBoxLogo = new System.Windows.Forms.PictureBox();
 			this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.FileSaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.FileLoadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -79,6 +77,10 @@
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.UpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.GithubToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.labelVersionNr = new System.Windows.Forms.Label();
+			this.labelVersion = new System.Windows.Forms.Label();
+			this.pictureBoxLogo = new System.Windows.Forms.PictureBox();
+			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.groupBoxDebug.SuspendLayout();
 			this.groupBoxLinux.SuspendLayout();
 			this.groupBoxTool.SuspendLayout();
@@ -228,38 +230,6 @@
 			this.menuStrip1.TabIndex = 20;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
-			// labelVersionNr
-			// 
-			this.labelVersionNr.AutoSize = true;
-			this.labelVersionNr.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-			this.labelVersionNr.Location = new System.Drawing.Point(568, 418);
-			this.labelVersionNr.Name = "labelVersionNr";
-			this.labelVersionNr.Size = new System.Drawing.Size(27, 14);
-			this.labelVersionNr.TabIndex = 22;
-			this.labelVersionNr.Text = "1.0";
-			// 
-			// labelVersion
-			// 
-			this.labelVersion.AutoSize = true;
-			this.labelVersion.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-			this.labelVersion.Location = new System.Drawing.Point(509, 418);
-			this.labelVersion.Name = "labelVersion";
-			this.labelVersion.Size = new System.Drawing.Size(53, 14);
-			this.labelVersion.TabIndex = 21;
-			this.labelVersion.Text = "Version";
-			// 
-			// pictureBoxLogo
-			// 
-			this.pictureBoxLogo.BackgroundImage = global::Toolbox.ResourceImage.elmLogo;
-			this.pictureBoxLogo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-			this.pictureBoxLogo.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-			this.pictureBoxLogo.Location = new System.Drawing.Point(224, 116);
-			this.pictureBoxLogo.Margin = new System.Windows.Forms.Padding(0);
-			this.pictureBoxLogo.Name = "pictureBoxLogo";
-			this.pictureBoxLogo.Size = new System.Drawing.Size(180, 180);
-			this.pictureBoxLogo.TabIndex = 14;
-			this.pictureBoxLogo.TabStop = false;
-			// 
 			// startToolStripMenuItem
 			// 
 			this.startToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -320,7 +290,7 @@
             this.debugToolStripMenuItem1});
 			this.UARTToolStripMenuItem.Image = global::Toolbox.ResourceImage.Hardware;
 			this.UARTToolStripMenuItem.Name = "UARTToolStripMenuItem";
-			this.UARTToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.UARTToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
 			this.UARTToolStripMenuItem.Text = "UART";
 			// 
 			// eepromToolStripMenuItem
@@ -356,7 +326,7 @@
             this.xilinxToolStripMenuItem});
 			this.JTAGToolStripMenuItem.Image = global::Toolbox.ResourceImage.Deploy;
 			this.JTAGToolStripMenuItem.Name = "JTAGToolStripMenuItem";
-			this.JTAGToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.JTAGToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
 			this.JTAGToolStripMenuItem.Text = "JTAG";
 			// 
 			// xilinxToolStripMenuItem
@@ -376,7 +346,7 @@
             this.controlToolStripMenuItem});
 			this.NetworkToolStripMenuItem.Image = global::Toolbox.ResourceImage.NetworkDiagram;
 			this.NetworkToolStripMenuItem.Name = "NetworkToolStripMenuItem";
-			this.NetworkToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.NetworkToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
 			this.NetworkToolStripMenuItem.Text = "Network";
 			this.NetworkToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
 			// 
@@ -423,7 +393,7 @@
             this.raw2ImageToolStripMenuItem});
 			this.ImageToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("ImageToolStripMenuItem.Image")));
 			this.ImageToolStripMenuItem.Name = "ImageToolStripMenuItem";
-			this.ImageToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.ImageToolStripMenuItem.Size = new System.Drawing.Size(94, 22);
 			this.ImageToolStripMenuItem.Text = "Bild";
 			// 
 			// image2RawToolStripMenuItem
@@ -535,7 +505,7 @@
 			// 
 			this.VersionToolStripMenuItem.Image = global::Toolbox.ResourceImage.VersionTime;
 			this.VersionToolStripMenuItem.Name = "VersionToolStripMenuItem";
-			this.VersionToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.VersionToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
 			this.VersionToolStripMenuItem.Text = "Version";
 			this.VersionToolStripMenuItem.Click += new System.EventHandler(this.VersionToolStripMenuItem_Click);
 			// 
@@ -543,20 +513,20 @@
 			// 
 			this.HelpSupportToolStripMenuItem.Image = global::Toolbox.ResourceImage.Star;
 			this.HelpSupportToolStripMenuItem.Name = "HelpSupportToolStripMenuItem";
-			this.HelpSupportToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.HelpSupportToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
 			this.HelpSupportToolStripMenuItem.Text = "Hilfe/Support";
 			this.HelpSupportToolStripMenuItem.Click += new System.EventHandler(this.HelpSupportToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator2
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
+			this.toolStripSeparator2.Size = new System.Drawing.Size(143, 6);
 			// 
 			// UpdateToolStripMenuItem
 			// 
 			this.UpdateToolStripMenuItem.Enabled = false;
 			this.UpdateToolStripMenuItem.Name = "UpdateToolStripMenuItem";
-			this.UpdateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.UpdateToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
 			this.UpdateToolStripMenuItem.Text = "Aktualisieren";
 			this.UpdateToolStripMenuItem.Click += new System.EventHandler(this.UpdateToolStripMenuItem_Click);
 			// 
@@ -564,9 +534,46 @@
 			// 
 			this.GithubToolStripMenuItem.Image = global::Toolbox.ResourceImage.WebBrowser;
 			this.GithubToolStripMenuItem.Name = "GithubToolStripMenuItem";
-			this.GithubToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.GithubToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
 			this.GithubToolStripMenuItem.Text = "elm|Github";
 			this.GithubToolStripMenuItem.Click += new System.EventHandler(this.GithubToolStripMenuItem_Click);
+			// 
+			// labelVersionNr
+			// 
+			this.labelVersionNr.AutoSize = true;
+			this.labelVersionNr.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+			this.labelVersionNr.Location = new System.Drawing.Point(568, 418);
+			this.labelVersionNr.Name = "labelVersionNr";
+			this.labelVersionNr.Size = new System.Drawing.Size(27, 14);
+			this.labelVersionNr.TabIndex = 22;
+			this.labelVersionNr.Text = "1.0";
+			// 
+			// labelVersion
+			// 
+			this.labelVersion.AutoSize = true;
+			this.labelVersion.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+			this.labelVersion.Location = new System.Drawing.Point(509, 418);
+			this.labelVersion.Name = "labelVersion";
+			this.labelVersion.Size = new System.Drawing.Size(53, 14);
+			this.labelVersion.TabIndex = 21;
+			this.labelVersion.Text = "Version";
+			// 
+			// pictureBoxLogo
+			// 
+			this.pictureBoxLogo.BackgroundImage = global::Toolbox.ResourceImage.elmLogo;
+			this.pictureBoxLogo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+			this.pictureBoxLogo.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+			this.pictureBoxLogo.Location = new System.Drawing.Point(224, 116);
+			this.pictureBoxLogo.Margin = new System.Windows.Forms.Padding(0);
+			this.pictureBoxLogo.Name = "pictureBoxLogo";
+			this.pictureBoxLogo.Size = new System.Drawing.Size(180, 180);
+			this.pictureBoxLogo.TabIndex = 14;
+			this.pictureBoxLogo.TabStop = false;
+			// 
+			// contextMenuStrip1
+			// 
+			this.contextMenuStrip1.Name = "contextMenuStrip1";
+			this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
 			// 
 			// FormMain
 			// 
@@ -654,6 +661,7 @@
 		private System.Windows.Forms.Label labelVersion;
 		private System.Windows.Forms.ToolStripMenuItem controlToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem SystemSpeakToolStripMenuItem;
+		private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
 	}
 }
 

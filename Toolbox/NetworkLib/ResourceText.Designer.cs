@@ -313,6 +313,15 @@ namespace NetworkLib.Language {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die safhjweuds92723bsa2 ähnelt.
+        /// </summary>
+        internal static string Passphrase {
+            get {
+                return ResourceManager.GetString("Passphrase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die AAAA ähnelt.
         /// </summary>
         internal static string pingDATA {

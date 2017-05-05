@@ -162,6 +162,9 @@
   <data name="Message" xml:space="preserve">
     <value>Meldung</value>
   </data>
+  <data name="Passphrase" xml:space="preserve">
+    <value>assaduewtmcvxcwemvch</value>
+  </data>
   <data name="Slash" xml:space="preserve">
     <value>/</value>
   </data>

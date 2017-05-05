@@ -348,4 +348,7 @@
   <data name="Passphrase" xml:space="preserve">
     <value>safhjweuds92723bsa2</value>
   </data>
+  <data name="MsgFileOpenOverwrite" xml:space="preserve">
+    <value>Alle bestehenden Einträge werden überschrieben</value>
+  </data>
 </root>
