@@ -150,19 +150,28 @@ namespace Toolbox
 			//	return;
 
 			// Überprüfen ob Passwort-Authentifizierung eingestellt
-			if (_authentification == false &&  _systemparameter.SystemAccount[_accountid][ResourceText.keyMode] == ResourceText.AuthModePWD)
+			if(_accountid >= 0)
 			{
-				labelAuthMethod.Visible = true;
-				makelabel(labelAuthMethod, Color.Empty, ResourceText.AuthPWD);
-			}
-			// Überprüfen ob Zertifikat-Authentifizierung eingestellt
-			else if (_authentification == true && _systemparameter.SystemCertificate[_accountid][ResourceText.keyMode] == ResourceText.AuthModeCERT)
-			{
-				labelAuthMethod.Visible = true;
-				makelabel(labelAuthMethod, Color.Empty, ResourceText.AuthCERT);
+				if (_authentification == false && _systemparameter.SystemAccount[_accountid][ResourceText.keyMode] == ResourceText.AuthModePWD)
+				{
+					labelAuthMethod.Visible = true;
+					makelabel(labelAuthMethod, Color.Empty, ResourceText.AuthPWD);
+				}
+				// Überprüfen ob Zertifikat-Authentifizierung eingestellt
+				else if (_authentification == true && _systemparameter.SystemCertificate[_accountid][ResourceText.keyMode] == ResourceText.AuthModeCERT)
+				{
+					labelAuthMethod.Visible = true;
+					makelabel(labelAuthMethod, Color.Empty, ResourceText.AuthCERT);
 
+				}
+				// Wenn kein Authentifizierungsmodus gewählt Groupbox deaktivieren
+				else
+				{
+					makelabel(labelAuthMethod, Color.Red, ResourceText.ConnectionNoAuthMode);
+					buttonConnect.Enabled = false;      // Verbindungstest Button deaktivieren
+					groupBoxSetting.Enabled = false;    // Authentifizierungsgroupbox deaktivieren
+				}
 			}
-			// Wenn kein Authentifizierungsmodus gewählt Groupbox deaktivieren
 			else
 			{
 				makelabel(labelAuthMethod, Color.Red, ResourceText.ConnectionNoAuthMode);

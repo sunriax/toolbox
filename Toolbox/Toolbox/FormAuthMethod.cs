@@ -119,7 +119,7 @@ namespace Toolbox
 			bool crypt = true;	// Variable zum einstellen der Dateiverschlüsselung
 
 			// !!! Nur vorübergehende Lösung (unsauber) !!!
-			string passphrase = Interaction.InputBox("Bitte Passphrase zum Verschlüsseln der Kennwortdaten eingeben, bei leerer Eingabe werden die Daten unverschlüsselt gespeichert", "Title");
+			string passphrase = Interaction.InputBox("Bitte Passphrase zum Verschlüsseln der Kennwortdaten eingeben, bei leerer Eingabe werden die Daten unverschlüsselt gespeichert, (Kennwörter werden immer verschlüsselt!)", "Eingabeaufforderung");
 
 			if (passphrase == ResourceText.EMPTY)
 				crypt = false;
@@ -155,8 +155,17 @@ namespace Toolbox
 			string filename = openFileDialogData.FileName;	// Datenpfad auf lokale Variable legen
 			string[][] data;                                // interne Datenvariable
 
+			bool crypt = true;  // Variable zum einstellen der Dateiverschlüsselung
+
+			// !!! Nur vorübergehende Lösung (unsauber) !!!
+			string passphrase = Interaction.InputBox("Bitte Passphrase zum Entschlüsseln der Kennwortdaten eingeben, bei leerer Eingabe werden die Daten unverschlüsselt gespeichert, (Kennwörter werden immer verschlüsselt!)", "Eingabeaufforderung");
+
+			if (passphrase == ResourceText.EMPTY)
+				crypt = false;
+			// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 			// Überprüfen ob Daten ausgelesen und vorhanden
-			if ((data = Handler.ReadCSV(Path.GetDirectoryName(filename), Path.GetFileName(filename), '|', true, ResourceText.Passphrase)) == null)
+			if ((data = Handler.ReadCSV(Path.GetDirectoryName(filename), Path.GetFileName(filename), '|', crypt, passphrase)) == null)
 				return;
 
 			// Vorhandene Daten aus Wörterbüchern entfernen

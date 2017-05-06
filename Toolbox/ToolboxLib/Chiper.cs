@@ -21,80 +21,83 @@ namespace ToolboxLib
 		// Nachstehende funktionen gefunden auf http://stackoverflow.com/questions/10168240/encrypting-decrypting-a-string-in-c-sharp
 		public static string Encrypt(string plaintext, string passphrase)
 		{
-			byte[] saltbytes = Generate256BitsOfRandomEntropy();
-			byte[] ivbytes = Generate256BitsOfRandomEntropy();
-			byte[] plainbytes = Encoding.UTF8.GetBytes(plaintext);
+			try
+			{
+				byte[] saltbytes = Generate256BitsOfRandomEntropy();
+				byte[] ivbytes = Generate256BitsOfRandomEntropy();
+				byte[] plainbytes = Encoding.UTF8.GetBytes(plaintext);
 
-			Rfc2898DeriveBytes password = new Rfc2898DeriveBytes(passphrase, saltbytes, _repeat);
+				Rfc2898DeriveBytes password = new Rfc2898DeriveBytes(passphrase, saltbytes, _repeat);
 
-			byte[] keybytes = password.GetBytes(_keylength / 8);
+				byte[] keybytes = password.GetBytes(_keylength / 8);
 
-			Rijndael keysymmetric = new RijndaelManaged();
+				Rijndael keysymmetric = new RijndaelManaged();
 
-			keysymmetric.BlockSize = (int)(Math.Pow(2, _blocksize));
-			keysymmetric.Mode = CipherMode.CBC;
-			keysymmetric.Padding = PaddingMode.PKCS7;
+				keysymmetric.BlockSize = (int)(Math.Pow(2, _blocksize));
+				keysymmetric.Mode = CipherMode.CBC;
+				keysymmetric.Padding = PaddingMode.PKCS7;
 			
-			ICryptoTransform encryptor = keysymmetric.CreateEncryptor(keybytes, ivbytes);
+				ICryptoTransform encryptor = keysymmetric.CreateEncryptor(keybytes, ivbytes);
 
-			MemoryStream memstream = new MemoryStream();
-			CryptoStream cryptstream = new CryptoStream(memstream, encryptor, CryptoStreamMode.Write);
+				MemoryStream memstream = new MemoryStream();
+				CryptoStream cryptstream = new CryptoStream(memstream, encryptor, CryptoStreamMode.Write);
 
-			cryptstream.Write(plainbytes, 0, plainbytes.Length);
-			cryptstream.FlushFinalBlock();
+				cryptstream.Write(plainbytes, 0, plainbytes.Length);
+				cryptstream.FlushFinalBlock();
 
-			byte[] chiperbytes = saltbytes;
+				byte[] chiperbytes = saltbytes;
 
-			chiperbytes = chiperbytes.Concat(ivbytes).ToArray();
-			chiperbytes = chiperbytes.Concat(memstream.ToArray()).ToArray();
-			memstream.Close();
-			cryptstream.Close();
+				chiperbytes = chiperbytes.Concat(ivbytes).ToArray();
+				chiperbytes = chiperbytes.Concat(memstream.ToArray()).ToArray();
+				memstream.Close();
+				cryptstream.Close();
 
-			return Convert.ToBase64String(chiperbytes);
+				return Convert.ToBase64String(chiperbytes);
+			}
+			catch
+			{
+				return null;
+			}
 		}
 
 		public static string Decrypt(string chiperstring, string passphrase)
 		{
-			byte[] chiperbytessaltiv = Convert.FromBase64String(chiperstring);
-			byte[] saltbytes = chiperbytessaltiv.Take(_keylength / 8).ToArray();
-			byte[] ivbytes = chiperbytessaltiv.Skip(_keylength / 8).Take(_keylength / 8).ToArray();
-			byte[] textbytes = chiperbytessaltiv.Skip((_keylength / 8) * 2).Take(chiperbytessaltiv.Length - ((_keylength / 8) * 2)).ToArray();
+			try
+			{
+				byte[] chiperbytessaltiv = Convert.FromBase64String(chiperstring);
+				byte[] saltbytes = chiperbytessaltiv.Take(_keylength / 8).ToArray();
+				byte[] ivbytes = chiperbytessaltiv.Skip(_keylength / 8).Take(_keylength / 8).ToArray();
+				byte[] textbytes = chiperbytessaltiv.Skip((_keylength / 8) * 2).Take(chiperbytessaltiv.Length - ((_keylength / 8) * 2)).ToArray();
 
-			Rfc2898DeriveBytes password = new Rfc2898DeriveBytes(passphrase, saltbytes, _repeat);
+				Rfc2898DeriveBytes password = new Rfc2898DeriveBytes(passphrase, saltbytes, _repeat);
 
-			byte[] keybytes = password.GetBytes(_keylength / 8);
-			Rijndael keysymmetric = new RijndaelManaged();
+				byte[] keybytes = password.GetBytes(_keylength / 8);
+				Rijndael keysymmetric = new RijndaelManaged();
 
-			keysymmetric.BlockSize = (int)(Math.Pow(2, _blocksize));
-			keysymmetric.Mode = CipherMode.CBC;
-			keysymmetric.Padding = PaddingMode.PKCS7;
+				keysymmetric.BlockSize = (int)(Math.Pow(2, _blocksize));
+				keysymmetric.Mode = CipherMode.CBC;
+				keysymmetric.Padding = PaddingMode.PKCS7;
 
-			ICryptoTransform decryptor = keysymmetric.CreateDecryptor(keybytes, ivbytes);
+				ICryptoTransform decryptor = keysymmetric.CreateDecryptor(keybytes, ivbytes);
 
-			MemoryStream memstream = new MemoryStream(textbytes);
-			CryptoStream cryptstream = new CryptoStream(memstream, decryptor, CryptoStreamMode.Read);
+				MemoryStream memstream = new MemoryStream(textbytes);
+				CryptoStream cryptstream = new CryptoStream(memstream, decryptor, CryptoStreamMode.Read);
 
-			byte[] plainbytes = new byte[textbytes.Length];
-			int decryptbytes = cryptstream.Read(plainbytes, 0, plainbytes.Length);
+				byte[] plainbytes = new byte[textbytes.Length];
+				int decryptbytes = cryptstream.Read(plainbytes, 0, plainbytes.Length);
 
-			memstream.Close();
-			cryptstream.Close();
+				memstream.Close();
+				cryptstream.Close();
 
-			return Encoding.UTF8.GetString(plainbytes, 0, decryptbytes);
+				return Encoding.UTF8.GetString(plainbytes, 0, decryptbytes);
+			}
+			catch
+			{
+				return null;
+			}
 		}
 
-		private static byte[] Generate256BitsOfRandomEntropy()
-		{
-			byte[] randomBytes = new byte[32]; // 32 Bytes will give us 256 bits.
-
-			RNGCryptoServiceProvider rngcrytoservice = new RNGCryptoServiceProvider();
-
-			rngcrytoservice.GetBytes(randomBytes);
-
-			return randomBytes;
-		}
-
-
+		// Zu Testzwecken
 		public static int CalcPolynom(double a, double b, double c, double d, int x, bool direction)
 		{
 			double polynom_0 = (a * Math.Pow(x, 3) + b * Math.Pow(x, 2) + c * x + d);
@@ -109,6 +112,17 @@ namespace ToolboxLib
 		//	+--------------------------------------------------+
 		//	|+++	Lokale Funktionen						+++|
 		//	+--------------------------------------------------+
+
+		private static byte[] Generate256BitsOfRandomEntropy()
+		{
+			byte[] randomBytes = new byte[32];
+
+			RNGCryptoServiceProvider rngcrytoservice = new RNGCryptoServiceProvider();
+
+			rngcrytoservice.GetBytes(randomBytes);
+
+			return randomBytes;
+		}
 
 		// Funktion zum erzeugen von Exception Texten
 		private static string CreateException(string ExceptionClass, string ExceptionFunction, string ExceptionFault)
