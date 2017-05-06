@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using Microsoft.VisualBasic;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -40,36 +41,14 @@ namespace Toolbox
 			// TextBoxen mit Standardparameteren belegen
 			textboxinit();
 
-			// Listview mit bestehenden Elementen füllen
-			for (int i = 0; i < _systemparameter.SystemAccount.Count; i++)
-			{
-				if (_systemparameter.SystemAccount[i][ResourceText.keyMode] == ResourceText.AuthModePWD)
-				{
-					string[] listviewitem = { listViewAccount.Items.Count.ToString(), _systemparameter.SystemAccount[i][ResourceText.keyUsername], ResourceText.SpacerPassword, _systemparameter.SystemAccount[i][ResourceText.keyServer], _systemparameter.SystemAccount[i][ResourceText.keyPort] };
+			if (_systemparameter.SystemAccount.Count > 0)
+				Tool.ListviewInit(listViewAccount, _systemparameter.SystemAccount);
 
-					ListViewItem item;
-					item = new ListViewItem(listviewitem);
-					listViewAccount.Items.Add(item);
-				}
-			}
-
-			// Listview mit bestehenden Elementen füllen
-			for (int i = 0; i < _systemparameter.SystemCertificate.Count; i++)
-			{
-				if (_systemparameter.SystemCertificate[i][ResourceText.keyMode] == ResourceText.AuthModeCERT)
-				{
-					string[] listviewitem = { listViewCertificate.Items.Count.ToString(), _systemparameter.SystemCertificate[i][ResourceText.keyCertificate], ResourceText.SpacerPassword, _systemparameter.SystemCertificate[i][ResourceText.keyServer], _systemparameter.SystemCertificate[i][ResourceText.keyPort] };
-
-					ListViewItem item;
-					item = new ListViewItem(listviewitem);
-					listViewCertificate.Items.Add(item);
-				}
-			}
+			if (_systemparameter.SystemCertificate.Count > 0)
+				Tool.ListviewInit(listViewCertificate, _systemparameter.SystemCertificate);
 
 			if (_authentification == false && listViewAccount.Items.Count > 0)
 			{
-				tabControl.SelectedIndex = 0;
-
 				if(_accountid >= 0)
 				{
 					listViewAccount.Items[_accountid].Focused = true;
@@ -80,11 +59,11 @@ namespace Toolbox
 					listViewAccount.Items[0].Focused = true;
 					listViewAccount.Items[0].Selected = true;
 				}
+
+				tabControl.SelectedIndex = 0;
 			}
 			else if (_authentification == true && listViewCertificate.Items.Count > 0)
 			{
-				tabControl.SelectedIndex = 1;
-
 				if (_accountid >= 0)
 				{
 					listViewCertificate.Items[_accountid].Focused = true;
@@ -95,6 +74,8 @@ namespace Toolbox
 					listViewCertificate.Items[0].Focused = true;
 					listViewCertificate.Items[0].Selected = true;
 				}
+
+				tabControl.SelectedIndex = 1;
 			}
 		}
 
@@ -105,127 +86,89 @@ namespace Toolbox
 
 		private void FileSaveToolStripMenuItem_Click(object sender, EventArgs e)
 		{
+			// Einstellen der Datenformate für speichern der Benutzerdaten
 			saveFileDialogData.Filter = ResourceText.AccountFileFilter;
 			
+			// Datei speichern Dialog anzeigen
 			DialogResult FilePointer = saveFileDialogData.ShowDialog();
 
+			// Überprüfen ob Dateidialog ohne Eingabe
 			if (FilePointer == DialogResult.Cancel || FilePointer == DialogResult.Abort)
 				return;
 
-			string filename = saveFileDialogData.FileName;
-			string[][] data = new string[_systemparameter.SystemAccount.Count + _systemparameter.SystemCertificate.Count][];
+			string filename = saveFileDialogData.FileName;	// Datenpfad auf lokale Variable legen
+			string[][] data = new string[_systemparameter.SystemAccount.Count + _systemparameter.SystemCertificate.Count][];    // 2D-Array zur Speicherung der Accountdaten
 
-			if(_systemparameter.SystemAccount.Count > 0)
+			// ??? Programmabschnitt eventuell optimierbar !!!
+			// Überprüfen ob Accountdaten vorhanden
+			if (_systemparameter.SystemAccount.Count > 0)
 				for(int i=0; i < _systemparameter.SystemAccount.Count; i++)
 				{
 					data[i] = new string[_systemparameter.SystemAccount[i].Count + 1];
 					data[i] = _systemparameter.SystemAccount[i].Values.ToArray();
 				}
-
+			// Überprüfen ob Zertifikatdaten vorhanden
 			if (_systemparameter.SystemCertificate.Count > 0)
 				for (int j = 0; j < _systemparameter.SystemCertificate.Count; j++)
 				{
 					data[_systemparameter.SystemAccount.Count + j] = new string[_systemparameter.SystemCertificate[j].Count + 1];
 					data[_systemparameter.SystemAccount.Count + j] = _systemparameter.SystemCertificate[j].Values.ToArray();
 				}
+			// ???????????????????????????????????????????????
 
-			if (!Handler.WriteCSV(Path.GetDirectoryName(filename), Path.GetFileName(filename), '|', data, false))
-				MessageBox.Show(ResourceText.MsgDialogExit, ResourceText.Hint, MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+			bool crypt = true;	// Variable zum einstellen der Dateiverschlüsselung
 
+			// !!! Nur vorübergehende Lösung (unsauber) !!!
+			string passphrase = Interaction.InputBox("Bitte Passphrase zum Verschlüsseln der Kennwortdaten eingeben, bei leerer Eingabe werden die Daten unverschlüsselt gespeichert", "Title");
+
+			if (passphrase == ResourceText.EMPTY)
+				crypt = false;
+			// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+			// Verschlüsselte Accountdatei erzeugen
+			if (!Handler.WriteCSV(Path.GetDirectoryName(filename), Path.GetFileName(filename), '|', data, crypt, passphrase))
+				MessageBox.Show(ResourceText.MsgSaveUserdata, ResourceText.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
 		}
 
 		private void FileOpenToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			int count = 0;
-
-			DialogResult Abort = DialogResult.OK;
-
-			if (listViewAccount.Items.Count > 0 || listViewCertificate.Items.Count > 0)
-				Abort = MessageBox.Show(ResourceText.MsgFileOpenOverwrite, ResourceText.Warning, MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
-
-			if (Abort == DialogResult.Cancel)
-				return;
-
+			// Einstellen der Datenformate für auslesen der Accountdaten
 			openFileDialogData.Filter = ResourceText.AccountFileFilter;
 
+			// Datei öffnen Dialog anzeigen
 			DialogResult FilePointer = openFileDialogData.ShowDialog();
 
+			// Überprüfen ob Dateidialog ohne Eingabe
 			if (FilePointer == DialogResult.Cancel || FilePointer == DialogResult.Abort)
 				return;
 
-			string filename = openFileDialogData.FileName;
-			string[][] data;
+			DialogResult Abort = DialogResult.OK;	// Variable zum späteren überprüfen ob auslesen abgebrochen
 
-			data = Handler.ReadCSV(Path.GetDirectoryName(filename), Path.GetFileName(filename), '|');
+			// Überprüfen ob Daten in Datensätzen vorhanden
+			if (listViewAccount.Items.Count > 0 || listViewCertificate.Items.Count > 0)
+				Abort = MessageBox.Show(ResourceText.MsgFileOpenOverwrite, ResourceText.Warning, MessageBoxButtons.OKCancel, MessageBoxIcon.Hand);
 
+			// Überprüfen ob überschreiben abgebrochen
+			if (Abort == DialogResult.Cancel)
+				return;
+
+			string filename = openFileDialogData.FileName;	// Datenpfad auf lokale Variable legen
+			string[][] data;                                // interne Datenvariable
+
+			// Überprüfen ob Daten ausgelesen und vorhanden
+			if ((data = Handler.ReadCSV(Path.GetDirectoryName(filename), Path.GetFileName(filename), '|', true, ResourceText.Passphrase)) == null)
+				return;
+
+			// Vorhandene Daten aus Wörterbüchern entfernen
 			_systemparameter.SystemAccount.Clear();
 			_systemparameter.SystemCertificate.Clear();
-			listViewAccount.Items.Clear();
-			listViewCertificate.Items.Clear();
 
-			for (int i = 0; i < data.Length; i++)
-			{
-				if (data[i][0] == ResourceText.AuthModePWD)
-				{
-					_systemparameter.SystemAccount[count] = new Dictionary<string, string>();
-					_systemparameter.SystemAccount[count].Add(ResourceText.keyMode,		data[i][0]);
-					_systemparameter.SystemAccount[count].Add(ResourceText.keyUsername,	data[i][1]);
-					_systemparameter.SystemAccount[count].Add(ResourceText.keyPassword,	data[i][2]);
-					_systemparameter.SystemAccount[count].Add(ResourceText.keyServer,	data[i][3]);
-					_systemparameter.SystemAccount[count].Add(ResourceText.keyPort,		data[i][4]);
-					_systemparameter.SystemAccount[count].Add(ResourceText.keyEmpty,	ResourceText.EMPTY);
+			// Neue Daten in Wörterbücher sowie Listbox Schreiben
+			Tool.Account2Dict(data, _systemparameter.SystemAccount, listViewAccount, true);
+			Tool.Certificate2Dict(data, _systemparameter.SystemCertificate, listViewCertificate, true);
 
-					count++;
-				}
-			}
-
-			count = 0;
-
-			for (int i = 0; i < data.Length; i++)
-			{
-				if (data[i][0] == ResourceText.AuthModeCERT)
-				{
-					_systemparameter.SystemAccount[count] = new Dictionary<string, string>();
-					_systemparameter.SystemAccount[count].Add(ResourceText.keyMode,				data[i][0]);
-					_systemparameter.SystemAccount[count].Add(ResourceText.keyCertificate,		data[i][1]);
-					_systemparameter.SystemAccount[count].Add(ResourceText.keyCertificateName,	data[i][2]);
-					_systemparameter.SystemAccount[count].Add(ResourceText.keyPassword,			data[i][3]);
-					_systemparameter.SystemAccount[count].Add(ResourceText.keyServer,			data[i][4]);
-					_systemparameter.SystemAccount[count].Add(ResourceText.keyPort,				data[i][5]);
-
-					count++;
-				}
-			}
-
-			// Listview mit bestehenden Elementen füllen
-			for (int i = 0; i < _systemparameter.SystemAccount.Count; i++)
-			{
-				if (_systemparameter.SystemAccount[i][ResourceText.keyMode] == ResourceText.AuthModePWD)
-				{
-					string[] listviewitem = { listViewAccount.Items.Count.ToString(), _systemparameter.SystemAccount[i][ResourceText.keyUsername], ResourceText.SpacerPassword, _systemparameter.SystemAccount[i][ResourceText.keyServer], _systemparameter.SystemAccount[i][ResourceText.keyPort] };
-
-					ListViewItem item;
-					item = new ListViewItem(listviewitem);
-					listViewAccount.Items.Add(item);
-				}
-			}
-
-			// Listview mit bestehenden Elementen füllen
-			for (int i = 0; i < _systemparameter.SystemCertificate.Count; i++)
-			{
-				if (_systemparameter.SystemCertificate[i][ResourceText.keyMode] == ResourceText.AuthModeCERT)
-				{
-					string[] listviewitem = { listViewCertificate.Items.Count.ToString(), _systemparameter.SystemCertificate[i][ResourceText.keyCertificate], ResourceText.SpacerPassword, _systemparameter.SystemCertificate[i][ResourceText.keyServer], _systemparameter.SystemCertificate[i][ResourceText.keyPort] };
-
-					ListViewItem item;
-					item = new ListViewItem(listviewitem);
-					listViewCertificate.Items.Add(item);
-				}
-			}
-
-			_accountid = 0;
-			_authentification = false;
-
+			_accountid = -1;			// Accountid Rücksetzen
+			_authentification = false;	// Authentifizierungsmethode rücksetzen
 		}
 
 		private void QuitToolStripMenuItem_Click(object sender, EventArgs e)

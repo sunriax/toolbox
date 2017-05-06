@@ -538,6 +538,15 @@ namespace Toolbox.Language {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Speichern der Benutzer/Zertifikatdaten fehlgeschlagen ähnelt.
+        /// </summary>
+        public static string MsgSaveUserdata {
+            get {
+                return ResourceManager.GetString("MsgSaveUserdata", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die IP-Adresse/Namen konnte nicht aufgelöst werden ähnelt.
         /// </summary>
         public static string MsgServerFault {

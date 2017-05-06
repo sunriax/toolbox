@@ -36,6 +36,7 @@
     <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Renci.SshNet">
       <HintPath>..\_lib\Renci.SshNet.dll</HintPath>
     </Reference>

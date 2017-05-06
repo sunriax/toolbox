@@ -61,6 +61,24 @@ namespace ToolboxLib.Language {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die CERT ähnelt.
+        /// </summary>
+        internal static string AuthModeCERT {
+            get {
+                return ResourceManager.GetString("AuthModeCERT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die PWD ähnelt.
+        /// </summary>
+        internal static string AuthModePWD {
+            get {
+                return ResourceManager.GetString("AuthModePWD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die \ ähnelt.
         /// </summary>
         internal static string Backslash {
@@ -187,6 +205,114 @@ namespace ToolboxLib.Language {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die certificate ähnelt.
+        /// </summary>
+        internal static string keyCertificate {
+            get {
+                return ResourceManager.GetString("keyCertificate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die path ähnelt.
+        /// </summary>
+        internal static string keyCertificateName {
+            get {
+                return ResourceManager.GetString("keyCertificateName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die empty ähnelt.
+        /// </summary>
+        internal static string keyEmpty {
+            get {
+                return ResourceManager.GetString("keyEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die ipaddress ähnelt.
+        /// </summary>
+        internal static string keyIPAddress {
+            get {
+                return ResourceManager.GetString("keyIPAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die language ähnelt.
+        /// </summary>
+        internal static string keyLanguage {
+            get {
+                return ResourceManager.GetString("keyLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die mode ähnelt.
+        /// </summary>
+        internal static string keyMode {
+            get {
+                return ResourceManager.GetString("keyMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die none ähnelt.
+        /// </summary>
+        internal static string keyNone {
+            get {
+                return ResourceManager.GetString("keyNone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die passphrase ähnelt.
+        /// </summary>
+        internal static string keyPassphrase {
+            get {
+                return ResourceManager.GetString("keyPassphrase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die password ähnelt.
+        /// </summary>
+        internal static string keyPassword {
+            get {
+                return ResourceManager.GetString("keyPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die port ähnelt.
+        /// </summary>
+        internal static string keyPort {
+            get {
+                return ResourceManager.GetString("keyPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die server ähnelt.
+        /// </summary>
+        internal static string keyServer {
+            get {
+                return ResourceManager.GetString("keyServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die username ähnelt.
+        /// </summary>
+        internal static string keyUsername {
+            get {
+                return ResourceManager.GetString("keyUsername", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Meldung ähnelt.
         /// </summary>
         internal static string Message {
@@ -196,20 +322,20 @@ namespace ToolboxLib.Language {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die assaduewtmcvxcwemvch ähnelt.
-        /// </summary>
-        internal static string Passphrase {
-            get {
-                return ResourceManager.GetString("Passphrase", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die / ähnelt.
         /// </summary>
         internal static string Slash {
             get {
                 return ResourceManager.GetString("Slash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die ***************** ähnelt.
+        /// </summary>
+        internal static string SpacerPassword {
+            get {
+                return ResourceManager.GetString("SpacerPassword", resourceCulture);
             }
         }
     }

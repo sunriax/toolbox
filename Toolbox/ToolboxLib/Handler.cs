@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Security.Cryptography;
 using ToolboxLib.Language;
 
 namespace ToolboxLib
@@ -39,7 +40,7 @@ namespace ToolboxLib
 			return false.ToString();
 		}
 
-		public static bool WriteCSV(string path, string filename, char delimeter, string[][] data, bool encrypt = false, bool append = false)
+		public static bool WriteCSV(string path, string filename, char delimeter, string[][] data, bool encrypt = false, string passphrase = null, bool append = false)
 		{
 			if (filename == ResourceText.EMPTY)
 				throw new Exception(CreateException(ResourceText.Message, ResourceText.ExceptionClass, ResourceText.ExceptionWriteCSV, ResourceText.ExceptionFileNameEmpty));
@@ -73,7 +74,10 @@ namespace ToolboxLib
 			}
 
 			if(encrypt == true)
-				stream = Chiper.Encrypt(stream, ResourceText.Passphrase);
+				if (passphrase == null)
+					return false;
+				else
+					stream = Chiper.Encrypt(stream, passphrase);
 
 			datastream.Write(stream);
 			datastream.Close();
@@ -81,7 +85,7 @@ namespace ToolboxLib
 			return true;
 		}
 
-		public static bool WriteCSV(string path, string filename, char delimeter, List<string[]> data, bool append = false)
+		public static bool WriteCSV(string path, string filename, char delimeter, List<string[]> data, bool encrypt = false, string passphrase = null, bool append = false)
 		{
 			if(filename == ResourceText.EMPTY)
 				throw new Exception(CreateException(ResourceText.Message, ResourceText.ExceptionClass, ResourceText.ExceptionWriteCSV, ResourceText.ExceptionFileNameEmpty));
@@ -92,6 +96,7 @@ namespace ToolboxLib
 			// Weitere Prüfungen nichtnotwendig da später über Filedialog alles bereits abgeprüft
 			path = CheckDirectory(path, true);
 
+			string stream = null;
 			StreamWriter datastream = new StreamWriter(path + filename, append);
 
 			// Zeile Eingabedaten + Seperator (ASCII)
@@ -110,12 +115,20 @@ namespace ToolboxLib
 				}
 				datastream.WriteLine();
 			}
+
+			if (encrypt == true)
+				if (passphrase == null)
+					return false;
+				else
+					stream = Chiper.Encrypt(stream, passphrase);
+
+			datastream.Write(stream);
 			datastream.Close();
 
 			return true;
 		}
 
-		public static string[][] ReadCSV(string path, string filename, char delimeter)
+		public static string[][] ReadCSV(string path, string filename, char delimeter, bool decrypt = false, string passphrase = null)
 		{
 			List<string[]> data = new List<string[]>();
 			string linedata = null;
@@ -130,7 +143,25 @@ namespace ToolboxLib
 
 			// Weitere Prüfungen nichtnotwendig da später über Filedialog alles bereits abgeprüft
 
-			StreamReader datastream = new StreamReader(path + filename);	
+			StreamReader datastream;
+
+			// Wenn Entschlüsseln erforderlich
+			if (decrypt == true)
+			{
+				if (passphrase == null)
+					return null;
+
+				StreamReader cryptostream = new StreamReader(path + filename);
+				byte[] decryptarray = Encoding.UTF8.GetBytes(Chiper.Decrypt(cryptostream.ReadToEnd(), passphrase));
+
+				MemoryStream stream = new MemoryStream(decryptarray);
+
+				datastream = new StreamReader(stream);
+			}
+			else
+			{
+				datastream = new StreamReader(path + filename);
+			}
 
 			while ((linedata = datastream.ReadLine()) != null)
 			{
@@ -142,7 +173,7 @@ namespace ToolboxLib
 			return data.ToArray();
 		}
 
-		public static bool ReadCSV(string path, string filename, char delimeter, List<string[]> data)
+		public static bool ReadCSV(string path, string filename, char delimeter, List<string[]> data, bool decrypt = false, string passphrase = null)
 		{
 			string linedata;
 
@@ -156,9 +187,27 @@ namespace ToolboxLib
 
 			// Weitere Prüfungen nichtnotwendig da später über Filedialog alles bereits abgeprüft
 
-			StreamReader datastream = new StreamReader(path + filename);
+			StreamReader datastream;
 
-			while((linedata = datastream.ReadLine()) != null)
+			// Wenn Entschlüsseln erforderlich
+			if (decrypt == true)
+			{
+				if (passphrase == null)
+					return false;
+
+				StreamReader cryptostream = new StreamReader(path + filename);
+				byte[] decryptarray = Encoding.UTF8.GetBytes(Chiper.Decrypt(cryptostream.ReadToEnd(), passphrase));
+
+				MemoryStream stream = new MemoryStream(decryptarray);
+
+				datastream = new StreamReader(stream);
+			}
+			else
+			{
+				datastream = new StreamReader(path + filename);
+			}
+
+			while ((linedata = datastream.ReadLine()) != null)
 			{
 				string[] seperateddata = linedata.Split(delimeter);
 				data.Add(seperateddata);

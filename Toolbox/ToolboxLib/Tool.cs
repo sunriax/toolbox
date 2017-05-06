@@ -74,6 +74,120 @@ namespace ToolboxLib
 			return convert;
 		}
 
+		public static void Account2Dict(string[][] data, Dictionary<int, Dictionary<string, string>> dictionary, ListView listview = null, bool clear = false)
+		{
+			if (listview != null && clear == true)
+				listview.Items.Clear();
+
+			for (int i = 0; i < data.Length; i++)
+			{
+				if (data[i][0] == ResourceText.AuthModePWD)
+				{
+					int position = dictionary.Count;
+
+					dictionary[position] = new Dictionary<string, string>();
+					dictionary[position].Add(ResourceText.keyMode, data[i][0]);
+					dictionary[position].Add(ResourceText.keyUsername, data[i][1]);
+					dictionary[position].Add(ResourceText.keyPassword, data[i][2]);
+					dictionary[position].Add(ResourceText.keyServer, data[i][3]);
+					dictionary[position].Add(ResourceText.keyPort, data[i][4]);
+					dictionary[position].Add(ResourceText.keyEmpty, data[i][5]);
+
+					if(listview != null)
+					{
+						string[] listviewitem = { data[i][1], ResourceText.SpacerPassword, data[i][3], data[i][4] };
+						Items2Listview(listview, listviewitem);
+					}
+				}
+			}
+		}
+
+		public static void Certificate2Dict(string[][] data, Dictionary<int, Dictionary<string, string>> dictionary, ListView listview = null, bool clear = false)
+		{
+			if (listview != null && clear == true)
+				listview.Items.Clear();
+
+			for (int i = 0; i < data.Length; i++)
+			{
+				if (data[i][0] == ResourceText.AuthModeCERT)
+				{
+					int position = dictionary.Count;
+
+					dictionary[position] = new Dictionary<string, string>();
+					dictionary[position].Add(ResourceText.keyMode, data[i][0]);
+					dictionary[position].Add(ResourceText.keyCertificate, data[i][1]);
+					dictionary[position].Add(ResourceText.keyCertificateName, data[i][2]);
+					dictionary[position].Add(ResourceText.keyPassphrase, data[i][3]);
+					dictionary[position].Add(ResourceText.keyServer, data[i][4]);
+					dictionary[position].Add(ResourceText.keyPort, data[i][5]);
+
+					if (listview != null)
+					{
+						string[] listviewitem = { data[i][1], ResourceText.SpacerPassword, data[i][4], data[i][5] };
+						Items2Listview(listview, listviewitem);
+					}
+				}
+			}
+		}
+
+		public static void ListviewInit(ListView listview, Dictionary<int, Dictionary<string, string>> dictionary)
+		{
+			// Listview mit bestehenden Elementen füllen
+			for (int i = 0; i < dictionary.Count; i++)
+			{
+				string[] listviewitem = new string[dictionary[i].Count];
+
+				if (dictionary[i][ResourceText.keyMode] == ResourceText.AuthModePWD)
+				{
+					listviewitem[0] = dictionary[i][ResourceText.keyUsername];
+					listviewitem[1] = ResourceText.SpacerPassword;
+					listviewitem[2] = dictionary[i][ResourceText.keyServer];
+					listviewitem[3] = dictionary[i][ResourceText.keyPort];
+				}
+				else if (dictionary[i][ResourceText.keyMode] == ResourceText.AuthModeCERT)
+				{
+					listviewitem[0] = dictionary[i][ResourceText.keyCertificate];
+					listviewitem[1] = ResourceText.SpacerPassword;
+					listviewitem[2] = dictionary[i][ResourceText.keyServer];
+					listviewitem[3] = dictionary[i][ResourceText.keyPort];
+				}
+				else
+					listviewitem = null;
+
+				if(listviewitem != null)
+					Items2Listview(listview, listviewitem);
+			}
+		}
+
+
+		public static bool Items2Listview(ListView listview, string[] items)
+		{
+			//	if(items.Length < 1)
+			//		Handler.CreateException()
+
+			string[] listviewitem = new string[items.Length];
+
+			for (int i = 0; i < items.Length; i++)
+			{
+				if (i == 0)
+					listviewitem[i] = listview.Items.Count.ToString();
+				else
+					listviewitem[i] = items[i - 1];
+			}
+
+			ListViewItem item = new ListViewItem(listviewitem);
+			
+			try
+			{
+				listview.Items.Add(item);
+			}
+			catch
+			{
+				return false;
+			}
+			return true;
+		}
+
 		// Funktion zum ersezten von Zeilenumbrüchen und Wagenrücklauf
 		public static string ReplaceLinebreak(string InputString)
 		{

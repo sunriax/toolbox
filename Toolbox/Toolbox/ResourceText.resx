@@ -351,4 +351,7 @@
   <data name="MsgFileOpenOverwrite" xml:space="preserve">
     <value>Alle bestehenden Einträge werden überschrieben</value>
   </data>
+  <data name="MsgSaveUserdata" xml:space="preserve">
+    <value>Speichern der Benutzer/Zertifikatdaten fehlgeschlagen</value>
+  </data>
 </root>

@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AuthModeCERT" xml:space="preserve">
+    <value>CERT</value>
+  </data>
+  <data name="AuthModePWD" xml:space="preserve">
+    <value>PWD</value>
+  </data>
   <data name="Backslash" xml:space="preserve">
     <value>\</value>
   </data>
@@ -159,13 +165,49 @@
   <data name="ExceptionWriteCSV" xml:space="preserve">
     <value>WriteCSV()</value>
   </data>
+  <data name="keyCertificate" xml:space="preserve">
+    <value>certificate</value>
+  </data>
+  <data name="keyCertificateName" xml:space="preserve">
+    <value>path</value>
+  </data>
+  <data name="keyEmpty" xml:space="preserve">
+    <value>empty</value>
+  </data>
+  <data name="keyIPAddress" xml:space="preserve">
+    <value>ipaddress</value>
+  </data>
+  <data name="keyLanguage" xml:space="preserve">
+    <value>language</value>
+  </data>
+  <data name="keyMode" xml:space="preserve">
+    <value>mode</value>
+  </data>
+  <data name="keyNone" xml:space="preserve">
+    <value>none</value>
+  </data>
+  <data name="keyPassphrase" xml:space="preserve">
+    <value>passphrase</value>
+  </data>
+  <data name="keyPassword" xml:space="preserve">
+    <value>password</value>
+  </data>
+  <data name="keyPort" xml:space="preserve">
+    <value>port</value>
+  </data>
+  <data name="keyServer" xml:space="preserve">
+    <value>server</value>
+  </data>
+  <data name="keyUsername" xml:space="preserve">
+    <value>username</value>
+  </data>
   <data name="Message" xml:space="preserve">
     <value>Meldung</value>
   </data>
-  <data name="Passphrase" xml:space="preserve">
-    <value>assaduewtmcvxcwemvch</value>
-  </data>
   <data name="Slash" xml:space="preserve">
     <value>/</value>
+  </data>
+  <data name="SpacerPassword" xml:space="preserve">
+    <value>*****************</value>
   </data>
 </root>

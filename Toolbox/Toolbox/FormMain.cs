@@ -31,7 +31,6 @@ namespace Toolbox
 	{
 		public int AccountId;
 		public bool AccountType;
-
 		public Ressource SystemApp;
 		public SSH SystemSSH;
 		public SSH SystemSFTP;
