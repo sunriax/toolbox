@@ -421,6 +421,15 @@ namespace Toolbox.Language {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die http://localhost/schule/toolbox/help ähnelt.
+        /// </summary>
+        public static string LinkHelp {
+            get {
+                return ResourceManager.GetString("LinkHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die http:// ähnelt.
         /// </summary>
         public static string Linkhttp {
@@ -435,6 +444,51 @@ namespace Toolbox.Language {
         public static string Linkhttps {
             get {
                 return ResourceManager.GetString("Linkhttps", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die http://localhost/schule/toolbox/ ähnelt.
+        /// </summary>
+        public static string LinkUpdate {
+            get {
+                return ResourceManager.GetString("LinkUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die ?get=load_x32 ähnelt.
+        /// </summary>
+        public static string LinkUpdateDownload_x32 {
+            get {
+                return ResourceManager.GetString("LinkUpdateDownload_x32", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die ?get=load_x64 ähnelt.
+        /// </summary>
+        public static string LinkUpdateDownload_x64 {
+            get {
+                return ResourceManager.GetString("LinkUpdateDownload_x64", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die update.php ähnelt.
+        /// </summary>
+        public static string LinkUpdateFile {
+            get {
+                return ResourceManager.GetString("LinkUpdateFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die ?get=version ähnelt.
+        /// </summary>
+        public static string LinkUpdateVersion {
+            get {
+                return ResourceManager.GetString("LinkUpdateVersion", resourceCulture);
             }
         }
         
@@ -579,6 +633,24 @@ namespace Toolbox.Language {
         public static string MsgToolboxVersion {
             get {
                 return ResourceManager.GetString("MsgToolboxVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Es wurde eine neue Software Version gefunden, zum aktualisieren bestätigen ähnelt.
+        /// </summary>
+        public static string MsgUpdateAvileable {
+            get {
+                return ResourceManager.GetString("MsgUpdateAvileable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Die Software befindet sich auf dem neusten Stand ähnelt.
+        /// </summary>
+        public static string MsgUpdateOk {
+            get {
+                return ResourceManager.GetString("MsgUpdateOk", resourceCulture);
             }
         }
         

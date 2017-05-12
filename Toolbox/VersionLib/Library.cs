@@ -8,7 +8,7 @@ using VersionLib.Language;
 
 namespace VersionLib
 {
-	static public class Library
+	public static class Library
 	{
 		private static string _ClassUART = ResourceText.NotAvileable;
 		private static string _ClassFIFO = ResourceText.NotAvileable;

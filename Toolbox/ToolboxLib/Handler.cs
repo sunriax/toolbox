@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using System.Security.Cryptography;
+using System.Net;
 using ToolboxLib.Language;
 
 namespace ToolboxLib
@@ -229,6 +229,45 @@ namespace ToolboxLib
 			File.Copy(filename, topath + filecopy);
 
 			return true;
+		}
+
+		public static string Request(string updatelink)
+		{
+			string reply = null;
+
+			// Request erzeugen
+			WebRequest request = WebRequest.Create(updatelink);
+			request.Credentials = CredentialCache.DefaultCredentials;
+
+			// Antwort abfragen
+			WebResponse response = request.GetResponse();
+
+			// Status abspeichern
+			if (((HttpWebResponse)response).StatusDescription != HttpStatusCode.OK.ToString())
+				return null;
+
+			// Datenkontent der angeforderten Seite
+			Stream datastream = response.GetResponseStream();
+			StreamReader reader = new StreamReader(datastream);
+
+			// Datenkontent ausgeben
+			reply += reader.ReadToEnd();
+
+			reader.Close();
+			response.Close();
+
+			return reply;
+		}
+
+		public static string DownloadFile(string downloadlink, string downloadfile, string downloadpath)
+		{	
+			// Neue Webclient instance
+			WebClient webclient = new WebClient();
+			webclient.DownloadFile(downloadlink, downloadfile);
+
+			downloadpath = CheckDirectory(downloadpath, true);
+
+			return downloadpath + downloadfile;
 		}
 
 		#region Lokal

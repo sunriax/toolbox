@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.IO;
 using System.Net;
 using System.Net.NetworkInformation;
 using ToolboxLib;
@@ -19,45 +18,27 @@ namespace NetworkLib
 
 	public static class Network
     {
-		private static int[] _ipaddress;
-		private static string _data = ResourceText.pingDATA;
+		#region Deklaration
+		//	+--------------------------------------------------+
+		//	|+++	Variablendeklaration					+++|
+		//	+--------------------------------------------------+
 
+		private static string _data = ResourceText.pingDATA;
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		#endregion
+		
 		#region CheckIP
 		//	+--------------------------------------------------+
-		//	|+++	Funktionen -> checkip					+++|
+		//	|+++	Funktionen -> CheckIp					+++|
 		//	+--------------------------------------------------+
 
 		// Prüft eine IP-Adresse auf ihre Richtigkeit
-		public static bool CheckIP(string ipaddress)
+		public static bool CheckIP(string ipstring)
 		{
-			char[] delimeter = new char[] { Convert.ToChar(ResourceText.IPdelimiter) };	// IP-Adresse Trennzeichen in Array ablegen
-			string[] ipbuffer = new string[4];											// Interner Funktionspuffer für IP-Adresse
-			int[] ipbytes = new int[4];													// Interner Funktionsbuffer für IP-Bytes
+			IPAddress ipaddress = null;     // Variable für IP-Adresse
 
-			// IP-Adressen Bytes in Buffer ablegen
-			ipbuffer = ipaddress.Split(delimeter, 4);
-
-			// Überprüfen ob Array mehr als 4 Elemente enthält
-			// (wird schon durch Split begrenzt)
-			if (ipbuffer.Length > 4)
-				return false;
-
-			// Buffer Schleifendurchlauf
-			for(int i=0; i < ipbuffer.Length; i++)
-			{
-				// Überprüfen ob IP-String in IP-Int umgewandlet werden kann
-				if (!int.TryParse(ipbuffer[i], out ipbytes[i]))
-					return false;
-			}
-
-			// Überprüfen ob IP-Bytes gültig sind
-			if (!Tool.CheckNumeric(ipbytes[0], 1, 254))
-				return false;
-			if (!Tool.CheckNumeric(ipbytes[1], 0, 254))
-				return false;
-			if (!Tool.CheckNumeric(ipbytes[2], 0, 254))
-				return false;
-			if (!Tool.CheckNumeric(ipbytes[3], 1, 254))
+			// Überprüfen ob eingegebene IP-Adresse gültig
+			if (!IPAddress.TryParse(ipstring, out ipaddress))
 				return false;
 
 			// Rückgabe wenn alle Bedingungne erfüllt sind
@@ -66,30 +47,44 @@ namespace NetworkLib
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		#endregion
 
+		#region CheckIP
+		//	+--------------------------------------------------+
+		//	|+++	Funktionen -> CheckHost					+++|
+		//	+--------------------------------------------------+
+
 		// Prüft einen Hostnamen auf Richtigkeit
 		public static bool CheckHost(string hostname)
 		{
-			if(Uri.CheckHostName(hostname) == UriHostNameType.Unknown)
+			// Überprüfen ob Hostname bekannt
+			if (Uri.CheckHostName(hostname) == UriHostNameType.Unknown)
 				return false;
 			return true;
 		}
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		#endregion
 
 		#region PingHost
-			//	+--------------------------------------------------+
-			//	|+++	Funktionen -> pinghost					+++|
-			//	+--------------------------------------------------+
+		//	+--------------------------------------------------+
+		//	|+++	Funktionen -> PingHost					+++|
+		//	+--------------------------------------------------+
 
-			// Versucht einen hostnamen begrenzt durch einen Timeout anzupingen
-		public static bool PingHost(string hostname, int timeout)
+		// Versucht einen hostnamen begrenzt durch einen Timeout anzupingen
+		public static bool PingHost(string hostname, int timeout, string data = null)
 		{
-			Ping ping = new Ping();
-			PingReply reply;
+			byte[] buffer;			// Byte Buffer anlegen
 
-			// Buffer mit 2 Bytes erzeugen
-			byte[] buffer = Encoding.ASCII.GetBytes(_data);
+			Ping ping = new Ping(); // Neue Ping Instanz erzeugen
+			PingReply reply;        // Ping Antwortvariable
+
+			// Überprüfen ob externe Daten vorhanden
+			if (data == null)
+				buffer = Encoding.ASCII.GetBytes(_data);	// Buffer erzeugen
+			else
+				buffer = Encoding.ASCII.GetBytes(data);     // Buffer erzeugen
 
 			try
 			{
+				// Ping ausführen und Antwort speichern
 				reply = ping.Send(hostname, timeout, buffer);
 			}
 			catch
@@ -97,8 +92,10 @@ namespace NetworkLib
 				return false;
 			}
 
+			// Überprüfen ob Ping Abfrage erfolgreich
 			if (reply.Status == IPStatus.Success)
 			{
+				// Überprüfen ob Antwortadresse gültig
 				if (CheckIP(reply.Address.ToString()))
 					return true;
 			}
@@ -106,27 +103,34 @@ namespace NetworkLib
 		}
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		#endregion
-
+		
 		#region PingIP
 		//	+--------------------------------------------------+
-		//	|+++	Funktionen -> pingip					+++|
+		//	|+++	Funktionen -> PingIP					+++|
 		//	+--------------------------------------------------+
 
-		// Versucht eine IP-Adresse begrenzt durch einen Timeout anzupingen
-		public static bool PingIP(string ipaddress, int timeout)
+		// Versucht eine IP-Adresse (String) begrenzt durch einen Timeout anzupingen
+		public static bool PingIP(string ipaddress, int timeout, string data)
 		{
-			Ping ping = new Ping();
-			PingReply reply;
-			IPAddress address = null;
+			byte[] buffer;          // Byte Buffer anlegen
 
+			Ping ping = new Ping();		// Neue Ping Instanz erzeugen
+			PingReply reply;			// Ping Antwortvariable
+			IPAddress address = null;	// Variable für IP-Adresse
+
+			// Überprüfen ob eingegebene IP-Adresse gültig
 			if (!IPAddress.TryParse(ipaddress, out address))
 				return false;
 
-			// Buffer mit 2 Bytes erzeugen
-			byte[] buffer = Encoding.ASCII.GetBytes(_data);
-			
+			// Überprüfen ob externe Daten vorhanden
+			if (data == null)
+				buffer = Encoding.ASCII.GetBytes(_data);    // Buffer erzeugen
+			else
+				buffer = Encoding.ASCII.GetBytes(data);     // Buffer erzeugen
+
 			try
 			{
+				// Ping ausführen und Antwort speichern
 				reply = ping.Send(address, timeout, buffer);
 			}
 			catch
@@ -134,30 +138,40 @@ namespace NetworkLib
 				return false;
 			}
 
+			// Überprüfen ob Ping Abfrage erfolgreich
 			if (reply.Status == IPStatus.Success)
 			{
+				// Überprüfen ob Antwortadresse gültig
 				if (CheckIP(reply.Address.ToString()))
 					return true;
 			}
 			return false;
 		}
 
-		public static bool PingIP(byte[] ipaddress, int timeout)
+		// Versucht eine IP-Adresse (Byte Array) begrenzt durch einen Timeout anzupingen
+		public static bool PingIP(byte[] ipaddress, int timeout, string data = null)
 		{
-			Ping ping = new Ping();
-			PingReply reply;
-			IPAddress address = null;
+			// Eingabe IP-Addresse (Byte Array) in string ablegen
 			string ipstring = ipaddress[0].ToString() + ResourceText.IPdelimiter + ipaddress[1].ToString() + ResourceText.IPdelimiter + ipaddress[2].ToString() + ResourceText.IPdelimiter + ipaddress[3].ToString();
+			byte[] buffer;				// Byte Buffer anlegen
 
+			Ping ping = new Ping();     // Neue Ping Instanz erzeugen
+			PingReply reply;            // Ping Antwortvariable
+			IPAddress address = null;   // Variable für IP-Adresse
+
+			// Überprüfen ob eingegebene IP-Adresse gültig
 			if (!IPAddress.TryParse(ipstring, out address))
 				return false;
 
-			// Buffer mit 2 Bytes erzeugen
-			string data = ResourceText.pingDATA;
-			byte[] buffer = Encoding.ASCII.GetBytes(data);
+			// Überprüfen ob externe Daten vorhanden
+			if (data == null)
+				buffer = Encoding.ASCII.GetBytes(_data);    // Buffer erzeugen
+			else
+				buffer = Encoding.ASCII.GetBytes(data);     // Buffer erzeugen
 
 			try
 			{
+				// Ping ausführen und Antwort speichern
 				reply = ping.Send(address, timeout, buffer);
 			}
 			catch
@@ -165,8 +179,10 @@ namespace NetworkLib
 				return false;
 			}
 
+			// Überprüfen ob Ping Abfrage erfolgreich
 			if (reply.Status == IPStatus.Success)
 			{
+				// Überprüfen ob Antwortadresse gültig
 				if (CheckIP(reply.Address.ToString()))
 					return true;
 			}
@@ -183,34 +199,16 @@ namespace NetworkLib
 		// Versucht einen Namen in eine IP-Adresse aufzulösen
 		public static IPAddress[] ResolveHost(string hostname)
 		{
-			IPHostEntry hostentry = Dns.GetHostEntry(hostname);
-			IPAddress[] iparray = new IPAddress[hostentry.AddressList.Length];
+			IPHostEntry hostentry = Dns.GetHostEntry(hostname);					// Variable für Hosteintrag
+			IPAddress[] iparray = new IPAddress[hostentry.AddressList.Length];	// Array für IP-Adressen
 
-			int count = 0;
-
+			// Ermittelte IP-Adressen in Array speichern
 			for (int i = 0; i < hostentry.AddressList.Length; i++)
 			{
-				iparray[count] = hostentry.AddressList[i];
+				iparray[i] = hostentry.AddressList[i];
 			}
 
-			return iparray;
-		}
-		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		#endregion
-
-		#region Properties
-		//	+--------------------------------------------------+
-		//	|+++	Properties								+++|
-		//	+--------------------------------------------------+
-
-		// Gibt die eingetragene IP-Adresse zurück
-		public static int[] GetIP
-		{
-			// IP Adresse zurückgeben
-			get
-			{
-				return _ipaddress;
-			}
+			return iparray;	// Array zurückgeben
 		}
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		#endregion

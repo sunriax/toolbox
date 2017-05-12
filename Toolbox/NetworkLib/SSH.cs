@@ -16,11 +16,18 @@ namespace NetworkLib
 	//	+--------------------------------------------------+
 	//	|+++	SSH Klasse								+++|
 	//	+--------------------------------------------------+
+
 	public class SSH
 	{
+		#region Deklaration
+		//	+--------------------------------------------------+
+		//	|+++	Variablendeklaration					+++|
+		//	+--------------------------------------------------+
+
 		// Systemkonstanten
 		private const string _version = "V1.0B";
 		private const int _maxport = 65535;
+		private const int _minport = 1;
 
 		// Klassenvariablen
 		private ConnectionInfo _connection;
@@ -33,6 +40,8 @@ namespace NetworkLib
 		private string _port = ResourceText.sshPORT;
 		private string _certificate = ResourceText.sshCERTIFICATE;
 		private string _passphrase = ResourceText.sshPASSPHRASE;
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		#endregion
 
 		#region Konstruktoren
 		//	+--------------------------------------------------+
@@ -42,30 +51,40 @@ namespace NetworkLib
 		// Leerkonstruktor benötigt für Versionskontrolle
 		public SSH()
 		{
+			// Klassenvariablen mit NULL initialisieren!
 			_connection = null;
 			_ssh = null;
 			_sftp = null;
 		}
 
 		// Konstruktor zur Verbindungseinstellung mittels Benutzer und Passwort
-		public SSH(string ipadress, string port, string username, string password = null)
+		public SSH(string ipaddress, string port, string username, string password = null)
 		{
-			// Variablen überprüfen
-			if (ipadress == ResourceText.EMPTY)
+			// Eingabevariablen überprüfen
+			if (ipaddress == ResourceText.EMPTY || ipaddress.Length > Convert.ToInt16(ResourceText.sshIPAddressLength))
 				throw new Exception(Handler.CreateException(ResourceText.Message, ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionIP));
-			if (username == ResourceText.EMPTY)
+			if (username == ResourceText.EMPTY || username.Length > Convert.ToInt16(ResourceText.sshFieldMaxLength))
 				throw new Exception(Handler.CreateException(ResourceText.Message, ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionUser));
-			if (Tool.String2Int(port, 22) > _maxport)
+			if (Tool.String2Int(port, Convert.ToInt16(ResourceText.sshPORT)) > _maxport || Tool.String2Int(port, Convert.ToInt16(ResourceText.sshPORT)) < _minport)
 				throw new Exception(Handler.CreateException(ResourceText.Message, ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionPort));
 
-			// Klassenvariablen beschreiben
-			_ipaddress = ipadress;
+			// Klassenvariablen mit übergebenen Werten an Konstruktor beschreiben
+			_ipaddress = ipaddress;
 			_username = username;
 			_port = port;
-			_password = Chiper.Decrypt(password, ResourceText.Passphrase);
+
+			try
+			{
+				// Versuchen übergebenes Passwort zu entschlüsseln
+				_password = Chiper.Decrypt(password, ResourceText.Passphrase);
+			}
+			catch
+			{
+				throw new Exception(Handler.CreateException(ResourceText.Message, ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionPasswortDecrypt));
+			}
 
 			// Passwort basierte Verbindung erstellen
-			_connection = new ConnectionInfo(ipadress, Tool.String2Int(port, 22), username, new AuthenticationMethod[] { new PasswordAuthenticationMethod(username, password) });
+			_connection = new ConnectionInfo(ipaddress, Tool.String2Int(port, 22), username, new AuthenticationMethod[] { new PasswordAuthenticationMethod(username, password) });
 		}
 
 		// Konstruktor zur Verbindungseinstellung mittels Zertifikat
@@ -102,31 +121,37 @@ namespace NetworkLib
 		// SSH Verbindungsaufbau
 		public bool SSHconnect()
 		{
+			// Überprüfen ob Verbindung NULL
 			if (_connection == null)
 				throw new Exception(Handler.CreateException(ResourceText.Message, ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionConnectionFailed));
 
 			try
 			{
+				// Neuen SSH Client erstellen
 				_ssh = new SshClient(_connection);
 			}
 			catch
 			{
-				_connection = null;
-				_ssh = null;
+				_connection = null;	// Verbindungsvariable rücksetzten
+				_ssh = null;		// SSH Client rücksetzten
+
 				throw new Exception(Handler.CreateException(ResourceText.Message, ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionSSHclient));
 			}
 
 			try
 			{
+				// SSH Verbindung herstellen
 				_ssh.Connect();
 			}
 			catch
 			{
-				_connection = null;
-				_ssh = null;
+				_connection = null; // Verbindungsvariable rücksetzten
+				_ssh = null;        // SSH Client rücksetzten
+
 				throw new Exception(Handler.CreateException(ResourceText.Message, ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionSSHconnect));
 			}
-			return true;
+
+			return true;	// Rückgabe Verbindung hergestellt
 		}
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		#endregion
@@ -139,32 +164,37 @@ namespace NetworkLib
 		// SFTP Verbindungsaufbau
 		public bool SFTPconnect()
 		{
+			// Überprüfen ob Verbindung NULL
 			if (_connection == null)
 				throw new Exception(Handler.CreateException(ResourceText.Message, ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionConnectionFailed));
 
 			try
 			{
+				// Neuen SFTP Client erstellen
 				_sftp = new SftpClient(_connection);
 			}
 			catch
 			{
-				_connection = null;
-				_sftp = null;
+				_connection = null; // Verbindungsvariable rücksetzten
+				_sftp = null;       // SFTP Client rücksetzten
+
 				throw new Exception(Handler.CreateException(ResourceText.Message, ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionSFTPclient));
 			}
 
 			try
 			{
+				// SSH Verbindung herstellen
 				_sftp.Connect();
 			}
 			catch
 			{
-				_connection = null;
-				_sftp = null;
+				_connection = null; // Verbindungsvariable rücksetzten
+				_sftp = null;       // SFTP Client rücksetzten
+
 				throw new Exception(Handler.CreateException(ResourceText.Message, ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionSFTPconnect));
 			}
 
-			return true;
+			return true;    // Rückgabe Verbindung hergestellt
 		}
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		#endregion
@@ -177,13 +207,15 @@ namespace NetworkLib
 		// SSH Befehl ausführen
 		public string SSHexec(string command)
 		{
+			// Überprüfen ob Verbindung NULL
 			if (_ssh == null)
 				throw new Exception(Handler.CreateException(ResourceText.Message, ResourceText.ExceptionClass, ResourceText.ExceptionSSH, ResourceText.ExceptionSSHconnect));
 
+			// Überprüfen ob Verbindung hergestellt
 			if (!_ssh.IsConnected)
 				return ResourceText.sshFaultNoConnection;
 
-			return _ssh.CreateCommand(command).Execute();
+			return _ssh.CreateCommand(command).Execute();	// SSH Befehl rückgabe zurückgeben
 		}
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		#endregion

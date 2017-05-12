@@ -241,4 +241,13 @@
   <data name="Passphrase" xml:space="preserve">
     <value>safhjweuds92723bsa2</value>
   </data>
+  <data name="ExceptionPasswortDecrypt" xml:space="preserve">
+    <value>Entschlüsseln des Passworts fehlgeschlagen</value>
+  </data>
+  <data name="sshFieldMaxLength" xml:space="preserve">
+    <value>40</value>
+  </data>
+  <data name="sshIPAddressLength" xml:space="preserve">
+    <value>16</value>
+  </data>
 </root>

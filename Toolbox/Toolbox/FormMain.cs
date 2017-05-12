@@ -114,6 +114,7 @@ namespace Toolbox
 
 			// Version auf Mainframe einstellen
 			labelVersionNr.Text = ResourceText.ProgramVersion;
+			UpdateToolStripMenuItem.Enabled = true;
 		}
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		#endregion
@@ -377,11 +378,30 @@ namespace Toolbox
 		private void HelpSupportToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			// Menüband -> Hilfe -> Hilfe/Support
+			System.Diagnostics.Process.Start(ResourceText.LinkHelp);
 		}
 
 		private void UpdateToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			// Menüband -> Hilfe -> Aktualisieren
+			DialogResult Update = DialogResult.Cancel;
+			
+			if (Handler.Request(ResourceText.LinkUpdate + ResourceText.LinkUpdateFile + ResourceText.LinkUpdateVersion) != ResourceText.ProgramVersion)
+				Update = MessageBox.Show(ResourceText.MsgUpdateAvileable, ResourceText.Information, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+			else
+				MessageBox.Show(ResourceText.MsgUpdateOk, ResourceText.Information, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+
+			if(Update == DialogResult.Yes)
+			{
+				string getFilename = Handler.Request(ResourceText.LinkUpdate + ResourceText.LinkUpdateFile + ResourceText.LinkUpdateDownload_x64);
+
+				if(getFilename != null)
+				{
+					string download = Handler.DownloadFile(ResourceText.LinkUpdate, getFilename, Application.StartupPath);
+					MessageBox.Show(download);
+				}
+			}
+
 		}
 
 		private void VersionToolStripMenuItem_Click(object sender, EventArgs e)
@@ -417,6 +437,5 @@ namespace Toolbox
 		}
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		#endregion
-
 	}
 }

@@ -205,6 +205,15 @@ namespace NetworkLib.Language {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Entschlüsseln des Passworts fehlgeschlagen ähnelt.
+        /// </summary>
+        internal static string ExceptionPasswortDecrypt {
+            get {
+                return ResourceManager.GetString("ExceptionPasswortDecrypt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Variable Port leer ähnelt.
         /// </summary>
         internal static string ExceptionPort {
@@ -376,11 +385,29 @@ namespace NetworkLib.Language {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 40 ähnelt.
+        /// </summary>
+        internal static string sshFieldMaxLength {
+            get {
+                return ResourceManager.GetString("sshFieldMaxLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die 192.168.0.1 ähnelt.
         /// </summary>
         internal static string sshIP {
             get {
                 return ResourceManager.GetString("sshIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 16 ähnelt.
+        /// </summary>
+        internal static string sshIPAddressLength {
+            get {
+                return ResourceManager.GetString("sshIPAddressLength", resourceCulture);
             }
         }
         

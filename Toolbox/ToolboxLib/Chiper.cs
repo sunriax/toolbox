@@ -11,30 +11,47 @@ namespace ToolboxLib
 {
 	public static class Chiper
 	{
-		private const int _maxkeylength = 2048;
-		private const int _maxrepeat = 4096;
+		#region Deklaration
+		//	+--------------------------------------------------+
+		//	|+++	Variablendeklaration					+++|
+		//	+--------------------------------------------------+
 
-		private static int _keylength = 256;
-		private static int _repeat = 2048;
-		private static int _blocksize = 8;
+		private const int _keylength = 256;		// Länge des Schlüssels (gültig: 128/192/256)
+		private const int _repeat = 2048;		// Wiederholungen der Verschlüsselung
+		private const int _blocksize = 256;     // Blocklänge des Schlüssels (gültig: 128/192/256)
+												//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		#endregion
 
-		// Nachstehende funktionen gefunden auf http://stackoverflow.com/questions/10168240/encrypting-decrypting-a-string-in-c-sharp
+		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! INFORMATION !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		// Nachstehende Funktionen kopiert von http://stackoverflow.com/questions/10168240/encrypting-decrypting-a-string-in-c-sharp
+		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+		#region Encrypt
+		//	+--------------------------------------------------+
+		//	|+++	Encrypt									+++|
+		//	+--------------------------------------------------+
+
+		// Funktion zum Verschlüsseln von Plaintext
 		public static string Encrypt(string plaintext, string passphrase)
 		{
+			// Versuchen Verschlüsselung durchzuführen
 			try
 			{
-				byte[] saltbytes = Generate256BitsOfRandomEntropy();
-				byte[] ivbytes = Generate256BitsOfRandomEntropy();
-				byte[] plainbytes = Encoding.UTF8.GetBytes(plaintext);
+				byte[] saltbytes = Generate256BitsOfRandomEntropy();		// Random Bitfolge erzeugen (Salz)
+				byte[] ivbytes = Generate256BitsOfRandomEntropy();			// Random Bitfolge erzeugen (Salz)
+				byte[] plainbytes = Encoding.UTF8.GetBytes(plaintext);		// Bytes aus Eingabetext erzeugen
 
+				// Generation der Schlüsselableitungsfunktion (PBKDF2) mithilfe des HMACSHA1 Generator (SHA1 Broken (unsicher)!!!)
 				Rfc2898DeriveBytes password = new Rfc2898DeriveBytes(passphrase, saltbytes, _repeat);
 
-				byte[] keybytes = password.GetBytes(_keylength / 8);
+				byte[] keybytes = password.GetBytes(_keylength / 8);	// Erzeugen eines Byte Array aus dem Passwort
 
+				// Erzeugen der Algorithmus Basisklasse
 				Rijndael keysymmetric = new RijndaelManaged();
 
-				keysymmetric.BlockSize = (int)(Math.Pow(2, _blocksize));
-				keysymmetric.Mode = CipherMode.CBC;
+				// Einstellen spezifischer Verschlüsselungseinstellungen
+				keysymmetric.BlockSize = _blocksize;		// Einstellen der Blockgröße
+				keysymmetric.Mode = CipherMode.CBC;			// 
 				keysymmetric.Padding = PaddingMode.PKCS7;
 			
 				ICryptoTransform encryptor = keysymmetric.CreateEncryptor(keybytes, ivbytes);
@@ -59,7 +76,15 @@ namespace ToolboxLib
 				return null;
 			}
 		}
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		#endregion
 
+		#region Decrypt
+		//	+--------------------------------------------------+
+		//	|+++	Decrypt									+++|
+		//	+--------------------------------------------------+
+
+		// Funktion zum Entschlüsseln von Plaintext
 		public static string Decrypt(string chiperstring, string passphrase)
 		{
 			try
@@ -74,7 +99,7 @@ namespace ToolboxLib
 				byte[] keybytes = password.GetBytes(_keylength / 8);
 				Rijndael keysymmetric = new RijndaelManaged();
 
-				keysymmetric.BlockSize = (int)(Math.Pow(2, _blocksize));
+				keysymmetric.BlockSize = _blocksize;
 				keysymmetric.Mode = CipherMode.CBC;
 				keysymmetric.Padding = PaddingMode.PKCS7;
 
@@ -96,7 +121,10 @@ namespace ToolboxLib
 				return null;
 			}
 		}
-
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		#endregion
+		
+		
 		// Zu Testzwecken
 		public static int CalcPolynom(double a, double b, double c, double d, int x, bool direction)
 		{
@@ -113,6 +141,7 @@ namespace ToolboxLib
 		//	|+++	Lokale Funktionen						+++|
 		//	+--------------------------------------------------+
 
+		// Zufallsbits generieren
 		private static byte[] Generate256BitsOfRandomEntropy()
 		{
 			byte[] randomBytes = new byte[32];

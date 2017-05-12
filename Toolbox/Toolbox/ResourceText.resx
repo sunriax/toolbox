@@ -354,4 +354,28 @@
   <data name="MsgSaveUserdata" xml:space="preserve">
     <value>Speichern der Benutzer/Zertifikatdaten fehlgeschlagen</value>
   </data>
+  <data name="LinkHelp" xml:space="preserve">
+    <value>http://localhost/schule/toolbox/help</value>
+  </data>
+  <data name="LinkUpdate" xml:space="preserve">
+    <value>http://localhost/schule/toolbox/</value>
+  </data>
+  <data name="LinkUpdateDownload_x32" xml:space="preserve">
+    <value>?get=load_x32</value>
+  </data>
+  <data name="LinkUpdateDownload_x64" xml:space="preserve">
+    <value>?get=load_x64</value>
+  </data>
+  <data name="LinkUpdateVersion" xml:space="preserve">
+    <value>?get=version</value>
+  </data>
+  <data name="MsgUpdateAvileable" xml:space="preserve">
+    <value>Es wurde eine neue Software Version gefunden, zum aktualisieren bestätigen</value>
+  </data>
+  <data name="MsgUpdateOk" xml:space="preserve">
+    <value>Die Software befindet sich auf dem neusten Stand</value>
+  </data>
+  <data name="LinkUpdateFile" xml:space="preserve">
+    <value>update.php</value>
+  </data>
 </root>
