@@ -12,34 +12,62 @@ namespace ToolboxLib
 	public static class Handler
 	{
 
+		#region CheckFile
+		//	+--------------------------------------------------+
+		//	|+++	CheckFile								+++|
+		//	+--------------------------------------------------+
+
+		// Funktion zum überprüfen ob eine Datei existiert
 		public static bool CheckFile(string file)
 		{
+			// Überprüfen ob Datei existiert
 			if (File.Exists(file))
 				return true;
 			return false;
 		}
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		#endregion
 
+		#region CheckDirectory
+		//	+--------------------------------------------------+
+		//	|+++	CheckDirectory							+++|
+		//	+--------------------------------------------------+
+
+		// Funktion zum überprüfen ob ein Verzeichnis existiert
 		public static bool CheckDirectory(string path)
 		{
+			// Überprüfen ob Pfad existiert
 			if (Directory.Exists(path))
 				return true;
 			return false;
 		}
-
-		public static string CheckDirectory(string path, bool delimeter)
+		
+		// Funktion zum überprüfen ob ein Verzeichnis existiert und ob dieses den Pfadangabe entspricht
+		public static string CheckDirectory(string path, bool delimeter = false)
 		{
+			// Überprüfen ob Verzeichnis existiert
 			if (Directory.Exists(path))
 			{
+				// Überprüfen ob Prüfung auf Endzeichen notwendig
 				if (delimeter == true)
 				{
-					if (path[path.Length - 1].ToString() != ResourceText.Slash)
-						path = path + ResourceText.Slash;
+					// Überprüfen ob Endzeichen "\" vorhanden
+					if (path[path.Length - 1].ToString() != ResourceText.Backslash)
+						path = path + ResourceText.Backslash;	// Endzeichen ergänzen
 				}
-				return path;
+				return path;			// Pfad zurückgeben
 			}
-			return false.ToString();
+			return false.ToString();	// Rückgabewert besser "null" (Überprüfen!!!)
 		}
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		#endregion
 
+		#region WriteCSV
+		//	+--------------------------------------------------+
+		//	|+++	WriteCSV								+++|
+		//	+--------------------------------------------------+
+
+		// CSV Datei erzeugen (Array)
 		public static bool WriteCSV(string path, string filename, char delimeter, string[][] data, bool encrypt = false, string passphrase = null, bool append = false)
 		{
 			if (filename == ResourceText.EMPTY)
@@ -85,6 +113,7 @@ namespace ToolboxLib
 			return true;
 		}
 
+		// CSV Datei erzeugen (List)
 		public static bool WriteCSV(string path, string filename, char delimeter, List<string[]> data, bool encrypt = false, string passphrase = null, bool append = false)
 		{
 			if(filename == ResourceText.EMPTY)
@@ -127,7 +156,15 @@ namespace ToolboxLib
 
 			return true;
 		}
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		#endregion
 
+		#region ReadCSV
+		//	+--------------------------------------------------+
+		//	|+++	ReadCSV									+++|
+		//	+--------------------------------------------------+
+
+		// CSV Datei auslesen (Array)
 		public static string[][] ReadCSV(string path, string filename, char delimeter, bool decrypt = false, string passphrase = null)
 		{
 			List<string[]> data = new List<string[]>();
@@ -173,6 +210,7 @@ namespace ToolboxLib
 			return data.ToArray();
 		}
 
+		// CSV Datei auslesen (List)
 		public static bool ReadCSV(string path, string filename, char delimeter, List<string[]> data, bool decrypt = false, string passphrase = null)
 		{
 			string linedata;
@@ -216,7 +254,15 @@ namespace ToolboxLib
 
 			return true;
 		}
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		#endregion
 
+		#region FileCopy
+		//	+--------------------------------------------------+
+		//	|+++	FileCopy								+++|
+		//	+--------------------------------------------------+
+
+		// Datei kopieren
 		public static bool FileCopy(string filename, string topath, bool delete = false)
 		{
 			if (!CheckDirectory(topath))
@@ -230,7 +276,15 @@ namespace ToolboxLib
 
 			return true;
 		}
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		#endregion
 
+		#region Request
+		//	+--------------------------------------------------+
+		//	|+++	Request									+++|
+		//	+--------------------------------------------------+
+
+		// Web Request ausführen
 		public static string Request(string updatelink)
 		{
 			string reply = null;
@@ -258,7 +312,15 @@ namespace ToolboxLib
 
 			return reply;
 		}
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		#endregion
 
+		#region DownloadFile
+		//	+--------------------------------------------------+
+		//	|+++	DownloadFile							+++|
+		//	+--------------------------------------------------+
+
+		// Datei Herunterladen
 		public static string DownloadFile(string downloadlink, string downloadfile, string downloadpath)
 		{	
 			// Neue Webclient instance
@@ -269,18 +331,21 @@ namespace ToolboxLib
 
 			return downloadpath + downloadfile;
 		}
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		#endregion
 
-		#region Lokal
-			//	+--------------------------------------------------+
-			//	|+++	Lokale Funktionen						+++|
-			//	+--------------------------------------------------+
+		#region CreateException
+		//	+--------------------------------------------------+
+		//	|+++	CreateException							+++|
+		//	+--------------------------------------------------+
 
-			// Funktion zum erzeugen von Exception Texten
+		// Funktion zum erzeugen von Texten für Exceptions
 		public static string CreateException(string ExceptionMessage, string ExceptionClass, string ExceptionFunction, string ExceptionFault)
 		{
 			string create = ExceptionClass + "->" + ExceptionFunction + "(" + ExceptionMessage + ": " + ExceptionFault + ")";
 			return create;
 		}
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		#endregion
 	}
 }
